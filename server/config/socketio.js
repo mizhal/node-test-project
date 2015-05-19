@@ -18,6 +18,7 @@ function onConnect(socket) {
   });
 
   // Insert sockets below
+  require('../api/ImportacionDeGrupo/ImportacionDeGrupo.socket').register(socket);
   require('../api/BaneoAlumno/BaneoAlumno.socket').register(socket);
   require('../api/GrupoAlumnos/GrupoAlumnos.socket').register(socket);
   require('../api/DatosProfesor/DatosProfesor.socket').register(socket);
