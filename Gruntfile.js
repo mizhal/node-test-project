@@ -637,7 +637,8 @@ module.exports = function (grunt) {
         'injector',
         'wiredep',
         'autoprefixer',
-        'concurrent:debug'
+        'concurrent:debug',
+        'node-inspector'
       ]);
     }
 
