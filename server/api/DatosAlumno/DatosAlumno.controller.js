@@ -23,6 +23,7 @@ exports.show = function(req, res) {
 // Creates a new DatosAlumno in the DB.
 exports.create = function(req, res) {
   var new_ = new DatosAlumno(req.body);
+  new_.attach(req.files);
   new_.save(function(err, DatosAlumno) {
     if(err) { return handleError(res, err); }
     return res.status(201).json(DatosAlumno);

@@ -2,6 +2,7 @@
 
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
+var model_attachments = require("../../components/model_attachments");
 
 var DatosAlumnoSchema = new Schema({
   nombre: String,
@@ -14,5 +15,7 @@ var DatosAlumnoSchema = new Schema({
   	enum: ["CREADO", "ACTIVO", "BANEADO", "INACTIVO"]
   }
 });
+
+DatosAlumnoSchema.plugin(model_attachments, {field_names: ['foto'], path: "attached_files/DatosAlumno"});
 
 module.exports = mongoose.model('DatosAlumno', DatosAlumnoSchema);
