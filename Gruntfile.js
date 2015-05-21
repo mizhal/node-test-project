@@ -206,7 +206,13 @@ module.exports = function (grunt) {
     'node-inspector': {
       custom: {
         options: {
-          'web-host': 'localhost'
+          'web-host': '127.0.0.1',
+          'web-port': 8080,
+          'debug-port': 5858,
+          'save-live-edit': false,
+          'no-preload': true,
+          'stack-trace-limit': 4,
+          'hidden': ['node_modules']
         }
       }
     },
@@ -637,8 +643,7 @@ module.exports = function (grunt) {
         'injector',
         'wiredep',
         'autoprefixer',
-        'concurrent:debug',
-        'node-inspector'
+        'concurrent:debug'
       ]);
     }
 
