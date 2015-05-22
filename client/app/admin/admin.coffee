@@ -1,8 +1,9 @@
 'use strict'
 
-angular.module 'pfcLaminasNodeApp'
-.config ($routeProvider) ->
-  $routeProvider
-  .when '/admin',
+angular.module 'testGeneratorUiRouterApp'
+.config ($stateProvider) ->
+  $stateProvider
+  .state 'admin',
+    url: '/admin'
     templateUrl: 'app/admin/admin.html'
     controller: 'AdminCtrl'

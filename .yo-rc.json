@@ -12,7 +12,7 @@
       "coffee": true,
       "jade": true,
       "less": true,
-      "ngroute": true,
+      "uirouter": true,
       "bootstrap": true,
       "uibootstrap": true,
       "socketio": true,

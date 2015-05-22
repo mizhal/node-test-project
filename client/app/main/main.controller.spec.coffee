@@ -3,7 +3,7 @@
 describe 'Controller: MainCtrl', ->
 
   # load the controller's module
-  beforeEach module 'pfcLaminasNodeApp' 
+  beforeEach module 'testGeneratorUiRouterApp' 
   beforeEach module 'socketMock' 
 
   MainCtrl = undefined
