@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module 'pfcLaminasNodeApp'
+angular.module 'testGeneratorUiRouterApp'
 .controller 'LoginCtrl', ($scope, Auth, $location, $window) ->
   $scope.user = {}
   $scope.errors = {}

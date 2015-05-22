@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module 'pfcLaminasNodeApp'
+angular.module 'testGeneratorUiRouterApp'
 .controller 'NavbarCtrl', ($scope, $location, Auth) ->
   $scope.menu = [
     title: 'Home'

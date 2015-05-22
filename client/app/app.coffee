@@ -1,17 +1,16 @@
 'use strict'
 
-angular.module 'pfcLaminasNodeApp', [
+angular.module 'testGeneratorUiRouterApp', [
   'ngCookies',
   'ngResource',
   'ngSanitize',
-  'ngRoute',
   'btford.socket-io',
+  'ui.router',
   'ui.bootstrap'
 ]
-.config ($routeProvider, $locationProvider, $httpProvider) ->
-  $routeProvider
-  .otherwise
-    redirectTo: '/'
+.config ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) ->
+  $urlRouterProvider
+  .otherwise '/'
 
   $locationProvider.html5Mode true
   $httpProvider.interceptors.push 'authInterceptor'
@@ -34,6 +33,6 @@ angular.module 'pfcLaminasNodeApp', [
 
 .run ($rootScope, $location, Auth) ->
   # Redirect to login if route requires auth and you're not logged in
-  $rootScope.$on '$routeChangeStart', (event, next) ->
+  $rootScope.$on '$stateChangeStart', (event, next) ->
     Auth.isLoggedInAsync (loggedIn) ->
       $location.path "/login" if next.authenticate and not loggedIn

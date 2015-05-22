@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module 'pfcLaminasNodeApp'
+angular.module 'testGeneratorUiRouterApp'
 .factory 'User', ($resource) ->
   $resource '/api/users/:id/:controller',
     id: '@_id'

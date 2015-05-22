@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module 'pfcLaminasNodeApp'
+angular.module 'testGeneratorUiRouterApp'
 .controller 'MainCtrl', ($scope, $http, socket) ->
   $scope.awesomeThings = []
 

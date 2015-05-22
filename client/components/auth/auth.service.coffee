@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module 'pfcLaminasNodeApp'
+angular.module 'testGeneratorUiRouterApp'
 .factory 'Auth', ($location, $rootScope, $http, User, $cookieStore, $q) ->
   currentUser = if $cookieStore.get 'token' then User.get() else {}
 
