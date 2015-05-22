@@ -16,6 +16,6 @@ var DatosAlumnoSchema = new Schema({
   }
 });
 
-DatosAlumnoSchema.plugin(model_attachments, {field_names: ['foto'], path: "attached_files/DatosAlumno"});
+DatosAlumnoSchema.plugin(model_attachments, {field_names: ['foto'], path: "client/assets/attached_files/DatosAlumno"});
 
 module.exports = mongoose.model('DatosAlumno', DatosAlumnoSchema);
