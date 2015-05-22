@@ -1,8 +1,10 @@
 'use strict'
 
 angular.module 'testGeneratorUiRouterApp'
-.controller 'MainCtrl', ($scope, $http, socket) ->
+.controller 'MainCtrl', ($scope, $http, socket, $translate, $translatePartialLoader) ->
   $scope.awesomeThings = []
+
+  $translatePartialLoader.addPart 'main'
 
   $http.get('/api/things').success (awesomeThings) ->
     $scope.awesomeThings = awesomeThings
@@ -20,3 +22,6 @@ angular.module 'testGeneratorUiRouterApp'
 
   $scope.$on '$destroy', ->
     socket.unsyncUpdates 'thing'
+
+  $scope.changeLanguage = (lang) ->
+    $translate.use lang 

@@ -6,14 +6,22 @@ angular.module 'testGeneratorUiRouterApp', [
   'ngSanitize',
   'btford.socket-io',
   'ui.router',
-  'ui.bootstrap'
+  'ui.bootstrap',
+  'pascalprecht.translate'
 ]
-.config ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) ->
+.config ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, $translateProvider, $translatePartialLoaderProvider) ->
   $urlRouterProvider
   .otherwise '/'
 
   $locationProvider.html5Mode true
   $httpProvider.interceptors.push 'authInterceptor'
+
+  $translatePartialLoaderProvider.addPart('main');
+  $translateProvider.useLoader '$translatePartialLoader', {
+    urlTemplate: "assets/i18n/{part}/{lang}.json"
+  }
+
+  $translateProvider.preferredLanguage("es")
 
 .factory 'authInterceptor', ($rootScope, $q, $cookieStore, $location) ->
   # Add authorization token to headers
