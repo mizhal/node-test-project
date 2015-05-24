@@ -10,6 +10,7 @@ var path = require('path');
 module.exports = function(app) {
 
   // Insert routes below
+  app.use('/api/translations', require('./api/Translation'));
   app.use('/api/gestion/baneo_alumnos', require('./api/BaneoAlumno'));
   app.use('/api/gestion/grupo_alumnos', require('./api/GrupoAlumnos'));
   app.use('/api/gestion/datos_profesores', require('./api/DatosProfesor'));
