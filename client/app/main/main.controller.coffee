@@ -1,7 +1,8 @@
 'use strict'
 
-angular.module 'testGeneratorUiRouterApp'
+angular.module 'pfcLaminasNodeApp'
 .controller 'MainCtrl', ($scope, $http, socket, $translate, $translatePartialLoader) ->
+
   $scope.awesomeThings = []
 
   $translatePartialLoader.addPart 'main'
@@ -22,6 +23,3 @@ angular.module 'testGeneratorUiRouterApp'
 
   $scope.$on '$destroy', ->
     socket.unsyncUpdates 'thing'
-
-  $scope.changeLanguage = (lang) ->
-    $translate.use lang 

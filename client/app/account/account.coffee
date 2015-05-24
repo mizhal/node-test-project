@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module 'testGeneratorUiRouterApp'
+angular.module 'pfcLaminasNodeApp'
 .config ($stateProvider) ->
   $stateProvider
   .state 'login',

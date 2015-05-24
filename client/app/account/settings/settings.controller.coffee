@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module 'testGeneratorUiRouterApp'
+angular.module 'pfcLaminasNodeApp'
 .controller 'SettingsCtrl', ($scope, User, Auth) ->
   $scope.errors = {}
   $scope.changePassword = (form) ->
