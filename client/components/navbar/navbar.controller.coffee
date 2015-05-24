@@ -1,7 +1,7 @@
 'use strict'
 
-angular.module 'testGeneratorUiRouterApp'
-.controller 'NavbarCtrl', ($scope, $location, Auth) ->
+angular.module 'pfcLaminasNodeApp'
+.controller 'NavbarCtrl', ($scope, $location, Auth, $translate) ->
   $scope.menu = [
     title: 'Home'
     link: '/'
@@ -17,3 +17,6 @@ angular.module 'testGeneratorUiRouterApp'
 
   $scope.isActive = (route) ->
     route is $location.path()
+
+  $scope.changeLanguage = (lang) ->
+    $translate.use lang 
