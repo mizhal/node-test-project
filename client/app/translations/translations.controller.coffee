@@ -18,8 +18,9 @@ angular.module 'pfcLaminasNodeApp'
   	.error (data, status, headers, config) ->
       $scope.translationsTable = {}
 
-      $translate("WEB_SERVICE_CONNECTION_ERROR").then (msg) ->
-        $scope.alerts.push type:"danger", msg: msg
+      $translate "WEB_SERVICE_CONNECTION_ERROR"
+        .then (msg) ->
+          $scope.alerts.push type:"danger", msg: msg
 
       
 
