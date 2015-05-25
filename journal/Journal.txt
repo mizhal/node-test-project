@@ -54,3 +54,15 @@ He incorporado el modulo ngGrid para mostrar la tabla de traducciones de forma t
 
 [END Journal Entry #{7}]
 
+[START Journal entry #{8}, Mon May 25 12:18:35 2015]
+
+No se actualiza la tabla de traducciones al crear nuevas.
+Parece que el socket funciona bien, transmite los datos nuevos al crear un objeto, debe haber un problema en la tabla. Lo mejor sería probar con un botón y una función local para ver si cambiando el "feed" de datos de la tabla se produce algún cambio en la vista.
+
+[END Journal Entry #{8}]
+
+[START Journal entry #{9}, Mon May 25 12:26:20 2015]
+
+No es ese el problema, ya que si lo actualizo a mano (con un botón y una función local) si cambia la tabla.
+
+[END Journal Entry #{9}]
