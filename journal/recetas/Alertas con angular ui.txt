@@ -1,0 +1,10 @@
+Alertas con angular ui
+
+Se usa la directiva alert que tiene esta estructura (en JADE):
+
+  alert(ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)"){{alert.msg}}
+
+En el controlador es necesario crear un array, "alerts" en este caso que contiene hashes con el campo type y el campo msg.
+Los valores de type pueden ser:
+  "danger" para alertas de error
+  "success" para notificaciones de exito u ordinarias.
