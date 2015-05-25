@@ -13,7 +13,7 @@ angular.module 'pfcLaminasNodeApp'
   $scope.closeAlert = (index) ->
     $scope.alerts.splice(index, 1) 
 
-  $http.get("/api/translations1.json")
+  $http.get("/api/translations.json")
   	.success (data, status, headers, config) ->
   		$scope.translationsTable = data
 
