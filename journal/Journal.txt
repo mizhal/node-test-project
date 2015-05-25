@@ -48,3 +48,9 @@ Mejor aun es usar el partial Loader que permite cargar solo las traducciones del
 
 [END Journal Entry #{6}]
 
+[START Journal entry #{7}, Mon May 25 10:24:26 2015]
+
+He incorporado el modulo ngGrid para mostrar la tabla de traducciones de forma tosca pero funcional. En adelante hay que pensar en organizar las traducciones por vista o modelo para que sea llevadero editarlo. También he creado en el controlador de traducciones la primera alerta usando la facilidad del módulo Angular UI que utiliza las de Bootstrap.
+
+[END Journal Entry #{7}]
+

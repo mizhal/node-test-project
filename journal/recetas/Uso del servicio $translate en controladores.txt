@@ -13,3 +13,6 @@ Lo mismo en Coffee:
   $translate "HEADLINE"
     .then (word) ->
       doThings()
+
+
+Las traducciones organizadas en espacios de nombres son accesibles mediante ".", como en 'NAMESPACE.PARAGRAPH'.
