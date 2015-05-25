@@ -1,3 +1,4 @@
 {
-	"HEADER": "Cabecera"
+	"HEADER": "Cabecera",
+  "WEB_SERVICE_CONNECTION_ERROR": "Error de conexión al servicio web"
 }

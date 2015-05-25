@@ -6,7 +6,7 @@ var Translation = require('./Translation.model');
 // Get list of Translations
 exports.index = function(req, res) {
   var language = req.query.lang;
-  Translation.find( 
+  Translation.find( {}, "key language view value",
     function (err, Translations) {
       if(err) { return handleError(res, err); }
       return res.status(200).json(Translations);

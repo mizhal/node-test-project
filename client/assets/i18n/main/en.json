@@ -1,3 +1,4 @@
 {
-	"HEADER": "Header"
+	"HEADER": "Header",
+  "WEB_SERVICE_CONNECTION_ERROR": "Web server connection error"
 }

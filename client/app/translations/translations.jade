@@ -1,2 +1,21 @@
-.col-md-12
-    | This is the translations view.
+header#banner.hero-unit
+  .container
+    h1(translate="HEADER")
+
+.container
+  .row
+    .col-lg-12
+      alert(ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)"){{alert.msg}}
+  .row
+    .col-lg-12
+      h1.page-header(translate="ALL_TRANSLATIONS")
+      div.gridStyle(ng-grid="gridOptions")
+
+  .row
+    .col-lg-12
+      div.buttons
+
+
+
+
+
