@@ -6,6 +6,7 @@ angular.module 'pfcLaminasNodeApp'
   $scope.awesomeThings = []
 
   $translatePartialLoader.addPart 'main'
+  $translate.refresh()
 
   $http.get('/api/things').success (awesomeThings) ->
     $scope.awesomeThings = awesomeThings

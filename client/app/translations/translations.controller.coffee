@@ -1,8 +1,10 @@
 'use strict'
 
 angular.module 'pfcLaminasNodeApp'
-.controller 'TranslationsCtrl', ($scope, $http, $translate) ->
-  $scope.message = 'Hello'
+.controller 'TranslationsCtrl', ($scope, $http, $translate, $translatePartialLoader) ->
+  
+  $translatePartialLoader.addPart "translations"
+  $translate.refresh()
 
   $scope.gridOptions = {data: 'translationsTable'}
 
@@ -11,7 +13,7 @@ angular.module 'pfcLaminasNodeApp'
   $scope.closeAlert = (index) ->
     $scope.alerts.splice(index, 1) 
 
-  $http.get("/api/translations.json")
+  $http.get("/api/translations1.json")
   	.success (data, status, headers, config) ->
   		$scope.translationsTable = data
 
