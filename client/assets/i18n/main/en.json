@@ -1,4 +1,5 @@
 {
 	"HEADER": "Header",
-  "WEB_SERVICE_CONNECTION_ERROR": "Web server connection error"
+  "WEB_SERVICE_CONNECTION_ERROR": "Web server connection error",
+  "ALL_TRANSLATIONS": "All Translations"
 }
