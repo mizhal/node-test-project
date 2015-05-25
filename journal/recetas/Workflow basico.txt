@@ -1,0 +1,10 @@
+Workflow basico
+
+1. Arrancar el servidor de desarrollo
+
+	1.1 Arrancar mongodb
+	1.2 Arrancar el servidor local
+		grunt serve
+
+1. Generacion de fragmentos de la API
+	

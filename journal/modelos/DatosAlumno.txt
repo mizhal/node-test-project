@@ -1,0 +1,8 @@
+class DatosAlumno
+	nombre: String
+	nick: String
+	codigo_uo: String
+	clave: String
+	ultimo_acceso: Date
+	estado: ENUM["CREADO", "ACTIVO", "BANEADO", "INACTIVO"]
+	foto: String	
