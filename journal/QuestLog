@@ -7,8 +7,13 @@ FOCO========
 		No parece haber muchas más opciones.
       [DONE] Crear una vista Grid con todas las traducciones (index de admin) y conectarla con el servicio web usando componentes de angular ui.
       [TODO] Creación y edicion de traducciones
-
-
+        [DONE] vista de creación y comprobación de que funciona.
+        [TODO] montar validaciones
+        [TODO] vista de edición
+        [MEJORA] Integrar el formulario de creación en la propia vista principal para crear y editar las traducciones con comodidad. 
+        [MEJORA] Editar el valor haciendo doble click sobre la tabla/grid.
+        [MEJORA] Ordenación por columnas clickando en la cabecera.
+      [TODO] Generacion de los JSONs a partir de las traducciones
 
 	#00003 FEAT UI de gestión de Datos Alumno
 		Vistas:
