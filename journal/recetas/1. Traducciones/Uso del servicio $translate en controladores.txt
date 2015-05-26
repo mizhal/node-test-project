@@ -15,3 +15,10 @@ Lo mismo en Coffee:
       doThings()
 
 Las traducciones organizadas en espacios de nombres son accesibles mediante ".", como en 'NAMESPACE.PARAGRAPH'.
+
+Para traducir varias claves a la vez:
+  $translate("CLAVE1 CLAVE2 HEADER.CLAVE3")
+    .then (translated) ->
+      $scope.clave1 = translated.CLAVE1
+      $scope.clave2 = translated.CLAVE2
+      $scope.clave3 = translated["HEADER.CLAVE3"]

@@ -1,0 +1,19 @@
+Servicio de notificaciones
+
+Se ha programado un servicio de notificaciones que facilita gestionar estas en los controladores sin necesidad de declarar nuevas funciones para gestionarlas y hacerles el mantenimiento general.
+
+Para usarlo, debe requerirse como dependencia "notificationManager" y una vez importado, asignarlo a una variable dentro del contexto del controlador:
+
+$scope.notif = notificationManager;
+
+En la vista se sigue usando la misma directiva que se menciona en la entrada "Alertas con angular ui", pero como función asociada al botón de cierre es necesario usar:
+  
+  notif.closeNotification($index)
+
+Que es la función que proporciona el servicio.
+
+Para crear nuevas notificaciones se usa la función:
+
+  $scope.notif.addNotification(hash_de_datos={type: "", msg: ""})
+  
+Con type = "danger" para las alertas y type = "success" para los mensajes.
