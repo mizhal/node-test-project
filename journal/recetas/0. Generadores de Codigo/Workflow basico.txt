@@ -1,0 +1,19 @@
+Workflow basico
+
+1. Arrancar el servidor de desarrollo
+
+	1.1 Arrancar mongodb
+	1.2 Arrancar el servidor local
+		grunt serve
+
+2. Generacion de "funciones" de la API
+
+	yo angular-fullstack:endpoint <NOMBRE>
+
+3. Servidor de desarrollo en modo depuración:
+
+  node-debug server/app.js
+
+  normalmente esto abre una ventana del navegador con el depurador gráfico, si no lo hace, en consola aparece un mensaje que dice la url que hay que poner en la barra del navegador para acceder al depurador gráfico.
+
+4. 
