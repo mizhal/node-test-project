@@ -8,7 +8,7 @@ angular.module 'pfcLaminasNodeApp', [
   'ui.router',
   'ui.bootstrap',
   'pascalprecht.translate',
-  'ngGrid'
+  'ui.grid'
 ]
 .config ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, $translateProvider, $translatePartialLoaderProvider) ->
   $urlRouterProvider
@@ -21,7 +21,6 @@ angular.module 'pfcLaminasNodeApp', [
   $translateProvider.useLoader '$translatePartialLoader', {
     urlTemplate: "assets/i18n/{part}/{lang}.json"
   }
-
   $translateProvider.preferredLanguage("es")
 
 .factory 'authInterceptor', ($rootScope, $q, $cookieStore, $location) ->
@@ -39,6 +38,19 @@ angular.module 'pfcLaminasNodeApp', [
       $cookieStore.remove 'token'
 
     $q.reject response
+
+.factory 'notificationManager', () ->
+  notificationManagerInstance = {
+    alerts: [],
+    closeNotification: (index) -> 
+      this.alerts.splice(index, 1)
+    addNotification: (notif_data) ->
+      this.alerts.push notif_data
+    pending: () ->
+      return this.alerts
+  }
+
+  return notificationManagerInstance
 
 .run ($rootScope, $location, Auth) ->
   # Redirect to login if route requires auth and you're not logged in
