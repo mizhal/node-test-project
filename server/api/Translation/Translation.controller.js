@@ -5,8 +5,15 @@ var Translation = require('./Translation.model');
 
 // Get list of Translations
 exports.index = function(req, res) {
+  var page_size = 100
+  var page_offset = (req.params.page || 0) * page_size;
   var language = req.query.lang;
-  Translation.find( {}, "key language view value",
+  var query = {};
+  if(req.query.filter){
+    query = {key: new RegExp("^.*" + req.query.filter + ".*$", "i")};
+  }
+  Translation.find(query, "key language view value", 
+    {skip: page_offset, limit: page_size},
     function (err, Translations) {
       if(err) { return handleError(res, err); }
       return res.status(200).json(Translations);
