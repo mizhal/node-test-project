@@ -5,15 +5,15 @@ angular.module 'pfcLaminasNodeApp'
   ($scope, $rootScope, socket, $http, $translate, $translatePartialLoader, $state, $stateParams, notificationManager) ->
 
     ## sistema de traducciones
-      $translatePartialLoader.addPart "translations"
-      $translate.refresh()
+    $translatePartialLoader.addPart "translations"
+    $translate.refresh()
 
-      $translate(["NEW_MODEL_CREATED_OK", "NEW_MODEL_CREATED_FAIL", "MODEL_UPDATED_OK", "MODEL_UPDATED_FAIL"])
-        .then (words) -> 
-          $scope.created_ok = words.NEW_MODEL_CREATED_OK
-          $scope.created_fail = words.NEW_MODEL_CREATED_FAIL
-          $scope.updated_ok = words.MODEL_UPDATED_OK
-          $scope.updated_fail = words.MODEL_UPDATED_FAIL
+    $translate(["NEW_MODEL_CREATED_OK", "NEW_MODEL_CREATED_FAIL", "MODEL_UPDATED_OK", "MODEL_UPDATED_FAIL"])
+      .then (words) -> 
+        $scope.created_ok = words.NEW_MODEL_CREATED_OK
+        $scope.created_fail = words.NEW_MODEL_CREATED_FAIL
+        $scope.updated_ok = words.MODEL_UPDATED_OK
+        $scope.updated_fail = words.MODEL_UPDATED_FAIL
 
     # enviar el idioma actual al crear traducciones
     # a traves de un campo oculto
