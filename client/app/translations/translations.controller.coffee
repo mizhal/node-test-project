@@ -13,11 +13,11 @@ angular.module 'pfcLaminasNodeApp'
   $scope.gridOptions = {
     data: 'translationsTable',
     columnDefs: [
-      {field: "key", name: "TRANSLATION.FIELD.KEY", headerCellFilter: "translate"},
-      {field: "language", name: "TRANSLATION.FIELD.LANGUAGE", headerCellFilter: "translate"},
-      {field: "view", name: "TRANSLATION.FIELD.VIEW", headerCellFilter: "translate"},
-      {field: "value", name: "TRANSLATION.FIELD.VALUE", headerCellFilter: "translate"},
-      {name: "TABLE_ACTIONS", headerCellFilter: "translate", cellTemplate: "<a translate='TABLE_EDIT' href='/translations/edit/{{row.entity._id}}' class='btn btn-info'></a>"}
+      {field: "key", displayName: "TRANSLATION.FIELD.KEY", headerCellFilter: "translate"},
+      {field: "language", displayName: "TRANSLATION.FIELD.LANGUAGE", headerCellFilter: "translate"},
+      {field: "view", displayName: "TRANSLATION.FIELD.VIEW", headerCellFilter: "translate"},
+      {field: "value", displayName: "TRANSLATION.FIELD.VALUE", headerCellFilter: "translate"},
+      {name: "TABLE_ACTIONS", displayName: "TABLE_ACTIONS", headerCellFilter: "translate", cellTemplate: "<a translate='TABLE_EDIT' href='/translations/edit/{{row.entity._id}}' class='btn btn-info'></a>"}
     ]
   }
   ## FIN CONFIGURACION TABLA
