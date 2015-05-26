@@ -5,11 +5,11 @@ header#banner.hero-unit
 .container
   .row
     .col-lg-12
-      alert(ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)"){{alert.msg}}
+      alert(ng-repeat="alert in notif.pending()" type="{{alert.type}}" close="notif.closeNotification($index)") {{alert.msg}}
   .row
     .col-lg-12
       h1.page-header(translate="ALL_TRANSLATIONS")
-      div.gridStyle(ng-grid="gridOptions")
+      div.gridStyle(ui-grid="gridOptions")
 
   .row
     .col-lg-12

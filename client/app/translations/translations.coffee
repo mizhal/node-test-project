@@ -12,3 +12,8 @@ angular.module 'pfcLaminasNodeApp'
       url: "/translations/new"
       templateUrl: "app/translations/partials/new.html"
       controller: "TranslationsCreateEditCtrl"
+  $stateProvider
+    .state "translation-edit",
+      url: "/translations/edit/:id"
+      templateUrl: "app/translations/partials/new.html"
+      controller: "TranslationsCreateEditCtrl"
