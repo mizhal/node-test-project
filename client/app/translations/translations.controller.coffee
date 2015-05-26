@@ -22,6 +22,10 @@ angular.module 'pfcLaminasNodeApp'
   }
   ## FIN CONFIGURACION TABLA
 
+  ## FILTRADO DE TABLA
+  $scope.filter = "filter"
+  ## FIN FILTRADO DE TABLA
+
   ## NOTIFICACIONES
   $scope.notif = notificationManager 
   ## FIN NOTIFICACIONES
