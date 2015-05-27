@@ -1,24 +1,18 @@
 QuestLog
 
 FOCO========
-	#00004	FEAT	OPEN	Modulo de Traducciones (lib + back + front)
-		Integrar angular-translate
-		AngularJS tiene soporte para traduccion de fechas y moneda a través de filtros, pero no para traducción de claves.
-		No parece haber muchas más opciones.
-      [DONE] Crear una vista Grid con todas las traducciones (index de admin) y conectarla con el servicio web usando componentes de angular ui.
-      [DONE] Creación y edicion de traducciones
-        [DONE] vista de creación y comprobación de que funciona.
-        [TODO] montar validaciones
-        [TODO] vista de edición
-      [MEJORA] Integrar el formulario de creación en la propia vista principal para crear y editar las traducciones con comodidad. 
-      [MEJORA] Editar el valor haciendo doble click sobre la tabla/grid.
-      [TODO] Generacion de los JSONs a partir de las traducciones
-        [TODO] Asegurarse de que se generan todas las traducciones necesarias
+  #00014 FEAT Integrar sequelize
+    
 
-  [TODO] Filtro de la tabla de traducciones.
-    Es necesario modificar la api para que el index acepte parametros.
+  #00010 FEAT Comun: Filtro y Sort (server side) en las tablas ui-grid/ngGrid
+    RECURSOS:
+      Stack Overflow: Server-side paging+filtering+sorting for ng-grid with WebAPI
+        http://stackoverflow.com/questions/17786091/server-side-pagingfilteringsorting-for-ng-grid-with-webapi
+
+    [DONE] modificar la api para que el index acepte parametros y paginación.
       Se usa el parametro "filter" con query string que pa eso está
-
+    [TODO] Integrar las funciones de ui-grid con la api paginada y filtrada.
+      UI-grid/ngGrid tiene soporte explícito para filtrado y para paginación con el servidor.
 
 	#00003 FEAT UI de gestión de Datos Alumno
 		Vistas:
@@ -38,6 +32,16 @@ SUGERENCIAS=
 		https://github.com/brianc/node-postgres
 BLOQUEADAS==
 COMPLETAS===
+  #00004  FEAT  OPEN  Modulo de Traducciones (lib + back + front)
+    :FECHA_FIN: 26/05/2015
+    Integrar angular-translate
+    AngularJS tiene soporte para traduccion de fechas y moneda a través de filtros, pero no para traducción de claves.
+    No parece haber muchas más opciones.
+      [DONE] Crear una vista Grid con todas las traducciones (index de admin) y conectarla con el servicio web usando componentes de angular ui.
+      [DONE] Creación y edicion de traducciones
+        [DONE] vista de creación y comprobación de que funciona.
+        [DONE] vista de edición
+
 	[done] cambiar el router por uiRoute
 	feat#001 - Subir archivos en los modelos que llevan archivos adjuntos
 		Explorar el mecanismo de subida de archivos e implementar la subida desde el cliente con el modelo de alumnos que tiene una foto/icono asociada.
