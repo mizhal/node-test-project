@@ -1,4 +1,4 @@
-/* Pruebas de creación de la base de datos */
+/* Pruebas de creación de la base de datos y de conexion y creacion de un esquema simple con Sequelize */
 
 var Sequelize = require('sequelize');
 var config = require('../server/config/local.env');
@@ -13,11 +13,8 @@ var pg = Promise.promisifyAll(require("pg"));
 
 /** CONEXION A LA BASE DE DATOS **/
 var getConexionDB = function(){
-  /*** esta funcion esta pensada para usarse dentro del contexto creado por la 'directiva' using 
-    de la librería bluebird, pues lleva un disposer
-  **/
   var conString = "postgres://" + config.SQL_ROOT_USER  + ":" + config.SQL_ROOT_PASSWORD + 
-    "@" + config.SQL_HOST + ":" + config.SQL_PORT + "/postgres";
+    "@" + config.SQL_HOST + "/postgres"  ;
 
   var done_continuation = null;
 
@@ -89,5 +86,38 @@ var crearTodo = Promise.promisify( function(next){
 
 /** MAIN **/
 crearTodo().then(function(res){
-  console.log("Puesta a punto de la Base de Datos finalizada.");
+
+  var sequelize = new Sequelize(config.SQL_DATABASE, config.SQL_USERNAME, config.SQL_PASSWORD, {
+    host: config.SQL_HOST,
+    dialect: config.SQL_DIALECT,
+    pool: {
+      max: 5,
+      min: 0,
+      idle: 10000
+    }
+  });
+
+  var User = sequelize.define('User', {
+      userID: Sequelize.INTEGER,
+      userName: Sequelize.TEXT,
+      password: Sequelize.TEXT
+  }, {
+      instanceMethods: {
+          getUserId: function() {
+              return this.userID;
+          }
+      }
+  });
+
+  sequelize.sync().then(function(){
+    sequelize.close();  
+  });
+
+}).finally(function(){
+  console.log("Finalizado");
 });
+  
+
+
+
+
