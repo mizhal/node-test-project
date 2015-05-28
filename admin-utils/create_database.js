@@ -46,7 +46,7 @@ var crearUsuario = Promise.promisify(function (client, next){
     console.log("Usuario " + config.SQL_USERNAME + " creado correctamente.");
     next();
   }).catch(function(error){
-    console.error("No se ha creado el usuario porque ya existía.", error);
+    console.log("No se ha creado el usuario porque ya existía.");
     next();
   });
 
@@ -59,10 +59,10 @@ var crearBaseDeDatos = Promise.promisify(function (client, next){
     config.SQL_USERNAME + '"';
 
   return client.queryAsync(command).then(function(result){
-    console.log("Base de datos creada correctamente.");
+    console.log("Base de datos " + config.SQL_DATABASE + " creada correctamente.");
     next();
   }).catch(function(error){
-    console.error("No se ha creado la base de datos porque ya existia.", error);
+    console.log("No se ha creado la base de datos porque ya existia.");
     next();
   });
 
@@ -75,14 +75,14 @@ var crearTodo = Promise.promisify( function(next){
     return crearUsuario(cliente_db)
       .then(function(res){
         return crearBaseDeDatos(cliente_db).then(function(res){
-          console.log("Client end");
+          console.log("Desconexión de la cuenta de administracion de postgresql");
           cliente_db.end();
         });
       });
   }).then(function(){
     return next();
   }).catch(function(error){
-    console.log("Error en el using");
+    console.error("Error con la conexión de administración de postgresql", error);
   });
 
 });
