@@ -66,3 +66,19 @@ Parece que el socket funciona bien, transmite los datos nuevos al crear un objet
 No es ese el problema, ya que si lo actualizo a mano (con un botón y una función local) si cambia la tabla.
 
 [END Journal Entry #{9}]
+
+[START Journal entry #{10}, Wed May 27 09:18:26 2015]
+
+Es interesante crear una tarea Grunt para generar la base de datos automáticamente.
+
+[END Journal Entry #{10}]
+
+[START Journal entry #{11}, Wed May 27 09:57:39 2015]
+
+La prueba de creación de la base de datos falla primero por:
+  - no existe el usuario
+  - no existe la base de datos
+
+[END Journal Entry #{11}]
+
+

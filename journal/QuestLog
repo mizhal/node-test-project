@@ -2,7 +2,13 @@ QuestLog
 
 FOCO========
   #00014 FEAT Integrar sequelize
-    
+    [DONE] Script de preparacion de la base de datos
+      1. Conectar y crear el usuario y la bd de proyecto directamente con el plugin de postgresql.
+      2. Después hacer la conexion "estándar" con Sequelize y lanzar migraciones o sincronizar las tablas.
+    Integrar sequelize con la app (conectar, sincronizar tablas, etc) 
+    Preparar el sistema de migraciones ()
+    Scripts de creación del usuario inicial y de la base de datos
+
 
   #00010 FEAT Comun: Filtro y Sort (server side) en las tablas ui-grid/ngGrid
     RECURSOS:

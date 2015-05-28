@@ -1,0 +1,5 @@
+Comandos para crear la base de datos y destruirla
+
+Para crear la base de datos se usa el comando 
+
+  grunt db:create
