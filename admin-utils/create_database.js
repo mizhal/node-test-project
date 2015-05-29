@@ -1,7 +1,8 @@
 /* Pruebas de creación de la base de datos */
 
 var Sequelize = require('sequelize');
-var config = require('../server/config/local.env');
+var config = require('../server/config/local.env.js');
+var envconfig = require('../server/config/database.json');
 var Promise = require('bluebird');
 var using = Promise.using;
 
@@ -55,14 +56,29 @@ var crearUsuario = Promise.promisify(function (client, next){
 /** CREACION DE LA BASE DE DATOS DECLARADA EN LA CONFIGURACION */
 var crearBaseDeDatos = Promise.promisify(function (client, next){
 
-  var command = 'CREATE DATABASE "' + config.SQL_DATABASE + '" WITH OWNER "' +
-    config.SQL_USERNAME + '"';
+  var environments = ["development", "test", "production"];
 
-  return client.queryAsync(command).then(function(result){
-    console.log("Base de datos " + config.SQL_DATABASE + " creada correctamente.");
-    next();
-  }).catch(function(error){
-    console.log("No se ha creado la base de datos porque ya existia.");
+  if(process.argv.length > 2){
+    if(environments.indexOf(process.argv[2]) != -1){
+      environments = [process.argv[2]]
+    } else if (process.argv[2].toLowerCase() == "all"){
+      environments = ["development", "test", "production"];
+    }
+  }
+
+  Promise.map(environments, function(environment){
+
+    var this_config = envconfig[environment];
+    var command = 'CREATE DATABASE "' + this_config.database + '" WITH OWNER "' +
+      this_config.username + '"';
+
+    return client.queryAsync(command).then(function(result){
+      console.log("Base de datos " + this_config.database + " creada correctamente.");
+    }).catch(function(error){
+      console.log("No se ha creado la base de datos " + this_config.database + " porque ya existia.");
+    });
+
+  }).then(function(){
     next();
   });
 
