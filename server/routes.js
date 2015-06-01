@@ -11,14 +11,8 @@ module.exports = function(app) {
 
   // Insert routes below
   app.use('/api/translations', require('./api/Translation'));
-  app.use('/api/gestion/baneo_alumnos', require('./api/BaneoAlumno'));
-  app.use('/api/gestion/grupo_alumnos', require('./api/GrupoAlumnos'));
-  app.use('/api/gestion/datos_profesores', require('./api/DatosProfesor'));
-  app.use('/api/gestion/datos_alumnos', require('./api/DatosAlumno'));
-  app.use('/api/things', require('./api/thing'));
-  app.use('/api/users', require('./api/user'));
 
-  app.use('/auth', require('./auth'));
+  //app.use('/auth', require('./auth'));
   
   // All undefined asset or api routes should return a 404
   app.route('/:url(api|auth|components|app|bower_components|assets)/*')
