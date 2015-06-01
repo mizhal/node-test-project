@@ -9,6 +9,11 @@ module.exports = {
   DOMAIN:           'http://localhost:9000',
   SESSION_SECRET:   'pfclaminasnode-secret',
 
+  SQL_ROOT_USER: "postgres",
+  SQL_ROOT_PASSWORD: "root",
+  SQL_HOST: "localhost",
+  SQL_POST: "5432",
+
   TWITTER_ID:       'app-id',
   TWITTER_SECRET:   'secret',
 
