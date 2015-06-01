@@ -4,7 +4,7 @@ module.exports = {
   up: function (queryInterface, Sequelize) {
     var db = queryInterface.sequelize;
     db.query('create table "Usuarios"(             \
-      id integer primary key not null,             \
+      id serial primary key not null,             \
       login varchar(20) not null,                  \
       password_encrypted varchar(64) not null,     \
       ultimo_acceso timestamp with time zone not null,            \
