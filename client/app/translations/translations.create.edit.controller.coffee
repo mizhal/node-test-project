@@ -36,12 +36,13 @@ angular.module 'pfcLaminasNodeApp'
 
     ## NOTIFICACIONES
     $scope.notif = notificationManager;
+    $scope.notif.clear();
     ## FIN NOTIFICACIONES
 
     ## METODOS
 
     $scope.submit = () ->
-      id = $scope.translation["_id"];
+      id = $scope.translation.id
       if(id == undefined)
         $http.post("/api/translations", $scope.translation)
           .success (data, status, headers, config) ->
