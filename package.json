@@ -34,7 +34,8 @@
     "pg-hstore": "2.3.2",
     "pg": "4.3.0",
     "bluebird": "2.9.26",
-    "sequelize-cli": "1.7.0"
+    "sequelize-cli": "1.7.0",
+    "bcrypt": "0.8.3" 
   },
   "devDependencies": {
     "grunt": "~0.4.4",
