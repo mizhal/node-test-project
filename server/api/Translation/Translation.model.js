@@ -1,13 +1,13 @@
 'use strict';
 
-var mongoose = require('mongoose'),
-    Schema = mongoose.Schema;
+var Sequelize = require('sequelize');
+var sequelize = require("../../components/sequelize_singleton");
 
-var TranslationSchema = new Schema({
-  key: String,
-  language: String,
-  view: String,
-  value: String
+var Translation = sequelize.define("Translation",{
+  key: Sequelize.STRING,
+  language: Sequelize.STRING,
+  view: Sequelize.STRING,
+  value: Sequelize.STRING  
 });
 
-module.exports = mongoose.model('Translation', TranslationSchema);
+module.exports = Translation;

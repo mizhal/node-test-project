@@ -8,3 +8,4 @@ dist
 npm-debug.log
 /uploads
 /client/assets/attached_files/
+/server/config/database.json

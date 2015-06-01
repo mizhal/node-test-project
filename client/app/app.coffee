@@ -48,6 +48,8 @@ angular.module 'pfcLaminasNodeApp', [
       this.alerts.push notif_data
     pending: () ->
       return this.alerts
+    clear: () ->
+      this.alerts.length = 0;
   }
 
   return notificationManagerInstance

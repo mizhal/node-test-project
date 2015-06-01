@@ -17,7 +17,7 @@ angular.module 'pfcLaminasNodeApp'
       {field: "language", displayName: "TRANSLATION.FIELD.LANGUAGE", headerCellFilter: "translate"},
       {field: "view", displayName: "TRANSLATION.FIELD.VIEW", headerCellFilter: "translate"},
       {field: "value", displayName: "TRANSLATION.FIELD.VALUE", headerCellFilter: "translate"},
-      {name: "TABLE_ACTIONS", displayName: "TABLE_ACTIONS", headerCellFilter: "translate", cellTemplate: "<a translate='TABLE_EDIT' href='/translations/edit/{{row.entity._id}}' class='btn btn-info'></a>"}
+      {name: "TABLE_ACTIONS", displayName: "TABLE_ACTIONS", headerCellFilter: "translate", cellTemplate: "<a translate='TABLE_EDIT' href='/translations/edit/{{row.entity.id}}' class='btn btn-info'></a>"}
     ]
   }
   ## FIN CONFIGURACION TABLA

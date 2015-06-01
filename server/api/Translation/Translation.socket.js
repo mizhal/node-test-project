@@ -7,11 +7,19 @@
 var Translation = require('./Translation.model');
 
 exports.register = function(socket) {
-  Translation.schema.post('save', function (doc) {
-    onSave(socket, doc);
+  Translation.afterCreate(function(obj, options, fn){
+    onSave(socket, obj);
+    fn(null, obj);
   });
-  Translation.schema.post('remove', function (doc) {
-    onRemove(socket, doc);
+
+  Translation.afterUpdate(function(obj, options, fn){
+    onSave(socket, obj);
+    fn(null, obj);
+  });
+
+  Translation.afterDestroy(function(obj, options, fn){
+    onRemove(socket, obj);
+    fn(null, obj);
   });
 }
 
