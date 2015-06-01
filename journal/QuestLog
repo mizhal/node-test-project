@@ -9,6 +9,9 @@ FOCO========
         Para encriptar la clave lo más problable será que use este módulo:
           [001] Password-Hash
             https://www.npmjs.com/package/password-hash
+        Parece ser que no, que ese modulo está deprecado. Mejor usar bcrypt o scrypt.
+        Ambos tienen dependencias chungas, como Python o OpenSSL. En realidad en máquinas unix esto no es muy importante.
+
         Junto con callbacks del modelo para realizar la encriptación al salvar o bien mediante getters y setters.
     .
     .
@@ -35,7 +38,7 @@ ACTIVAS=====
       UI-grid/ngGrid tiene soporte explícito para filtrado y para paginación con el servidor.
     .
     .
-  #002 - Integrar node-debug con grunt
+  #00019 ENH Integrar node-debug con grunt 
     Intentar que todo vaya como la seda invocando "grunt serve:debug"
     .
     .
@@ -108,6 +111,3 @@ COMPLETAS===
 			- nombrar en el archivo definitivo de tal manera que se vincule con el modelo, campo e id asociado
 			- borrar el archivo (O NO SEGUN LAS CONDICIONES DE BORRADO LOGICO) al destruir el objeto dueño.
 FALLIDAS====
-REGISTRO====
-	#001 - Subir archivos en los modelos que llevan archivos adjuntos
-		Explorar el mecanismo de subida de archivos e implementar la subida desde el cliente con el modelo de alumnos que tiene una foto/icono asociada.
