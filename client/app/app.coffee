@@ -1,19 +1,27 @@
 'use strict'
 
-angular.module 'testGeneratorUiRouterApp', [
+angular.module 'pfcLaminasNodeApp', [
   'ngCookies',
   'ngResource',
   'ngSanitize',
   'btford.socket-io',
   'ui.router',
-  'ui.bootstrap'
+  'ui.bootstrap',
+  'pascalprecht.translate',
+  'ui.grid'
 ]
-.config ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) ->
+.config ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, $translateProvider, $translatePartialLoaderProvider) ->
   $urlRouterProvider
   .otherwise '/'
 
   $locationProvider.html5Mode true
   $httpProvider.interceptors.push 'authInterceptor'
+
+  $translatePartialLoaderProvider.addPart('main');
+  $translateProvider.useLoader '$translatePartialLoader', {
+    urlTemplate: "assets/i18n/{part}/{lang}.json"
+  }
+  $translateProvider.preferredLanguage("es")
 
 .factory 'authInterceptor', ($rootScope, $q, $cookieStore, $location) ->
   # Add authorization token to headers
@@ -30,6 +38,21 @@ angular.module 'testGeneratorUiRouterApp', [
       $cookieStore.remove 'token'
 
     $q.reject response
+
+.factory 'notificationManager', () ->
+  notificationManagerInstance = {
+    alerts: [],
+    closeNotification: (index) -> 
+      this.alerts.splice(index, 1)
+    addNotification: (notif_data) ->
+      this.alerts.push notif_data
+    pending: () ->
+      return this.alerts
+    clear: () ->
+      this.alerts.length = 0;
+  }
+
+  return notificationManagerInstance
 
 .run ($rootScope, $location, Auth) ->
   # Redirect to login if route requires auth and you're not logged in

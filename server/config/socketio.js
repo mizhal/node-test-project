@@ -19,11 +19,7 @@ function onConnect(socket) {
 
   // Insert sockets below
   require('../api/ImportacionDeGrupo/ImportacionDeGrupo.socket').register(socket);
-  require('../api/BaneoAlumno/BaneoAlumno.socket').register(socket);
-  require('../api/GrupoAlumnos/GrupoAlumnos.socket').register(socket);
-  require('../api/DatosProfesor/DatosProfesor.socket').register(socket);
-  require('../api/DatosAlumno/DatosAlumno.socket').register(socket);
-  require('../api/thing/thing.socket').register(socket);
+  require('../api/Translation/Translation.socket').register(socket);
 }
 
 module.exports = function (socketio) {

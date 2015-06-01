@@ -1,0 +1,11 @@
+{
+  "HEADER": "Administración de traducciones",
+  "NEW_TRANSLATION": "Nueva Traducción",
+  "USING_LANGUAGE": "Editando el idioma '{{language}}'. Seleccione otro idioma en la barra de navegación si quiere editar la traducción en ese idioma",
+  "TRANSLATION.FIELD.KEY": "Clave",
+  "TRANSLATION.FIELD.LANGUAGE": "Idioma",
+  "TRANSLATION.FIELD.VIEW": "Vista/Partial",
+  "TRANSLATION.FIELD.VALUE": "Valor",
+  "TABLE_ACTIONS": "Acciones",
+  "TABLE_EDIT": "Editar"
+}

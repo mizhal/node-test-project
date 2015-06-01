@@ -1,0 +1,84 @@
+JOURNAL
+
+[START Journal entry #{1}, Fri May 22 09:07:58 2015]
+
+feat#001/1 - Subir archivos en los modelos que llevan archivos adjuntos -> COMPLETADO
+
+He implementado la subida y almacenamiento de archivos con NodeJS. Detalles a tener en cuenta son que se usa el middleware multer, y que es necesario enviar los datos adjuntos como valores de formulario, no mediante JSON, para poder hacer la subida de archivos como multipart.
+
+Otros detalles relevantes son que el directorio de subida de los archivos temporales es configurable en multer y que si no existe, es creado al iniciar el servidor.
+
+Para el correcto archivamiento de los ficheros subidos he implementado una extensión de mongoose que aprovecha las callbacks del ciclo de vida para organizar los ficheros y mantener cierta vinculación entre los datos de la base de datos y el "Archivo" en el sistema de archivos. En particular, se invoca una función attach que copia los datos del archivo temporal al objeto de datos. Si el proceso de "save" no falla (o la validación) otra callback after_save realiza la copia y renombrado del fichero subido al "ARCHIVO". El nombre del fichero junto con la jerarquia de directorios dentro del Archivo vinculan el fichero con el objeto dueño del mismo.
+
+Cuando el objeto es destruido, la callback asociada mueve todos los ficheros asociados a una "papelera de reciclaje" dentro del ARCHIVO.
+
+Una mejora interesante sería eliminar el archivo temporal cuando falle la validación del objeto o este no se salve definitivamente por otra razón.
+
+[END Journal Entry #{1}]
+
+[START Journal entry #{2}, Fri May 22 09:18:17 2015]
+	
+feat#001/2 - UI de gestión de Datos Alumno
+
+Debería hacer dos cosas antes: cambiar el router a UIRoute e integrar el módulo de traducciones.
+
+[END Journal Entry #{2}]
+
+[START Journal entry #{3}, Fri May 22 09:56:59 2015]
+
+He cambiado el router de angular por UI route, parece que no hay problemas de momento.
+
+[END Journal Entry #{3}]
+
+[START Journal entry #{4}, Fri May 22 10:12:09 2015]
+
+Para las traducciones voy a usar la librería "angular-translate" y "angular-translate-loader-url". La segunda es una extensión que permite cargar las traducciones desde una url. En concreto asi se puede redirigir a una url del propio servidor donde están las traducciones cargadas en la base de datos. Es algo que habrá que cachear por razones de rendimiento pero en principio es un requisito que las traducciones sean editables a través de la propia aplicación.
+
+[END Journal Entry #{4}]
+
+[START Journal entry #{5}, Fri May 22 10:32:35 2015]
+
+También conviene agregar la extensión para cargar archivos estáticos "angular-translate-loader-static-files"
+
+[END Journal Entry #{5}]
+
+[START Journal entry #{6}, Fri May 22 11:37:30 2015]
+
+Mejor aun es usar el partial Loader que permite cargar solo las traducciones del partial. El modulo se llama "angular-translate-loader-partial"
+
+[END Journal Entry #{6}]
+
+[START Journal entry #{7}, Mon May 25 10:24:26 2015]
+
+He incorporado el modulo ngGrid para mostrar la tabla de traducciones de forma tosca pero funcional. En adelante hay que pensar en organizar las traducciones por vista o modelo para que sea llevadero editarlo. También he creado en el controlador de traducciones la primera alerta usando la facilidad del módulo Angular UI que utiliza las de Bootstrap.
+
+[END Journal Entry #{7}]
+
+[START Journal entry #{8}, Mon May 25 12:18:35 2015]
+
+No se actualiza la tabla de traducciones al crear nuevas.
+Parece que el socket funciona bien, transmite los datos nuevos al crear un objeto, debe haber un problema en la tabla. Lo mejor sería probar con un botón y una función local para ver si cambiando el "feed" de datos de la tabla se produce algún cambio en la vista.
+
+[END Journal Entry #{8}]
+
+[START Journal entry #{9}, Mon May 25 12:26:20 2015]
+
+No es ese el problema, ya que si lo actualizo a mano (con un botón y una función local) si cambia la tabla.
+
+[END Journal Entry #{9}]
+
+[START Journal entry #{10}, Wed May 27 09:18:26 2015]
+
+Es interesante crear una tarea Grunt para generar la base de datos automáticamente.
+
+[END Journal Entry #{10}]
+
+[START Journal entry #{11}, Wed May 27 09:57:39 2015]
+
+La prueba de creación de la base de datos falla primero por:
+  - no existe el usuario
+  - no existe la base de datos
+
+[END Journal Entry #{11}]
+
+

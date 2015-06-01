@@ -3,7 +3,7 @@
 ###
 Removes server error when user updates input
 ###
-angular.module 'testGeneratorUiRouterApp'
+angular.module 'pfcLaminasNodeApp'
 .directive 'mongooseError', ->
   restrict: 'A'
   require: 'ngModel'

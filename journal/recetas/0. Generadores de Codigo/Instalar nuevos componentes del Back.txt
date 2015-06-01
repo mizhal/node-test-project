@@ -1,0 +1,30 @@
+Instalar nuevos componentes del Back
+
+Para instalar nuevos componentes para el back es necesario editar el archivo "packages.json". Es fundamental asegurarse de que se escribe JSON correcto y no javascript, en concreto en dos detalles:
+
+  - NO se debe dejar la "trailing comma", es decir, la coma al final de las enumeraciones de campos de un hash o de elementos de un array, que en javascript es tolerable pero en JSON no.
+  - Las claves deben ir entre comillas en general.
+
+Si el módulo que vamos a instalar es necesario en PRODUCCION la parte que hay que cambiar es la rama "dependencies" del hash principal. Si el modulo solo fuera necesario en DESARROLLO, por ejemplo módulos para pruebas automátizadas o para verificar el estilo del código fuente, la rama que hay que modificar es "devDependencies".
+
+Alli para añadir un nuevo módulo, digamos "fs.extra", es necesario crear una nueva clave con ese nombre y cuyo valor será la versión del módulo que vamos a necesitar:
+
+  "dependencies": {
+    ...
+    "fs.extra": "1.3.2"
+  }
+
+O bien para una dependencia/módulo para desarrollo:
+
+"devDependencies": {
+  ...
+  "should": "~3.3.1"
+}
+
+La versión puede prefijarse con los simbolos "~" para que se busque una versión aproximada (permitiendo cambiar el tercer número de versión), "^" para que busque una version cambiando el segundo y el tercer numero de versión, o ">=" para especificar un número de versión minimo tolerable. Existen otros modificadores para el número de versión.
+
+Una vez modificado este archivo, es necesario invocar:
+
+  npm install
+
+para instalar realmente los módulos en el entorno, ya sea de DESARROLLO o PRODUCCION.

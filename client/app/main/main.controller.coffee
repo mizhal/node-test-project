@@ -1,8 +1,12 @@
 'use strict'
 
-angular.module 'testGeneratorUiRouterApp'
-.controller 'MainCtrl', ($scope, $http, socket) ->
+angular.module 'pfcLaminasNodeApp'
+.controller 'MainCtrl', ($scope, $http, socket, $translate, $translatePartialLoader) ->
+
   $scope.awesomeThings = []
+
+  $translatePartialLoader.addPart 'main'
+  $translate.refresh()
 
   $http.get('/api/things').success (awesomeThings) ->
     $scope.awesomeThings = awesomeThings

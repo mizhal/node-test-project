@@ -1,0 +1,8 @@
+{
+	"HEADER": "Header",
+  "WEB_SERVICE_CONNECTION_ERROR": "Web server connection error",
+  "ALL_TRANSLATIONS": "All Translations",
+  "SUBMIT": "Submit",
+  "NEW_MODEL_CREATED_OK": "Data saved successfully",
+  "NEW_MODEL_CREATED_FAIL": "Error saving data"
+}

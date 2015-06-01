@@ -1,0 +1,16 @@
+Creación de migraciones
+
+Para crear nuevas migraciones se usa el comando:
+
+  sequelize migration:create --name nombre-de-la-migracion
+
+Esto creará un nuevo archivo en el directorio "db/migrations" llamado:
+
+  20150529135553-nombre-de-la-migracion.js
+
+La primera parte del nombre es una marca de tiempo e identifica unívocamente a la migración. La segunda parte es el nombre descriptivo que hemos puesto en el comando de creación. Por estética, si usamos algún separador de palabras en el nombre descriptivo, conviene que sea un "-" ya que sequelize pone un guión separando el nombre descriptivo y la marca de tiempo.
+
+Una vez creado, debemos editar el archivo con comandos que modifiquen la base de datos.
+El archivo contiene dos funciones vacias a editar, llamadas "up" y "down". La función "up" debe contener los comandos que "avanzan" la versión del esquema de la base de datos, es decir, que llevan de una versión del esquema a otra más actual.
+La función "down" contiene los comandos que llevan de una versión más actual a una más antigua.
+Los comandos pueden consistir en creación de tablas, modificación de datos, conversiones y cualquier cosa que se pueda escribir en javascript.

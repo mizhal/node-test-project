@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module 'testGeneratorUiRouterApp'
+angular.module 'pfcLaminasNodeApp'
 .controller 'AdminCtrl', ($scope, $http, Auth, User) ->
 
   $http.get '/api/users'

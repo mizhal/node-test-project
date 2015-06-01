@@ -1,0 +1,87 @@
+QuestLog
+
+FOCO========
+  #00016 FEAT Autenticacion y Autorizacion: Usuarios y Roles
+    [TODO] Modelos de usuarios y roles
+      [TODO] Encriptar la clave
+        Para encriptar la clave lo más problable será que use este módulo:
+          [001] Password-Hash
+            https://www.npmjs.com/package/password-hash
+        Junto con callbacks del modelo para realizar la encriptación al salvar o bien mediante getters y setters.
+
+  #00010 FEAT Comun: Filtro y Sort (server side) en las tablas ui-grid/ngGrid
+    RECURSOS:
+      Stack Overflow: Server-side paging+filtering+sorting for ng-grid with WebAPI
+        http://stackoverflow.com/questions/17786091/server-side-pagingfilteringsorting-for-ng-grid-with-webapi
+
+    [DONE] modificar la api para que el index acepte parametros y paginación.
+      Se usa el parametro "filter" con query string que pa eso está
+    [TODO] Integrar las funciones de ui-grid con la api paginada y filtrada.
+      UI-grid/ngGrid tiene soporte explícito para filtrado y para paginación con el servidor.
+
+	#00003 FEAT UI de gestión de Datos Alumno
+		Vistas:
+			- Detalle del Alumno
+			- Listado de Alumnos (sin cursos)
+			- Creación y Edición de Alumno
+
+	#002 - Integrar node-debug con grunt
+	#003 - Incorporar MULTER al Generador
+ACTIVAS=====
+SUGERENCIAS=
+	Explorar MEAN.js
+		http://meanjs.org/
+	Explorar AngularUI
+		https://angular-ui.github.io/
+	Explorar node-postgres
+		https://github.com/brianc/node-postgres
+BLOQUEADAS==
+COMPLETAS===
+  #00014 FEAT Integrar sequelize
+    [DONE] Script de preparacion de la base de datos
+      1. Conectar y crear el usuario y la bd de proyecto directamente con el plugin de postgresql.
+      2. Después hacer la conexion "estándar" con Sequelize y lanzar migraciones o sincronizar las tablas.
+    [DONE] Scripts de creación del usuario inicial y de la base de datos
+    [DONE] Integrar sequelize con la app (conectar, sincronizar tablas, etc) 
+      Se han modificado los controladores y modelos. 
+    [DONE] Actualizar el generador.
+    [DONE] Preparar el sistema de migraciones.
+      Ya está implementado.
+    [DONE] Ver si se pueden lanzar migraciones con comandos SQL raw.
+  #00004  FEAT  OPEN  Modulo de Traducciones (lib + back + front)
+    :FECHA_FIN: 26/05/2015
+    Integrar angular-translate
+    AngularJS tiene soporte para traduccion de fechas y moneda a través de filtros, pero no para traducción de claves.
+    No parece haber muchas más opciones.
+      [DONE] Crear una vista Grid con todas las traducciones (index de admin) y conectarla con el servicio web usando componentes de angular ui.
+      [DONE] Creación y edicion de traducciones
+        [DONE] vista de creación y comprobación de que funciona.
+        [DONE] vista de edición
+
+	[done] cambiar el router por uiRoute
+	feat#001 - Subir archivos en los modelos que llevan archivos adjuntos
+		Explorar el mecanismo de subida de archivos e implementar la subida desde el cliente con el modelo de alumnos que tiene una foto/icono asociada.
+			[DONE] Usar multer para subida de archivos
+				BRANCH: feat#0002/instalar-multer
+			[DONE] Experimentar la manera de gestionar la creacion:
+				Alternativas:
+					1. Subida en dos fases
+						- primero archivo, retornar ID asociar la ID al registro.
+						- segundo datos JSON, lleva la ID del archivo asociado.
+					2. Formulario
+						- enviar los datos de alumno como campos de formulario (urlencoded)
+						- enviar el archivo como otro campo más del formulario
+			
+				RESULT: Se puede hacer "facil" enviando los campos como elementos de formulario. bodyParser los parsea adecuadamente. Luego para vincular los archivos que están en req.files se debería usar otro método attach (por ejemplo) con algun tipo de plugin para Sequelize/Mongoose.
+			[DONE] Implementar una rutina para gestionar los archivos adjuntos usando las callbacks de ciclo de vida del modelo
+				Es necesario pasar como opciones los campos y el path de destino donde quedarán los archivos
+	ALT#0001 Plugin de gestión de adjuntos para mongoose.
+		Mongoose soporta plugins de manera sencilla, como se puede ver en http://mongoosejs.com/docs/plugins.html
+		El mecanismo del plugin consistiría en:
+			- mover el archivo temporal a un archivo definitivo SI NO FALLA LA VALIDACIÓN
+			- nombrar en el archivo definitivo de tal manera que se vincule con el modelo, campo e id asociado
+			- borrar el archivo (O NO SEGUN LAS CONDICIONES DE BORRADO LOGICO) al destruir el objeto dueño.
+FALLIDAS====
+REGISTRO====
+	#001 - Subir archivos en los modelos que llevan archivos adjuntos
+		Explorar el mecanismo de subida de archivos e implementar la subida desde el cliente con el modelo de alumnos que tiene una foto/icono asociada.

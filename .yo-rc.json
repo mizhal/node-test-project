@@ -20,7 +20,8 @@
       "auth": true,
       "oauth": true,
       "googleAuth": true,
-      "twitterAuth": true
+      "twitterAuth": true,
+      "sequelize": true
     }
   },
   "generator-ng-component": {
@@ -31,7 +32,7 @@
     "basePath": "client",
     "moduleName": "",
     "filters": [
-      "ngroute"
+      "uirouter"
     ],
     "extensions": [
       "coffee",
