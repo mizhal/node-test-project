@@ -1,17 +1,13 @@
 QuestLog
 
 FOCO========
-  #00014 FEAT Integrar sequelize
-    [DONE] Script de preparacion de la base de datos
-      1. Conectar y crear el usuario y la bd de proyecto directamente con el plugin de postgresql.
-      2. Después hacer la conexion "estándar" con Sequelize y lanzar migraciones o sincronizar las tablas.
-    [DONE] Scripts de creación del usuario inicial y de la base de datos
-    [DONE] Integrar sequelize con la app (conectar, sincronizar tablas, etc) 
-      Se han modificado los controladores y modelos. 
-    [TODO] Actualizar el generador.
-    [DONE] Preparar el sistema de migraciones.
-      Ya está implementado.
-    [TODO] Ver si se pueden lanzar migraciones con comandos SQL raw.
+  #00016 FEAT Autenticacion y Autorizacion: Usuarios y Roles
+    [TODO] Modelos de usuarios y roles
+      [TODO] Encriptar la clave
+        Para encriptar la clave lo más problable será que use este módulo:
+          [001] Password-Hash
+            https://www.npmjs.com/package/password-hash
+        Junto con callbacks del modelo para realizar la encriptación al salvar o bien mediante getters y setters.
 
   #00010 FEAT Comun: Filtro y Sort (server side) en las tablas ui-grid/ngGrid
     RECURSOS:
@@ -41,6 +37,17 @@ SUGERENCIAS=
 		https://github.com/brianc/node-postgres
 BLOQUEADAS==
 COMPLETAS===
+  #00014 FEAT Integrar sequelize
+    [DONE] Script de preparacion de la base de datos
+      1. Conectar y crear el usuario y la bd de proyecto directamente con el plugin de postgresql.
+      2. Después hacer la conexion "estándar" con Sequelize y lanzar migraciones o sincronizar las tablas.
+    [DONE] Scripts de creación del usuario inicial y de la base de datos
+    [DONE] Integrar sequelize con la app (conectar, sincronizar tablas, etc) 
+      Se han modificado los controladores y modelos. 
+    [DONE] Actualizar el generador.
+    [DONE] Preparar el sistema de migraciones.
+      Ya está implementado.
+    [DONE] Ver si se pueden lanzar migraciones con comandos SQL raw.
   #00004  FEAT  OPEN  Modulo de Traducciones (lib + back + front)
     :FECHA_FIN: 26/05/2015
     Integrar angular-translate
