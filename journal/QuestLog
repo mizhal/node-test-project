@@ -2,32 +2,51 @@ QuestLog
 
 FOCO========
   #00016 FEAT Autenticacion y Autorizacion: Usuarios y Roles
+    RAMA: feat#00016/autentificacion-y-autorizacion-usuarios-y-roles
+
     [TODO] Modelos de usuarios y roles
       [TODO] Encriptar la clave
         Para encriptar la clave lo más problable será que use este módulo:
           [001] Password-Hash
             https://www.npmjs.com/package/password-hash
         Junto con callbacks del modelo para realizar la encriptación al salvar o bien mediante getters y setters.
-
+    .
+    .
+  #00018 FEAT Back: Datos Alumno
+    Crear el endpoint de datos de alumno, asegurando que asimismo tiene un Usuario subsidiario que autoriza al uso de la aplicación.
+      .
+      .
+    RAMA: feat#0001/modulo-gestion-alumnos-grupos
+      .
+      .
+    JOURNAL
+      En la rama de Git se ha mergeado el modelo/endpoint de Usuario y la migración asociada.
+    .
+    .
+ACTIVAS=====
   #00010 FEAT Comun: Filtro y Sort (server side) en las tablas ui-grid/ngGrid
     RECURSOS:
-      Stack Overflow: Server-side paging+filtering+sorting for ng-grid with WebAPI
+      [001] Stack Overflow: Server-side paging+filtering+sorting for ng-grid with WebAPI
         http://stackoverflow.com/questions/17786091/server-side-pagingfilteringsorting-for-ng-grid-with-webapi
 
     [DONE] modificar la api para que el index acepte parametros y paginación.
       Se usa el parametro "filter" con query string que pa eso está
     [TODO] Integrar las funciones de ui-grid con la api paginada y filtrada.
       UI-grid/ngGrid tiene soporte explícito para filtrado y para paginación con el servidor.
-
-	#00003 FEAT UI de gestión de Datos Alumno
-		Vistas:
-			- Detalle del Alumno
-			- Listado de Alumnos (sin cursos)
-			- Creación y Edición de Alumno
-
-	#002 - Integrar node-debug con grunt
-	#003 - Incorporar MULTER al Generador
-ACTIVAS=====
+    .
+    .
+  #002 - Integrar node-debug con grunt
+    Intentar que todo vaya como la seda invocando "grunt serve:debug"
+    .
+    .
+  #00003 FEAT UI de gestión de Datos Alumno
+    RAMA: todavia no iniciado
+    Vistas:
+      - Detalle del Alumno
+      - Listado de Alumnos (sin cursos)
+      - Creación y Edición de Alumno
+    .
+    .
 SUGERENCIAS=
 	Explorar MEAN.js
 		http://meanjs.org/
@@ -37,6 +56,13 @@ SUGERENCIAS=
 		https://github.com/brianc/node-postgres
 BLOQUEADAS==
 COMPLETAS===
+  #003 - Incorporar MULTER al Generador
+    JOURNAL:
+    TASKS:
+      [DONE] Añadir la librería a la plantilla del package.json
+      [DONE] Modificar express.js para instalar el middleware
+    .
+    .
   #00014 FEAT Integrar sequelize
     [DONE] Script de preparacion de la base de datos
       1. Conectar y crear el usuario y la bd de proyecto directamente con el plugin de postgresql.
