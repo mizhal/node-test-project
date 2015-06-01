@@ -22,6 +22,7 @@ exports.register = function(socket) {
     onRemove(socket, obj);
     fn(null, obj);
   });
+
 }
 
 function onSave(socket, doc, cb) {
