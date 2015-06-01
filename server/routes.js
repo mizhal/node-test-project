@@ -11,6 +11,7 @@ module.exports = function(app) {
 
   // Insert routes below
   app.use('/api/gestion/importacion_grupos', require('./api/ImportacionDeGrupo'));
+  app.use('/api/usuarios', require('./api/Usuario'));
   app.use('/api/translations', require('./api/Translation'));
 
   //app.use('/auth', require('./auth'));
