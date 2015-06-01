@@ -1,8 +1,7 @@
 class DatosAlumno
-	nombre: String
-	nick: String
-	codigo_uo: String
-	clave: String
-	ultimo_acceso: Date
-	estado: ENUM["CREADO", "ACTIVO", "BANEADO", "INACTIVO"]
-	foto: String	
+	nombre: String[0..20]
+	nick: String[0..20]
+	codigo_uo: String[0..10]
+	estado: ENUM["CREADO", "ACTIVO", "BANEADO", "INACTIVO"] AS INTEGER
+	foto: String[0..255]
+  usuario: References[Usuario]
