@@ -10,7 +10,7 @@ angular.module 'pfcLaminasNodeApp'
     if form.$valid
       # Logged in, redirect to home
       Auth.login
-        email: $scope.user.email
+        login: $scope.user.login
         password: $scope.user.password
 
       .then ->

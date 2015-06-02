@@ -14,7 +14,7 @@ angular.module 'pfcLaminasNodeApp'
   login: (user, callback) ->
     deferred = $q.defer()
     $http.post '/auth/local',
-      email: user.email
+      login: user.login
       password: user.password
 
     .success (data) ->
