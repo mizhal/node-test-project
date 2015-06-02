@@ -37,8 +37,7 @@ exports.show = function(req, res) {
 
 // Creates a new Usuario in the DB.
 exports.create = function(req, res) {
-  var new_ = Usuario.build(req.body);
-  new_.save()
+  var new_ = Usuario.create(req.body)
     .then(function(Usuario) {
       return res.status(201).json(Usuario);
     }).catch(function(error){

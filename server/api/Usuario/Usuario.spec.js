@@ -1,10 +1,18 @@
 'use strict';
 
+var Usuario = require("./Usuario.model.js");
+
 var should = require('should');
 var app = require('../../app');
 var request = require('supertest');
 
 describe('GET /api/usuarios', function() {
+
+  before(function(){
+    Usuario.findAll().map(function(usuario){
+      usuario.destroy();
+    });
+  });
 
   it('should respond with JSON array', function(done) {
     request(app)
@@ -19,7 +27,6 @@ describe('GET /api/usuarios', function() {
   });
 
   it('should make crud', function(done){
-    var Usuario = require("./Usuario.model.js");
     var body = {
       login: "test1",
       password: "the-password",
@@ -37,7 +44,7 @@ describe('GET /api/usuarios', function() {
 
   it('should save password encrypted in database', function(done){
     var data = {
-      login: "test1",
+      login: "test2",
       password: "the-password",
       ultimo_acceso: 1,
       puede_entrar: true
@@ -57,4 +64,21 @@ describe('GET /api/usuarios', function() {
         done();
       })
   });
+
+  it("should autenticate", function(done){
+    var admin = Usuario.build({
+      login: "admin", 
+      password: "admin"
+    });
+    admin.save()
+      .then(function(admin){
+        should(admin.autenticar("admin")).equal(true);
+        should(admin.autenticar("xxxx")).equal(false);
+        done();
+      }).catch(function(error){
+        console.log("Error al crear usuario admin");
+        done(error);
+      });
+  });
+
 });

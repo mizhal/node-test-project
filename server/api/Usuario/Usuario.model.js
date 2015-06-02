@@ -26,13 +26,16 @@ var Usuario = sequelize.define('Usuario',
       type: Sequelize.DATE,
       allowNull: true
     },
+    salt: {
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
     puede_entrar: Sequelize.BOOLEAN
   },
   { // Object features and non persistent fields
     getterMethods: {
       password: function(){return this._password;}
     },
-
     setterMethods: {
       password: function(pass_value){
         this._password = pass_value;
@@ -42,6 +45,9 @@ var Usuario = sequelize.define('Usuario',
       habilitar: function(){
         this.puede_entrar = true;
         return this.save();
+      },
+      autenticar: function(password){
+        return this.password_encrypted == bcrypt.hashSync(password, this.salt);
       }
     },
     // Lifecycle callbacks
@@ -50,6 +56,7 @@ var Usuario = sequelize.define('Usuario',
         //asincronamente
         bcrypt.genSaltAsync(10)
           .then(function(salt) {
+            usuario.salt = salt;
             return bcrypt.hashAsync(usuario.password, salt);
           })
           .then(function(hash){
