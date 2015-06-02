@@ -22,6 +22,10 @@ FOCO========
       [003] passport-local, librería que ya está instalada 
         https://github.com/jaredhanson/passport-local
     Aprender a usar la estrategia local de passport para autentificar usuarios con el modelo local "Usuario"
+
+    TRACK:
+      [DONE] Migración para crear el usuario admin
+      [TODO] Corregir la estrategia local que viene incluida para usar el modelo Usuario en lugar de User
     .
     .
   #00018 FEAT Back: Datos Alumno
@@ -36,6 +40,15 @@ FOCO========
     .
     .
 ACTIVAS=====
+  #00021 ENH OPEN  Mejorar la estructura de los requires
+    Con algo que no requiera enlaces simbolicos que no van a ser muy compatibles en windows.
+    .
+    .
+  #00020 ENH  Mejorar el soporte a migraciones con sequelize-migration-pg-extras
+    https://www.npmjs.com/package/sequelize-migration-pg-extras
+    Tiene cosas como comandos para el script de creación de la base de datos y la destrucción.
+    .
+    .
   #00010 FEAT Comun: Filtro y Sort (server side) en las tablas ui-grid/ngGrid
     RECURSOS:
       [001] Stack Overflow: Server-side paging+filtering+sorting for ng-grid with WebAPI
