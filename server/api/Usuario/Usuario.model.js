@@ -24,9 +24,7 @@ var Usuario = sequelize.define('Usuario',
     },
     ultimo_acceso: {
       type: Sequelize.DATE,
-      allowNull: false,
-      validate: {
-      }
+      allowNull: true
     },
     puede_entrar: Sequelize.BOOLEAN
   },
@@ -38,6 +36,12 @@ var Usuario = sequelize.define('Usuario',
     setterMethods: {
       password: function(pass_value){
         this._password = pass_value;
+      }
+    },
+    instanceMethods: {
+      habilitar: function(){
+        this.puede_entrar = true;
+        return this.save();
       }
     },
     // Lifecycle callbacks
