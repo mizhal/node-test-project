@@ -2,6 +2,7 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
 exports.setup = function (Usuario, config) {
+
   passport.use(new LocalStrategy({
       usernameField: 'login',
       passwordField: 'password' // this is the virtual field on the model
@@ -26,4 +27,15 @@ exports.setup = function (Usuario, config) {
       })
     }
   ));
+
+  passport.serializeUser(function(user, done){
+    done(null, user.id);
+  });
+
+  passport.deserializeUser(function(id, done){
+    Usuario.findById(id).then(function(usuario){
+      done(null, usuario);
+    });
+  })
+
 };

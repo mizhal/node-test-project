@@ -91,6 +91,20 @@ exports.destroy = function(req, res) {
     });
 };
 
+exports.me = function(req, res) {
+  if(req.user) {
+    var user = req.user;
+    return res.json({
+      "login": user.login,
+      "ultimo_acceso": user.ultimo_acceso,
+      "puede_entrar": user.puede_entrar,
+      "role": "user"
+    });
+  } else {
+    return res.status(404).send("Not Found");
+  }
+}
+
 function handleError(res, err) {
   return res.status(500).send(err);
 }
