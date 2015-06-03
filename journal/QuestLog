@@ -1,17 +1,6 @@
 QuestLog
 
 FOCO========
-  #00016:01 Buscar un módulo de Autorizacion
-    DESC:
-      Al igual que es posible usar "passport" como middleware para autentificar a los usuarios en nuestra API, se debe buscar una librería que permita hacer lo mismo para autorización, es decir, determinar el acceso de cada endpoint y cada acción en función de los roles.    
-    UP: #00016 FEAT Autenticacion y Autorizacion: Usuarios y Roles
-    REFERENCIAS:
-      [001] MustBe: Authorization Plumbing For NodeJS / Express Apps
-        http://derickbailey.com/2014/11/30/mustbe-authorization-plumbing-for-nodejs-express-apps/
-    JOURNAL:
-      1: El modulo "MustBe" parece interesante, debo estudiarlo para ver si es una alternativa razonable.
-    .
-    .
   #00016:02 Preparar la configuración de Passport para Autentificacion
     UP: #00016 FEAT Autenticacion y Autorizacion: Usuarios y Roles 
     REFERENCIAS:
@@ -21,11 +10,31 @@ FOCO========
         http://passportjs.org/
       [003] passport-local, librería que ya está instalada 
         https://github.com/jaredhanson/passport-local
+      [004] Autenticación basada en token con AngularJS y NodeJS 
+        http://code.tutsplus.com/es/tutorials/token-based-authentication-with-angularjs-nodejs--cms-22543
     Aprender a usar la estrategia local de passport para autentificar usuarios con el modelo local "Usuario"
-
+    JOURNAL:
+      El endpoint /api/usuarios/me ya funciona. Envia el login, ultimo_acceso, y "puede_entrar".
+      Ha sido necesario añadir el rol provisionalmente para que funcione la parte de front de angular que venía con el generador.
     TRACK:
       [DONE] Migración para crear el usuario admin
-      [TODO] Corregir la estrategia local que viene incluida para usar el modelo Usuario en lugar de User
+      [DONE] Corregir la estrategia local que viene incluida para usar el modelo Usuario en lugar de User
+        [DONE] Regenerar el token encriptado en el servidor.
+      [TODO] Añadir el campo "nombre_completo" a usuario. 
+        Este campo debe sincronizarse/desnormalizarse luego desde DatosAlumno y/o DatosProfesor. 
+      [TODO] Añadir roles.
+        Se está enviando "hardcoded" el valor role="user" en /api/usuarios/me. Hay que sustituirlo por un verdadero sistema de roles.
+    .
+    .
+  #00016:01 Buscar un módulo de Autorizacion
+    DESC:
+      Al igual que es posible usar "passport" como middleware para autentificar a los usuarios en nuestra API, se debe buscar una librería que permita hacer lo mismo para autorización, es decir, determinar el acceso de cada endpoint y cada acción en función de los roles.    
+    UP: #00016 FEAT Autenticacion y Autorizacion: Usuarios y Roles
+    REFERENCIAS:
+      [001] MustBe: Authorization Plumbing For NodeJS / Express Apps
+        http://derickbailey.com/2014/11/30/mustbe-authorization-plumbing-for-nodejs-express-apps/
+    JOURNAL:
+      1: El modulo "MustBe" parece interesante, debo estudiarlo para ver si es una alternativa razonable.
     .
     .
   #00018 FEAT Back: Datos Alumno
