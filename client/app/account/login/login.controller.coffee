@@ -13,7 +13,7 @@ angular.module 'pfcLaminasNodeApp'
         login: $scope.user.login
         password: $scope.user.password
 
-      .then ->
+      .then (data) ->
         $location.path '/'
 
       .catch (err) ->
