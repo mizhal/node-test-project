@@ -30,7 +30,8 @@ var Usuario = sequelize.define('Usuario',
       type: Sequelize.STRING,
       allowNull: false,
     },
-    puede_entrar: Sequelize.BOOLEAN
+    puede_entrar: Sequelize.BOOLEAN,
+    nombre_completo: Sequelize.STRING(255)
   },
   { // Object features and non persistent fields
     getterMethods: {

@@ -98,6 +98,7 @@ exports.me = function(req, res) {
       "login": user.login,
       "ultimo_acceso": user.ultimo_acceso,
       "puede_entrar": user.puede_entrar,
+      "nombre_completo": user.nombre_completo || user.login,
       "role": "user"
     });
   } else {
