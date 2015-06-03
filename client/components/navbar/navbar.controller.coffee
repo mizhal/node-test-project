@@ -7,7 +7,7 @@ angular.module 'pfcLaminasNodeApp'
     link: '/'
   ]
   $scope.project = {
-    name: "PFC Laminas"
+    name: "PFC"
   }
   $scope.isCollapsed = true
   $scope.isLoggedIn = Auth.isLoggedIn
