@@ -71,5 +71,14 @@ var Usuario = sequelize.define('Usuario',
     }
   }
 );
+var UsuarioRoles = sequelize.define('UsuarioRoles', {
+});
+
+Usuario.relations = function(seq_context){
+  Usuario.belongsToMany(seq_context["Role"], {through: "UsuarioRoles", as: "Roles"});
+};
+
+sequelize.registerModel("Usuario", Usuario);
+sequelize.registerModel("UsuarioRoles", UsuarioRoles);
 
 module.exports = Usuario;

@@ -3,7 +3,7 @@
 module.exports = {
   up: function (queryInterface, Sequelize) {
     var db = queryInterface.sequelize;
-    db.query('create table "Usuarios"(                    \
+    return db.query('create table "Usuarios"(                    \
       id serial primary key not null,                     \
       login varchar(20) not null unique,                  \
       password_encrypted varchar(64) not null,            \
@@ -17,6 +17,6 @@ module.exports = {
 
   down: function (queryInterface, Sequelize) {
     var db = queryInterface.sequelize;
-    db.query('drop table "Usuarios"');
+    return db.query('drop table "Usuarios"');
   }
 };

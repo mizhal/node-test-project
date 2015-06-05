@@ -18,6 +18,7 @@ function onConnect(socket) {
   });
 
   // Insert sockets below
+  require('../api/Role/Role.socket').register(socket);
   require('../api/Usuario/Usuario.socket').register(socket);
   require('../api/Translation/Translation.socket').register(socket);
 }

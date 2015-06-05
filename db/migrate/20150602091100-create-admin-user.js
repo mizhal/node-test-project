@@ -1,7 +1,8 @@
 'use strict';
 
 // cargar el modelo
-var Usuario = require("server/api/Usuario/Usuario.model.js");
+var app = require('../../server/app');
+var Usuario = app.orm.getModel("Usuario");
 
 module.exports = {
   up: function (queryInterface, Sequelize) {
@@ -19,6 +20,6 @@ module.exports = {
     return Usuario.findOne({login: "admin"})
       .then(function(admin){
         return admin.destroy();
-      })
+      });
   }
 };
