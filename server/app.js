@@ -38,8 +38,9 @@ server.listen(config.port, config.ip, function () {
 });
 
 // set model relationships
-var sequelize = require("components/sequelize_singleton");
+var sequelize = require("./components/sequelize_singleton");
 sequelize.makeRelations();
+app.orm = sequelize;
 
 // Expose app
 exports = module.exports = app;

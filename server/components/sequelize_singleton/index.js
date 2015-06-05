@@ -16,15 +16,18 @@ var sequelize = new Sequelize(current_config.database, current_config.username, 
 });
 
 // resolver las dependencias circulares en las relaciones
-var context = [];
+sequelize.context = [];
 sequelize.registerModel = function(modelname, object){
-  context[modelname] = object;
+  sequelize.context[modelname] = object;
 }
 sequelize.makeRelations = function(){
-  for(var i in context){
-    if(context[i].relations)
-      context[i].relations(context);
+  for(var i in sequelize.context){
+    if(sequelize.context[i].relations)
+      sequelize.context[i].relations(sequelize.context);
   }
+}
+sequelize.getModel = function(name){
+  return sequelize.context[name];
 }
 
 module.exports = sequelize;
