@@ -1,6 +1,48 @@
 QuestLog
 
 FOCO========
+  [TODO] Reorganizar el repo. Extraer los cambios al ORM y a las migraciones a su propia rama. 
+  #00024 FEAT  Integrar completamente el soporte de migraciones
+    DESC:
+      Debe facilitarse lo siguiente:
+        1. Varias ordenes en cada migración:
+          Las migraciones son asincronas también, tenerlo en cuenta.
+        2. Cargar modelos
+        3. Creación y destrucción de las base de datos por comandos.
+    TRACK:
+      [DONE] Garantizar la secuencialidad.
+      [DONE] Modificar app para tener acceso al singleton del ORM.
+      [DONE] Modificar el singleton del ORM para poder cargar modelos desde el contexto compartido.
+      [TODO] Integrar el script de creacion de la base de datos.
+      [TODO] Integrar el script de destrucción de la base de datos.
+      .
+      .
+    JOURNAL:
+      .
+      .
+    RESULTS:
+      La solución para cargar modelos es importar la app (teniendo en cuenta que estás en el directorio de migraciones), en la app, dejar el singleton de Sequelize en la propiedad "orm" y preparar en el singleton de sequelize un método para obtener un modelo ("getModel")
+      La solución para ejecutar varias operaciones asíncronas es usar la librería de promesas e invocar las funciones dentro DE UN ARRAY con el método .all. El ARRAY es necesario para que se ejecuten en secuencia y no en paralelo.
+    .
+    .
+  #00023 FEAT  Setup de relaciones con sequelize
+    JOURNAL:
+      Sequelize presenta un problema de dependencias ya que parece pensado para definir todos los modelos en un solo archivo.
+      Para solucionar este problema se aplica inyección de dependencias, almacenando todos los modelos definidos en un contexto global y luego ejecutando una función que define las relaciones en una segunda fase cuando ya están definidos todos los modelos.
+    DESC:
+      Probar y garantizar que todo está integrado en las relaciones entre modelos con sequelize.
+      Implica detallar y documentar como se realizan las migraciones, que nombres llevan los campos de relacion, como realizar relaciones HABTM, nombres de las tablas intermedias...
+    TASK:
+      [TODO] Modificar el singleton de sequelize y la app para que creen las relaciones después de tener evaluados todos los modelos.
+
+  #00022 ENH Emular la consola de rails mediante un REPL
+    JOURNAL:
+      He construido una pipeline con promesas dentro de una función. Ahora estoy retornando esa pipeline pero los datos no pasan.
+      Ya está el REPL, ahora el problema es eliminar las dependencias circulares.
+    REFERENCIAS:
+      [001] Build Your Own App Specific REPL For Your NodeJS App
+        http://derickbailey.com/2014/07/02/build-your-own-app-specific-repl-for-your-nodejs-app/
+
   #00016:02 Preparar la configuración de Passport para Autentificacion
     UP: #00016 FEAT Autenticacion y Autorizacion: Usuarios y Roles 
     REFERENCIAS:
