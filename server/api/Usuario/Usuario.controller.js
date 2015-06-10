@@ -94,13 +94,18 @@ exports.destroy = function(req, res) {
 exports.me = function(req, res) {
   if(req.user) {
     var user = req.user;
-    return res.json({
-      "login": user.login,
-      "ultimo_acceso": user.ultimo_acceso,
-      "puede_entrar": user.puede_entrar,
-      "nombre_completo": user.nombre_completo || user.login,
-      "role": "user"
-    });
+    //get roles
+    return user.getRoles()
+      .map(function(rol){return rol.name})
+      .then(function(roles){
+        return res.json({
+          "login": user.login,
+          "ultimo_acceso": user.ultimo_acceso,
+          "puede_entrar": user.puede_entrar,
+          "nombre_completo": user.nombre_completo || user.login,
+          "role": roles
+        });
+      })
   } else {
     return res.status(404).send("Not Found");
   }
