@@ -1,6 +1,9 @@
 QuestLog
 
 FOCO========
+  #00027 FEAT  Crear máquina virtual y setup de producción
+    RAMA: feat#00027/maquina-virtual-y-setup-de-produccion
+
   #00016 FEAT Autenticacion y Autorizacion: Usuarios y Roles
     RAMA: feat#00016/autentificacion-y-autorizacion-usuarios-y-roles
 
