@@ -11,11 +11,19 @@ module.exports = {
       },
       "RoleId": {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: false,
+        references: "Roles",
+        referenceKey: "id",
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE"
       },
       "UsuarioId": {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: false,
+        references: "Usuarios",
+        referenceKey: "id",
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE"
       },
       "createdAt": Sequelize.DATE,
       "updatedAt": Sequelize.DATE
