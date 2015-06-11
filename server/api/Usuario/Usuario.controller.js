@@ -96,7 +96,7 @@ exports.me = function(req, res) {
     var user = req.user;
     //get roles
     return user.getRoles()
-      .map(function(rol){return rol.name})
+      .map(function(rol){return rol.nombre})
       .then(function(roles){
         return res.json({
           "login": user.login,
