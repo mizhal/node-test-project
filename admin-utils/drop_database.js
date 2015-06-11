@@ -1,4 +1,4 @@
-/* Creación de la base de datos */
+// drop database
 
 var Sequelize = require('sequelize');
 var config = require('../server/config/local.env.js');
@@ -9,10 +9,6 @@ var using = Promise.using;
 var fs = Promise.promisifyAll(require("fs"));
 var pg = Promise.promisifyAll(require("pg"));
 
-// crear la base de datos y el usuario por comando
-// se usan las bindings de PostgreSQL directamente
-
-/** CONEXION A LA BASE DE DATOS **/
 var getConexionDB = function(){
   /*** esta funcion esta pensada para usarse dentro del contexto creado por la 'directiva' using 
     de la librería bluebird, pues lleva un disposer
@@ -35,26 +31,11 @@ var getConexionDB = function(){
       console.log("Conexion a la base de datos liberada.");
     }
   });
-}
+};
 
-/** CREACION DEL USUARIO DECLARADO EN LA CONFIGURACION **/
-var crearUsuario = Promise.promisify(function (client, next){
 
-  var command = 'CREATE USER "' + config.SQL_USERNAME + '" WITH PASSWORD \'' +
-    config.SQL_PASSWORD + "'";
-
-  client.queryAsync(command).then(function(res){
-    console.log("Usuario " + config.SQL_USERNAME + " creado correctamente.");
-    next();
-  }).catch(function(error){
-    console.log("No se ha creado el usuario porque ya existía.");
-    next();
-  });
-
-});
-
-/** CREACION DE LA BASE DE DATOS DECLARADA EN LA CONFIGURACION */
-var crearBaseDeDatos = Promise.promisify(function (client, next){
+/** BORRADO DE LA BASE DE DATOS DECLARADA EN LA CONFIGURACION */
+var borrarBaseDeDatos = Promise.promisify(function (client, next){
 
   var environments = ["development", "test", "production"];
 
@@ -64,18 +45,20 @@ var crearBaseDeDatos = Promise.promisify(function (client, next){
     } else if (process.argv[2].toLowerCase() == "all"){
       environments = ["development", "test", "production"];
     }
+  } else {
+    console.log("Para el script de BORRADO es OBLIGATORIO especificar el entorno de ejecución (development, test, production o all)");
+    return next();
   }
 
   Promise.map(environments, function(environment){
 
     var this_config = envconfig[environment];
-    var command = 'CREATE DATABASE "' + this_config.database + '" WITH OWNER "' +
-      this_config.username + '"';
+    var command = 'DROP DATABASE "' + this_config.database + '"';
 
     return client.queryAsync(command).then(function(result){
-      console.log("Base de datos " + this_config.database + " creada correctamente.");
+      console.log("Base de datos %s BORRADA correctamente.", this_config.database);
     }).catch(function(error){
-      console.log("No se ha creado la base de datos " + this_config.database + " porque ya existia.");
+      console.log("No se ha podido BORRAR la base de datos %s: %s", this_config.database, error);
     });
 
   }).then(function(){
@@ -84,16 +67,12 @@ var crearBaseDeDatos = Promise.promisify(function (client, next){
 
 });
 
-/** CREAR TODAS LAS DEPENDENCIAS EN BASE DE DATOS **/
-var crearTodo = Promise.promisify( function(next){
+var borrarTodo = Promise.promisify( function(next){
 
   using(getConexionDB(), function(cliente_db){
-    return crearUsuario(cliente_db)
-      .then(function(res){
-        return crearBaseDeDatos(cliente_db).then(function(res){
-          console.log("Desconexión de la cuenta de administracion de postgresql");
-          cliente_db.end();
-        });
+      return borrarBaseDeDatos(cliente_db).then(function(res){
+        console.log("Desconexión de la cuenta de administracion de postgresql");
+        cliente_db.end();
       });
   }).then(function(){
     return next();
@@ -104,6 +83,11 @@ var crearTodo = Promise.promisify( function(next){
 });
 
 /** MAIN **/
-crearTodo().then(function(res){
-  console.log("Puesta a punto de la Base de Datos finalizada.");
-});
+if(process.argv.length > 2){
+  borrarTodo().then(function(res){
+    console.log("Puesta a punto de la Base de Datos finalizada.");
+  });
+} else {
+  console.log("Para el script de BORRADO es OBLIGATORIO especificar el entorno de ejecución (development, test, production o all)");
+}
+
