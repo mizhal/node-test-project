@@ -10,6 +10,10 @@ module.exports = {
           autoIncrement: true,
           primaryKey: true
         },
+        slug: {
+          type: Sequelize.STRING(32),
+          allowNull: false
+        },
         nombre: {
           type: Sequelize.STRING(32),
           allowNull: false
@@ -21,6 +25,10 @@ module.exports = {
         return queryInterface.addIndex("Roles", ["nombre"], 
           { indicesType: "UNIQUE"}
         );  
+      }).then(function(){
+        return queryInterface.addIndex("Roles", ["slug"], 
+          { indicesType: "UNIQUE"}
+        );          
       });
   },
 
