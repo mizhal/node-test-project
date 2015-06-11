@@ -16,15 +16,12 @@ var Usuario = sequelize.define('Usuario',
       validate: {
       }
     },
-<<<<<<< HEAD
-=======
     slug: {
       type: Sequelize.STRING,
       allowNull: false,
       validate: {
       }      
     },
->>>>>>> temp#001
     password_encrypted: {
       type: Sequelize.STRING,
       allowNull: false,
