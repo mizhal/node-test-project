@@ -2,7 +2,7 @@ Flujo de trabajo normal con migraciones
 
 0. Poner a punto el "command line interface" de sequelize (EN UN BASH)
 
-export PATH=<RAIZ DEL PROYECTO>
+  export PATH=$PATH:~/Workspace/pfc-laminas-node/node_modules/.bin/
 
 1. Crear nueva migracion
 

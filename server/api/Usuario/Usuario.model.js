@@ -16,6 +16,15 @@ var Usuario = sequelize.define('Usuario',
       validate: {
       }
     },
+<<<<<<< HEAD
+=======
+    slug: {
+      type: Sequelize.STRING,
+      allowNull: false,
+      validate: {
+      }      
+    },
+>>>>>>> temp#001
     password_encrypted: {
       type: Sequelize.STRING,
       allowNull: false,
@@ -71,14 +80,28 @@ var Usuario = sequelize.define('Usuario',
     }
   }
 );
+
+// Tabla del join Usuario *---* Role
 var UsuarioRoles = sequelize.define('UsuarioRoles', {
 });
 
+// Definición de relaciones
 Usuario.relations = function(seq_context){
+  // Usuario *---* Role
   Usuario.belongsToMany(seq_context["Role"], {through: "UsuarioRoles", as: "Roles"});
 };
 
+// Registro de Usuario con el ORM para poder realizar operaciones fuera de tiempo
 sequelize.registerModel("Usuario", Usuario);
 sequelize.registerModel("UsuarioRoles", UsuarioRoles);
+
+// Hook para generar el SLUG
+//slugs 
+var slug = require('slug');
+Usuario.hook("beforeValidate", function(usuario){
+  if(usuario.login){
+    usuario.slug = slug(usuario.login);
+  }
+});
 
 module.exports = Usuario;
