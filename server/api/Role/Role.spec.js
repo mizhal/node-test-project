@@ -18,12 +18,12 @@ describe('GET /api/roles', function() {
       });
   });
 
-  it("should de unique", function(done){
+  it("should be unique", function(done){
     var Role = app.orm.getModel("Role");
 
-    Role.create({nombre: "admin"})
+    Role.create({nombre: "test-admin"})
       .then(function(){
-        return Role.create({nombre: "admin"});    
+        return Role.create({nombre: "test-admin"});    
       })
       .then(function(){
         done();

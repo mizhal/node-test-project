@@ -23,7 +23,7 @@ var Role = sequelize.define('Role', {
 });
 
 Role.relations = function(seq_context){
-  Role.belongsToMany(seq_context["Usuario"], {through: "UsuarioRoles"});
+  Role.belongsToMany(seq_context["Usuario"], {through: seq_context["UsuarioRoles"]});
 };
 
 // Hook para generar el SLUG
