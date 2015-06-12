@@ -74,6 +74,27 @@ var Usuario = sequelize.define('Usuario',
             return continuacion(err, usuario);
           });
       }
+    },
+    classMethods: {
+      /** Metodo de conveniencia para optener el campo roles desnormalizado */
+      findAllWithRoles: function(query){
+        var Role = sequelize.getModel("Role");
+        query["include"] = {model: Role, as: "Roles"};
+        return Usuario.findAll(query).map(function(usuario){
+          var roles = usuario["Roles"];
+          usuario["Roles"] = roles.map(function(rol){return rol.slug;});
+          return usuario;
+        });
+      },
+      findOneWithRoles: function(query){
+        var Role = sequelize.getModel("Role");
+        query["include"] = {model: Role, as: "Roles"};
+        return Usuario.findOne(query).then(function(usuario){
+          var roles = usuario["Roles"];
+          usuario["Roles"] = roles.map(function(rol){return rol.slug;});
+          return usuario;
+        });
+      }
     }
   }
 );
@@ -85,7 +106,7 @@ var UsuarioRoles = sequelize.define('UsuarioRoles', {
 // Definición de relaciones
 Usuario.relations = function(seq_context){
   // Usuario *---* Role
-  Usuario.belongsToMany(seq_context["Role"], {through: "UsuarioRoles", as: "Roles"});
+  Usuario.belongsToMany(seq_context["Role"], {through: UsuarioRoles, as: "Roles"});
 };
 
 // Registro de Usuario con el ORM para poder realizar operaciones fuera de tiempo

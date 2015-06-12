@@ -2,6 +2,19 @@
 
 var _ = require('lodash');
 var Usuario = require("./Usuario.model.js");
+var Role = require("../Role/Role.model.js");
+
+// 
+function filterFields(object, fields){
+  var res = {};
+  for(var i in fields){
+    res[i] = object[i];
+  }
+  return res;
+}
+function filter1(usuario){
+  return filterFields(usuario, ["id", "login"]);
+}
 
 // Get list of Usuarios
 exports.index = function(req, res) { 
@@ -10,14 +23,14 @@ exports.index = function(req, res) {
     var language = req.query.lang;
     var query = {
       offset: page_offset,
-      limit: page_size
+      limit: page_size,
     };
 
     if(req.query.filter){
       query.where = {key: new RegExp("^.*" + req.query.filter + ".*$", "i")};
     }
 
-    Usuario.findAll(query).then(function(Usuarios){
+    Usuario.findWithRoles(query).then(function(Usuarios){
       return res.status(200).json(Usuarios);
     }).catch(function(err){
       return handleError(res, err);
@@ -26,8 +39,9 @@ exports.index = function(req, res) {
 }; 
 // Get a single Usuario
 exports.show = function(req, res) {
-  Usuario.findById(req.params.id)
-    .then(function (Usuario) {
+  Usuario.findWithRoles({
+      where: {id: req.params.id},  
+    }).then(function (Usuario) {
       if(!Usuario) { return res.status(404).send('Not Found'); }
       return res.json(Usuario);
     }).catch(function(error){

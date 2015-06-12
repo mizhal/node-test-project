@@ -6,7 +6,7 @@ var controller = require('./Usuario.controller');
 var authService = require("../../auth/auth.service.js");
 
 var router = express.Router();
-router.use(authService.isAuthenticated());
+//router.use(authService.isAuthenticated());
 
 router.get('/', controller.index);
 router.get('/page/:page', controller.index);

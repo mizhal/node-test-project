@@ -1,6 +1,7 @@
 'use strict';
 
 var Usuario = require("./Usuario.model.js");
+var Role = require("../Role/Role.model.js");
 
 var should = require('should');
 var app = require('../../app');
@@ -9,7 +10,7 @@ var request = require('supertest');
 describe('GET /api/usuarios', function() {
 
   before(function(){
-    Usuario.findAll().map(function(usuario){
+    Usuario.findAll({where: {id: {gt: 1}}}).map(function(usuario){
       usuario.destroy();
     });
   });
@@ -67,7 +68,7 @@ describe('GET /api/usuarios', function() {
 
   it("should autenticate", function(done){
     var admin = Usuario.build({
-      login: "admin", 
+      login: "admin-2", 
       password: "admin"
     });
     admin.save()
@@ -76,9 +77,41 @@ describe('GET /api/usuarios', function() {
         should(admin.autenticar("xxxx")).equal(false);
         done();
       }).catch(function(error){
-        console.log("Error al crear usuario admin");
+        console.log("Error al crear usuario admin2");
         done(error);
       });
+  });
+
+  it("can eager load roles", function(done){
+    Usuario.findOne({
+      where: {login: 'admin'},
+      include: {model: Role, as: "Roles"}
+    })
+      .then(function(admin){
+        admin["Roles"].should.be.instanceof(Array);
+        admin["Roles"].length.should.be.equal(4);
+        return done();
+      })
+      .catch(function(err){
+        return done(err);
+      });
+  });
+
+  it("can find with roles", function(done){
+
+    Usuario.findOneWithRoles({
+      where: {id: 1}
+    })
+    .then(function(admin){
+      should(admin.login).be.equal("admin");
+      admin["Roles"].should.be.instanceof(Array);
+      admin["Roles"].length.should.be.equal(4);
+      return done();
+    })
+    .catch(function(err){
+      return done(err);
+    });
+
   });
 
 });
