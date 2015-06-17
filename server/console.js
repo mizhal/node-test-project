@@ -8,6 +8,31 @@ var path = require('path');
 
 var ROOT_PATH = ".";
 
+/*****************
+ * UTILIDADES
+ *********************/
+function initUtils(replServer){
+  var Utils = {
+    /* Cargar el resultado de una promesa en una variable asincronamente */
+    let: function(symbol, promise){
+      promise.then(function(value){
+        replServer.context[symbol] = value;
+        console.log("SYMBOL %s SET", symbol);
+      });
+    }
+  };
+
+  for(var i in Utils){
+    replServer.context[i] = Utils[i];
+  };
+
+  console.log("Cargando utilidades de consola");
+}
+
+/*****************
+ * FIN UTILIDADES
+ *********************/
+
 function init(repl, sequelize){
   var replServer = null;
   return getModelsAndPaths(ROOT_PATH)
@@ -24,15 +49,17 @@ function init(repl, sequelize){
 
       console.log("Import model " + model_name);
       replServer.context[model_name] = require(filename);
+      initUtils(replServer);
       return model_name_and_filename;
     })
     .then(function(all){
       console.log("Imported all models found");
       sequelize.makeRelations();
+      return all;
     })
-    //.catch(function(error){
-    //  console.log("init error = " + error);
-    //})
+    .catch(function(error){
+      console.log("init error = " + error);
+    })
     ;
 }
 
