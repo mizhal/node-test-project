@@ -7,28 +7,30 @@ var Role = UsuarioFacade.Role;
 
 // Get list of Usuarios
 exports.index = function(req, res) { 
-    var page_size = 100
-    var page_offset = (req.params.page || 0) * page_size;
-    var language = req.query.lang;
-    var query = {
-      offset: page_offset,
-      limit: page_size
-    };
 
-    if(req.query.filter){
-      query.where = {key: new RegExp("^.*" + req.query.filter + ".*$", "i")};
-    }
+  var page_size = 100
+  var page_offset = (req.params.page || 0) * page_size;
+  var language = req.query.lang;
+  var query = {
+    offset: page_offset,
+    limit: page_size
+  };
 
-    Usuario.scope("common").findAllWithRoles(query).then(function(Usuarios){
-      return res.status(200).json(Usuarios);
-    }).catch(function(err){
-      return handleError(res, err);
-    });
+  if(req.query.filter){
+    query.where = {key: new RegExp("^.*" + req.query.filter + ".*$", "i")};
+  }
+
+  Usuario.scope("common").findAll(query).then(function(Usuarios){
+    return res.status(200).json(Usuarios);
+  }).catch(function(err){
+    console.log(err);
+    return handleError(res, err);
+  });
   
 }; 
 // Get a single Usuario
 exports.show = function(req, res) {
-  Usuario.scope("common").findOneWithRoles({
+  Usuario.scope("common").findOne({
       where: {id: req.params.id},  
     }).then(function (Usuario) {
       if(!Usuario) { return res.status(404).send('Not Found'); }
@@ -98,7 +100,7 @@ exports.me = function(req, res) {
   if(req.user) {
     var user = req.user;
     //get roles
-    return user.getRoles()
+    return user.getRoles_full()
       .map(function(rol){return rol.slug})
       .then(function(roles){
         return res.json({
@@ -203,5 +205,5 @@ exports.destroy_roles = function(req, res) {
 };
 
 function handleError(res, err) {
-  return res.status(500).send(err);
+  return res.status(500).json({error: err});
 }

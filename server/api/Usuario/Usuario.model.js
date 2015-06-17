@@ -86,15 +86,19 @@ var Usuario = sequelize.define('Usuario',
 
     nombre_completo: Sequelize.STRING(255),
 
-    // campo virtual con los slugs de los roles para la ui
     roles: {
       type: Sequelize.VIRTUAL,
       get: function(){
-        // se supone que estan precargados con include
-        return this["Roles"].map(function(rol){return rol.slug;});
+        if(this.roles_full){
+          return this.roles_full.map(function(rol){
+            return rol.slug;
+          });
+        } else {
+          return [];
+        }
       },
-      include : [
-        {model: Role, attributes: ["slug"]}
+      include: [
+        {model: Role, attributes: ["slug"], as:"roles_full"}
       ]
     }
   },
@@ -102,7 +106,10 @@ var Usuario = sequelize.define('Usuario',
     /** SCOPES **/
     scopes: {
       common: { // ATRIBUTOS MAS COMUNES
-        attributes: ["id", "login", "nombre_completo", "slug", "ultimo_acceso", "puede_entrar"],
+        attributes: [
+          "id", "login", "nombre_completo", 
+          "slug", "ultimo_acceso", "puede_entrar", "roles"
+          ]
       }
     },
     /** METODOS **/
@@ -116,7 +123,6 @@ var Usuario = sequelize.define('Usuario',
       autenticar: function(password){
         return this.password_encrypted == bcrypt.hashSync(password, this.salt);
       }
-
 
     },
     // Lifecycle callbacks
@@ -138,17 +144,6 @@ var Usuario = sequelize.define('Usuario',
       }
     },
     classMethods: {
-      /** Metodo de conveniencia para optener el campo roles desnormalizado */
-      findAllWithRoles: function(query){
-        var Role = sequelize.getModel("Role");
-        query["include"] = {model: Role, as: "Roles"};
-        return Usuario.findAll(query);
-      },
-      findOneWithRoles: function(query){
-        var Role = sequelize.getModel("Role");
-        query["include"] = {model: Role, as: "Roles"};
-        return Usuario.findOne(query);
-      }
     }
   }
 );
@@ -168,7 +163,7 @@ Usuario.hook("beforeValidate", function(usuario){
 var UsuarioRoles = sequelize.define('UsuarioRoles', {
 });
 
-Usuario.belongsToMany(Role, {through: UsuarioRoles, as: "Roles"});
+Usuario.belongsToMany(Role, {through: UsuarioRoles, as: "roles_full"});
 Role.belongsToMany(Usuario, {through: UsuarioRoles, as: "usuarios"});
 /********* FIN: RELACIONES ****/
 
@@ -193,5 +188,7 @@ var UsuariosFacade = {
   }
 };
 /** FIN: FACADE **/
+
+sequelize.initVirtualFields();
 
 module.exports = UsuariosFacade;
