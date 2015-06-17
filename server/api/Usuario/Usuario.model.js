@@ -7,7 +7,40 @@ var Promise = require("bluebird");
 //password hashing
 var bcrypt = Promise.promisifyAll(require('bcrypt'));
 
-// doc: http://docs.sequelizejs.com/en/latest/docs/models-definition/
+/*** MODELO ROLE **/
+var Role = sequelize.define('Role', {
+  nombre: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    validate: {
+      // es UNIQUE por definicion en la base de datos
+    }
+  },
+  slug: {
+    type: Sequelize.STRING,
+    allowNull: false
+  }
+},
+{
+  tablename: "Roles",
+  scope: {
+    only_slug: {
+      attributes: ["slug"]
+    }
+  }
+});
+
+// Hook para generar el SLUG
+var slug = require('slug');
+Role.hook("beforeValidate", function(role){
+  if(role.nombre){
+    role.slug = slug(role.nombre);
+  }
+});
+
+/*** FIN: MODELO ROLE **/
+
+/*** MODELO USUARIO **/
 var Usuario = sequelize.define('Usuario', 
   { // persistent fields
     login: {
@@ -16,46 +49,75 @@ var Usuario = sequelize.define('Usuario',
       validate: {
       }
     },
+
     slug: {
       type: Sequelize.STRING,
       allowNull: false,
       validate: {
       }      
     },
+
     password_encrypted: {
       type: Sequelize.STRING,
       allowNull: false,
       validate: {
       }
     },
+
+    password: {
+      type: Sequelize.VIRTUAL,
+      get: function(){return this._password;},
+      set: function(pass_value){
+        this._password = pass_value;
+      }
+    },
+
     ultimo_acceso: {
       type: Sequelize.DATE,
       allowNull: true
     },
+
     salt: {
       type: Sequelize.STRING,
       allowNull: false,
     },
+
     puede_entrar: Sequelize.BOOLEAN,
-    nombre_completo: Sequelize.STRING(255)
+
+    nombre_completo: Sequelize.STRING(255),
+
+    // campo virtual con los slugs de los roles para la ui
+    roles: {
+      type: Sequelize.VIRTUAL,
+      get: function(){
+        // se supone que estan precargados con include
+        return this["Roles"].map(function(rol){return rol.slug;});
+      },
+      include : [
+        {model: Role, attributes: ["slug"]}
+      ]
+    }
   },
   { // Object features and non persistent fields
-    getterMethods: {
-      password: function(){return this._password;}
-    },
-    setterMethods: {
-      password: function(pass_value){
-        this._password = pass_value;
+    /** SCOPES **/
+    scopes: {
+      common: { // ATRIBUTOS MAS COMUNES
+        attributes: ["id", "login", "nombre_completo", "slug", "ultimo_acceso", "puede_entrar"],
       }
     },
+    /** METODOS **/
     instanceMethods: {
+
       habilitar: function(){
         this.puede_entrar = true;
         return this.save();
       },
+
       autenticar: function(password){
         return this.password_encrypted == bcrypt.hashSync(password, this.salt);
       }
+
+
     },
     // Lifecycle callbacks
     hooks: {
@@ -80,38 +142,16 @@ var Usuario = sequelize.define('Usuario',
       findAllWithRoles: function(query){
         var Role = sequelize.getModel("Role");
         query["include"] = {model: Role, as: "Roles"};
-        return Usuario.findAll(query).map(function(usuario){
-          var roles = usuario["Roles"];
-          usuario["Roles"] = roles.map(function(rol){return rol.slug;});
-          return usuario;
-        });
+        return Usuario.findAll(query);
       },
       findOneWithRoles: function(query){
         var Role = sequelize.getModel("Role");
         query["include"] = {model: Role, as: "Roles"};
-        return Usuario.findOne(query).then(function(usuario){
-          var roles = usuario["Roles"];
-          usuario["Roles"] = roles.map(function(rol){return rol.slug;});
-          return usuario;
-        });
+        return Usuario.findOne(query);
       }
     }
   }
 );
-
-// Tabla del join Usuario *---* Role
-var UsuarioRoles = sequelize.define('UsuarioRoles', {
-});
-
-// Definición de relaciones
-Usuario.relations = function(seq_context){
-  // Usuario *---* Role
-  Usuario.belongsToMany(seq_context["Role"], {through: UsuarioRoles, as: "Roles"});
-};
-
-// Registro de Usuario con el ORM para poder realizar operaciones fuera de tiempo
-sequelize.registerModel("Usuario", Usuario);
-sequelize.registerModel("UsuarioRoles", UsuarioRoles);
 
 // Hook para generar el SLUG
 //slugs 
@@ -121,5 +161,37 @@ Usuario.hook("beforeValidate", function(usuario){
     usuario.slug = slug(usuario.login);
   }
 });
+/*** FIN: MODELO USUARIO **/
 
-module.exports = Usuario;
+/********* RELACIONES ****/
+// Tabla del join Usuario *---* Role
+var UsuarioRoles = sequelize.define('UsuarioRoles', {
+});
+
+Usuario.belongsToMany(Role, {through: UsuarioRoles, as: "Roles"});
+Role.belongsToMany(Usuario, {through: UsuarioRoles, as: "usuarios"});
+/********* FIN: RELACIONES ****/
+
+/** FACADE **/
+var UsuariosFacade = {
+  Usuario: Usuario,
+  Role: Role,
+  getUser: function(user_id){
+
+  },
+  setUser: function(user_data){
+
+  },
+  listUsers: function(query_filter){
+
+  },
+  getRole: function(role_id){
+
+  },
+  setRole: function(role_data){
+
+  }
+};
+/** FIN: FACADE **/
+
+module.exports = UsuariosFacade;

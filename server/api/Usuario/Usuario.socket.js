@@ -4,7 +4,9 @@
 
 'use strict';
 
-var Usuario = require('./Usuario.model');
+var UsuarioFacade = require('./Usuario.model');
+var Usuario = UsuarioFacade.Usuario;
+var Role = UsuarioFacade.Role;
 
 exports.register = function(socket) {
 
@@ -19,6 +21,21 @@ exports.register = function(socket) {
   });
 
   Usuario.afterDestroy(function(obj, options, fn){
+    onRemove(socket, obj);
+    fn(null, obj);
+  });
+
+  Role.afterCreate(function(obj, options, fn){
+    onSave(socket, obj);
+    fn(null, obj);
+  });
+
+  Role.afterUpdate(function(obj, options, fn){
+    onSave(socket, obj);
+    fn(null, obj);
+  });
+
+  Role.afterDestroy(function(obj, options, fn){
     onRemove(socket, obj);
     fn(null, obj);
   });

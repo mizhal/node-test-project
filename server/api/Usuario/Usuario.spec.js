@@ -1,7 +1,8 @@
 'use strict';
 
-var Usuario = require("./Usuario.model.js");
-var Role = require("../Role/Role.model.js");
+var UsuarioFacade = require("./Usuario.model.js");
+var Usuario = UsuarioFacade.Usuario;
+var Role = UsuarioFacade.Role;
 
 var should = require('should');
 var app = require('../../app');
@@ -106,6 +107,7 @@ describe('GET /api/usuarios', function() {
       should(admin.login).be.equal("admin");
       admin["Roles"].should.be.instanceof(Array);
       admin["Roles"].length.should.be.equal(4);
+      admin["Roles"][0].should.be.equal("admin");
       return done();
     })
     .catch(function(err){
@@ -114,4 +116,33 @@ describe('GET /api/usuarios', function() {
 
   });
 
+});
+
+describe('GET /api/usuarios/roles', function() {
+
+  it('should respond with JSON array', function(done) {
+    request(app)
+      .get('/api/roles')
+      .expect(200)
+      .expect('Content-Type', /json/)
+      .end(function(err, res) {
+        if (err) return done(err);
+        res.body.should.be.instanceof(Array);
+        done();
+      });
+  });
+
+  it("should be unique", function(done){
+    Role.create({nombre: "test-admin"})
+      .then(function(){
+        return Role.create({nombre: "test-admin"});    
+      })
+      .then(function(){
+        done();
+      })
+      .catch(function(error){
+        done(error, null);
+      });
+
+  });
 });

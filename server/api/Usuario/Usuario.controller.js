@@ -1,20 +1,9 @@
 'use strict';
 
 var _ = require('lodash');
-var Usuario = require("./Usuario.model.js");
-var Role = require("../Role/Role.model.js");
-
-// 
-function filterFields(object, fields){
-  var res = {};
-  for(var i in fields){
-    res[i] = object[i];
-  }
-  return res;
-}
-function filter1(usuario){
-  return filterFields(usuario, ["id", "login"]);
-}
+var UsuarioFacade = require("./Usuario.model.js");
+var Usuario = UsuarioFacade.Usuario;
+var Role = UsuarioFacade.Role;
 
 // Get list of Usuarios
 exports.index = function(req, res) { 
@@ -23,14 +12,14 @@ exports.index = function(req, res) {
     var language = req.query.lang;
     var query = {
       offset: page_offset,
-      limit: page_size,
+      limit: page_size
     };
 
     if(req.query.filter){
       query.where = {key: new RegExp("^.*" + req.query.filter + ".*$", "i")};
     }
 
-    Usuario.findWithRoles(query).then(function(Usuarios){
+    Usuario.scope("common").findAllWithRoles(query).then(function(Usuarios){
       return res.status(200).json(Usuarios);
     }).catch(function(err){
       return handleError(res, err);
@@ -39,7 +28,7 @@ exports.index = function(req, res) {
 }; 
 // Get a single Usuario
 exports.show = function(req, res) {
-  Usuario.findWithRoles({
+  Usuario.scope("common").findOneWithRoles({
       where: {id: req.params.id},  
     }).then(function (Usuario) {
       if(!Usuario) { return res.status(404).send('Not Found'); }
@@ -53,7 +42,7 @@ exports.show = function(req, res) {
 exports.create = function(req, res) {
   var new_ = Usuario.create(req.body)
     .then(function(Usuario) {
-      return res.status(201).json(Usuario);
+      return res.status(201);
     }).catch(function(error){
       return handleError(res, error);
     });
@@ -124,6 +113,94 @@ exports.me = function(req, res) {
     return res.status(404).send("Not Found");
   }
 }
+
+// Get list of Roles
+exports.index_roles = function(req, res) { 
+    var page_size = 100
+    var page_offset = (req.params.page || 0) * page_size;
+    var language = req.query.lang;
+    var query = {
+      offset: page_offset,
+      limit: page_size
+    };
+
+    if(req.query.filter){
+      query.where = {key: new RegExp("^.*" + req.query.filter + ".*$", "i")};
+    }
+
+    Role.findAll(query).then(function(Roles){
+      return res.status(200).json(Roles);
+    }).catch(function(err){
+      return handleError(res, err);
+    });
+  
+}; 
+// Get a single Role
+exports.show_roles = function(req, res) {
+  Role.findById(req.params.id)
+    .then(function (Role) {
+      if(!Role) { return res.status(404).send('Not Found'); }
+      return res.json(Role);
+    }).catch(function(error){
+      return handleError(res, error); 
+    });
+};
+
+// Creates a new Role in the DB.
+exports.create_roles = function(req, res) {
+  var new_ = Role.create(req.body)
+    .then(function(Role) {
+      return res.status(201).json(Role);
+    }).catch(function(error){
+      return handleError(res, error);
+    });
+};
+
+// Updates an existing Role in the DB.
+exports.update_roles = function(req, res) {
+  Role.findById(req.params.id)
+    .then(function (Role) {
+
+      if(!Role) { 
+        return res.status(404).send('Not Found'); 
+      }
+
+      var updated = _.merge(Role, req.body);
+      updated.save()
+        .then(function (err) {
+          return res.status(200).json(Role);
+        })
+        .catch(function(err){
+          return handleError(res, err);
+        });
+
+    }).catch(function(err){
+      return handleError(res, err);
+    });
+};
+
+// Deletes a Role from the DB.
+exports.destroy_roles = function(req, res) {
+  Role.findById(req.params.id)
+    .then(function (Role) {
+
+      if(!Role) { 
+        return res.status(404).send('Not Found'); 
+      }
+
+      Role.destroy()
+        .then(function(err) {
+          return res.status(204).send('No Content');
+        })
+        .catch(function(err){
+          return handleError(res, err);
+        });
+
+    })
+    .catch(function(err){
+      return handleError(res, err);
+    });
+};
 
 function handleError(res, err) {
   return res.status(500).send(err);
