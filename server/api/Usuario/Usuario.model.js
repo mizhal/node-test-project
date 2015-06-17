@@ -23,9 +23,12 @@ var Role = sequelize.define('Role', {
 },
 {
   tablename: "Roles",
-  scope: {
+  scopes: {
     only_slug: {
       attributes: ["slug"]
+    },
+    common: {
+      attributes: ["id", "nombre", "slug"]
     }
   }
 });

@@ -126,11 +126,13 @@ exports.index_roles = function(req, res) {
       limit: page_size
     };
 
+    console.log(">>>>> INDEX ROLES");
+
     if(req.query.filter){
       query.where = {key: new RegExp("^.*" + req.query.filter + ".*$", "i")};
     }
 
-    Role.findAll(query).then(function(Roles){
+    Role.scope("common").findAll(query).then(function(Roles){
       return res.status(200).json(Roles);
     }).catch(function(err){
       return handleError(res, err);
@@ -139,7 +141,7 @@ exports.index_roles = function(req, res) {
 }; 
 // Get a single Role
 exports.show_roles = function(req, res) {
-  Role.findById(req.params.id)
+  Role.scope("common").findById(req.params.id)
     .then(function (Role) {
       if(!Role) { return res.status(404).send('Not Found'); }
       return res.json(Role);
