@@ -1,0 +1,17 @@
+Flujo de trabajo normal con migraciones
+
+0. Poner a punto el "command line interface" de sequelize (EN UN BASH) o hacer "source" del archivo "load_variables.sh"
+
+  export PATH=$PATH:~/Workspace/pfc-laminas-node/node_modules/.bin/
+
+1. Crear nueva migracion
+
+sequelize migration:create --name "nombre-nueva-migracion"
+
+2. Lanzar migraciones
+
+NODE_ENV=<entorno> sequelize db:migrate
+
+3. Revertir una migración
+
+NODE_ENV=<entorno> sequelize db:migrate:undo
