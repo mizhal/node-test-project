@@ -1,7 +1,0 @@
-class DatosAlumno
-	nombre: String[0..20]
-	nick: String[0..20]
-	codigo_uo: String[0..10]
-	estado: ENUM["CREADO", "ACTIVO", "BANEADO", "INACTIVO"] AS INTEGER
-	foto: String[0..255]
-  usuario: References[Usuario]
