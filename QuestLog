@@ -1,6 +1,7 @@
 QuestLog
 
 FOCO========
+  [DONE] Extraer el Diario a un submodulo con el origin en el Libro Negro con todos los demás diarios.
   [TODO] Implementar el modulo de combate para la vista de editor
     He visto que puedo implementar el modulo de combate solo con dependencia del modulo de usuarios.
     Conviene implementarlo para hacer la vista de editor que ya está definida.
