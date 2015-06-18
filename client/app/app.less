@@ -1,3 +1,5 @@
+@import "./palette.less";
+
 @import 'bootstrap/less/bootstrap.less';
 @import 'font-awesome/less/font-awesome.less';
 
@@ -19,12 +21,25 @@
 @import 'account/login/login.less';
 @import 'admin/admin.less';
 @import 'main/main.less';
+@import 'palette.less';
 @import 'translations/translations.less';
+@import 'usuarios/usuarios.less';
 @import 'modal/modal.less';
 // endinjector
 
+/** MIXINS **/
+.standard-shadow {
+    box-shadow: -5px 5px 5px @shadow-color;
+};
+.standard-padding {
+    padding: 24px;
+}
+/** FIN:MIXINS */
+
 // TABLES/GRIDS
 .gridStyle {
+    margin-top: 1em;
+    margin-bottom: 1em;
     border: 1px solid rgb(212,212,212);
     width: 100%; 
     height: 300px;
@@ -39,3 +54,64 @@
     }
   }
 }
+
+/** Menu Bar **/
+.navbar {
+    min-height: 30px;
+}
+
+.navbar-default {
+    background-color: @menu-black;
+    .navbar-nav {
+        li {
+            a {
+                color: @menu-text-white;
+                padding: 5px 15px;
+            }
+        } 
+    }
+}
+
+.navbar-nav {
+    min-height: 30px;
+}
+
+.navbar-brand {
+    padding: 5px 15px;
+    height: auto;
+    line-height: auto;
+}
+/** FIN: Menu Bar */
+
+/*** Login Box **/
+section#login-form {
+    .standard-padding;
+    .standard-shadow;
+    background-color: @corporative-dark-blue;
+    color: @white-body-fonts;
+
+    input {
+        border-radius: 0px;
+        background-color: #ffffff;
+
+        &[type="submit"]{
+            background-color: #000000;
+            border: 0;
+            color: @white-body-fonts;
+        }
+    }
+}
+/*** FIN: Login Box **/
+
+/** Footer **/
+footer.footer.landing {
+  .standard-padding;
+  .standard-shadow;
+  float: right;
+  position: absolute;
+  bottom: 0px;
+  left: 30%;
+  text-align: left;
+  background-color: #AAA;
+}
+/** FIN: Footer **/

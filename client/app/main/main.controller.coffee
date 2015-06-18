@@ -8,6 +8,13 @@ angular.module 'pfcLaminasNodeApp'
   $translatePartialLoader.addPart 'main'
   $translate.refresh()
 
+  ## imagenes del carrusel
+  $scope.carouselImages = [
+    "assets/images/carousel1.png",
+    "assets/images/carousel2.png",
+    "assets/images/carousel3.png"
+  ]
+
   $http.get('/api/things').success (awesomeThings) ->
     $scope.awesomeThings = awesomeThings
     socket.syncUpdates 'thing', $scope.awesomeThings
