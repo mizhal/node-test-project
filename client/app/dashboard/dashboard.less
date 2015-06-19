@@ -1,12 +1,12 @@
 section#dashboard{
   padding-top: 10px;
-  background-color: #95a5a6;
+  background-color: @background-grey;
 }
 .player-data {
   .standard-text-shadow;
   .main-font;
   .standard-shadow;
-  background-color: #34495e;
+  background-color: @player-data-dash-back;
   padding: 25px;
 
   // NOMBRE Y PUNTOS DE VIDA
@@ -14,11 +14,11 @@ section#dashboard{
     .standard-text-shadow;
     line-height: 55px;
     font-size: 25px;
-    color: #ffffff;
+    color: @main-text-white;
   }
   .life-points {
     font-size: 37px;
-    color: #00ff12;
+    color: @life-points-color;
     text-align: right;
   }
 
@@ -26,20 +26,23 @@ section#dashboard{
   .level {
     .standard-text-shadow;
     font-size: 38px;
-    color: #ffffff;
+    color: @main-text-white;
   }
   .progress-section{
     .progress{
       border-radius: 0;
-      background-color: #34495e; 
-      border: 2px solid #ffffff;
+      background-color: @player-data-dash-back; 
+      border: 2px solid @main-border-white;
       margin-bottom: 0;
+    }
+    .progress-bar {
+      background-color: @exp-points-color;
     }
   }
   .exp-points {
     text-align: center;
     font-size: 23px;
-    color: #ffabab;
+    color: @exp-points-color;
   }
 
   // FOTO
@@ -48,7 +51,7 @@ section#dashboard{
       .standard-shadow;
       width: 152px;
       height: 152px;
-      background-color: #ffffff;
+      background-color: @main-block-white-bg;
       border-radius: 50%;
       padding: 10px;
     }
