@@ -2,7 +2,7 @@
 
 angular.module 'pfcLaminasNodeApp'
 .factory 'User', ($resource) ->
-  $resource '/api/usuarios/:id/:controller',
+  $resource '/api/auth/usuarios/:id/:controller',
     id: '@_id'
   ,
     changePassword:

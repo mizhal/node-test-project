@@ -6,6 +6,15 @@
 @icon-font-path: '/bower_components/bootstrap/fonts/';
 @fa-font-path: '/bower_components/font-awesome/fonts';
 
+/** FONTS */
+
+.main-font {
+  font-family: Tahoma, Verdana, Segoe, sans-serif;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 500; 
+};
+
 /**
  * App-wide Styles
  */
@@ -20,6 +29,7 @@
 // injector
 @import 'account/login/login.less';
 @import 'admin/admin.less';
+@import 'dashboard/dashboard.less';
 @import 'main/main.less';
 @import 'palette.less';
 @import 'translations/translations.less';
@@ -31,6 +41,9 @@
 .standard-shadow {
     box-shadow: -5px 5px 5px @shadow-color;
 };
+.standard-text-shadow {
+    text-shadow: -5px 5px 5px @shadow-color;  
+}
 .standard-padding {
     padding: 24px;
 }
@@ -155,8 +168,11 @@ footer.footer.landing {
     text-overflow: ellipsis;
     overflow: hidden;
 
-    h4, p {
-      color: #000000;
+    h4 {
+      color: #000;
+    }
+    p {
+      color: #666;
     }
   }
 

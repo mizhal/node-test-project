@@ -1,0 +1,83 @@
+section#dashboard{
+  padding-top: 10px;
+  background-color: #95a5a6;
+}
+.player-data {
+  .standard-text-shadow;
+  .main-font;
+  .standard-shadow;
+  background-color: #34495e;
+  padding: 25px;
+
+  // NOMBRE Y PUNTOS DE VIDA
+  .name {
+    .standard-text-shadow;
+    line-height: 55px;
+    font-size: 25px;
+    color: #ffffff;
+  }
+  .life-points {
+    font-size: 37px;
+    color: #00ff12;
+    text-align: right;
+  }
+
+  // NIVEL, EXPERIENCIA, BARRA EXPERIENCIA
+  .level {
+    .standard-text-shadow;
+    font-size: 38px;
+    color: #ffffff;
+  }
+  .progress-section{
+    .progress{
+      border-radius: 0;
+      background-color: #34495e; 
+      border: 2px solid #ffffff;
+      margin-bottom: 0;
+    }
+  }
+  .exp-points {
+    text-align: center;
+    font-size: 23px;
+    color: #ffabab;
+  }
+
+  // FOTO
+  .photo {
+    .photo-frame {
+      .standard-shadow;
+      width: 152px;
+      height: 152px;
+      background-color: #ffffff;
+      border-radius: 50%;
+      padding: 10px;
+    }
+    img{
+      width: 132px;
+      height: 132px;
+      border-radius: 50%;
+    }
+  }
+
+  // EXPOSITOR DE LOGROS
+  .achievements {
+    ul {
+        margin: 0 0 0 -10px;
+        padding: 0;
+        list-style-type: none;
+        li {
+          display: inline;
+        }
+    }
+    .achievement-frame {
+      padding: 0 10px;
+      display: block;
+      float: left;
+      img {
+        width: 50px;
+        height: 50px;
+      }
+    }
+
+  }
+}
