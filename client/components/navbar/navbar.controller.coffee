@@ -3,11 +3,9 @@
 angular.module 'pfcLaminasNodeApp'
 .controller 'NavbarCtrl', ($scope, $location, Auth, $translate) ->
   $scope.menu = [
-    title: 'Home'
-    link: '/'
   ]
   $scope.project = {
-    name: "PFC"
+    name: "Herramienta de evaluación colaborativa de láminas"
   }
   $scope.isCollapsed = true
   $scope.isLoggedIn = Auth.isLoggedIn

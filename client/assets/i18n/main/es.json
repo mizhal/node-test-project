@@ -3,5 +3,6 @@
   "WEB_SERVICE_CONNECTION_ERROR": "Error de conexión al servicio web",
   "ALL_TRANSLATIONS": "Todas las traducciones",
   "SUBMIT": "Enviar",
-  "NEW_MODEL_CREATED_OK": "Se han guardado los datos con éxito"
+  "NEW_MODEL_CREATED_OK": "Se han guardado los datos con éxito",
+  "LOGIN_HEADER": "Access",
 }

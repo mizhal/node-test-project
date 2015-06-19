@@ -55,31 +55,42 @@
   }
 }
 
+/** Fondo Login **/
+section#main-center {
+  background-color: #95a5a6;
+}
+
 /** Menu Bar **/
 .navbar {
-    min-height: 30px;
+  min-height: 30px;
+  margin: 0;
 }
 
 .navbar-default {
-    background-color: @menu-black;
-    .navbar-nav {
-        li {
-            a {
-                color: @menu-text-white;
-                padding: 5px 15px;
-            }
-        } 
-    }
+  .standard-shadow;
+  background-color: @menu-black;
+  border: 0;
+  .navbar-nav {
+      li {
+          a {
+              color: @menu-text-white;
+              padding: 5px 15px;
+          }
+      } 
+  }
+  .navbar-brand {
+    color: @menu-text-white;
+  }
 }
 
 .navbar-nav {
-    min-height: 30px;
+  min-height: 30px;
 }
 
 .navbar-brand {
-    padding: 5px 15px;
-    height: auto;
-    line-height: auto;
+  padding: 5px 15px;
+  height: auto;
+  line-height: auto;
 }
 /** FIN: Menu Bar */
 
@@ -87,8 +98,14 @@
 section#login-form {
     .standard-padding;
     .standard-shadow;
+    z-index: 100;
+    position: absolute;
+    float:left;
+    top: 20%;
+    left: 5%;
     background-color: @corporative-dark-blue;
     color: @white-body-fonts;
+
 
     input {
         border-radius: 0px;
@@ -107,11 +124,46 @@ section#login-form {
 footer.footer.landing {
   .standard-padding;
   .standard-shadow;
+  margin: 0;
+  margin-top: -150px;
   float: right;
   position: absolute;
-  bottom: 0px;
   left: 30%;
   text-align: left;
   background-color: #AAA;
+  border-top: 0;
 }
 /** FIN: Footer **/
+
+/** Carrusel de Login */
+.main-carousel-frame {
+  .standard-shadow;
+  background-color: #ffffff;
+
+  .carousel-indicators{
+    display: none;
+  }
+
+  .carousel-caption {
+    .standard-padding;
+    left: auto;
+    right: 0;
+    top: 0;
+    width: 70%;
+    text-align: left;
+    height: 40%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+
+    h4, p {
+      color: #000000;
+    }
+  }
+
+  .slide-frame-cutter {
+    height: 600px;
+    width: 100%;
+    overflow: hidden;
+  }
+}
+/** FIN: Carrusel de Login */
