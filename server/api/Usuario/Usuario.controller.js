@@ -99,18 +99,7 @@ exports.destroy = function(req, res) {
 exports.me = function(req, res) {
   if(req.user) {
     var user = req.user;
-    //get roles
-    return user.getRoles_full()
-      .map(function(rol){return rol.slug})
-      .then(function(roles){
-        return res.json({
-          "login": user.login,
-          "ultimo_acceso": user.ultimo_acceso,
-          "puede_entrar": user.puede_entrar,
-          "nombre_completo": user.nombre_completo || user.login,
-          "role": roles
-        });
-      })
+    return res.json(user);
   } else {
     return res.status(404).send("Not Found");
   }

@@ -27,7 +27,7 @@ function isAuthenticated() {
     // Attach user to request
     .use(function(req, res, next) {
       var user_id = req.user["_id"]; // el token lleva codificada la id en el campo "_id" de un hash
-      User.findById(user_id)
+      User.scope("common").findById(user_id)
         .then(function(user){
           req.user = user;
           if (!user) return res.status(401).send('Unauthorized');
