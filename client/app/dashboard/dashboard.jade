@@ -1,5 +1,9 @@
 section#dashboard
   .container
     .row
-      .col-md-12
-        ng-include(src="'components/player_data/player.html'")
+      .dash-header.col-md-12
+        .row 
+          .col-md-7
+            ng-include(src="'components/player_data/player_data.html'")
+          #dash-calendar.col-md-5
+            ng-include(src="'components/dash_calendar/dash_calendar.html'")

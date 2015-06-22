@@ -1,7 +1,7 @@
 'use strict'
 
 angular.module 'pfcLaminasNodeApp'
-.controller 'DashboardCtrl', ($scope) ->
+.controller 'DashboardCtrl', ($scope, $q, DashCalendar) ->
   $scope.player = {
     photo: "assets/images/attached_files/DatosAlumno/foto/555ee0c43a9023fc8c6ec560.png",
     level: 12,
@@ -16,4 +16,8 @@ angular.module 'pfcLaminasNodeApp'
     life_points: 3012
   }
 
-  $scope_progress_percent = $scope.player.progress_percent
+  $scope.calendar = DashCalendar
+  $scope.current_month = 6
+  $scope.current_month_name = "CAL_JUNE"
+  $scope.calendar = DashCalendar.getDayArray(6, 2015)
+  $scope.daynames = ["L", "M", "X", "J", "V", "S", "D"]
