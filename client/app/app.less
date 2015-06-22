@@ -38,6 +38,7 @@
 @import 'deliverables_log/deliverables_log.less';
 @import 'modal/modal.less';
 @import 'player_data/player_data.less';
+@import 'tasks_log/tasks_log.less';
 // endinjector
 
 /** MIXINS **/
@@ -52,6 +53,49 @@
 }
 .medium-padding {
     padding: 12px;
+}
+.unstyled-lists {
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    li {
+      margin: 0;
+      padding: 0;
+    }
+  }
+}
+.common-header {
+  header {
+    width: 100%;
+    background-color: @background-black;
+    padding: 0.5em 1em;
+    h2 {
+      margin: 0;
+      padding: 0;
+      font-size: 12px;
+      color: @main-text-white;
+    }
+  }  
+}
+.bootstrap-remove-accordion-styles {
+  // eliminar estilo de bootstrap
+  .panel {
+    background-color: transparent;
+    padding: 0;
+    margin: 0;
+    border-radius: 0;
+    border: 0;
+    box-shadow: 0;
+  }
+  .panel-heading, .panel-group .panel-heading + .panel-collapse .panel-body {
+    background-color: transparent;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    box-shadow: 0;
+  }
+  // FIN: eliminar estilos de bootstrap  
 }
 /** FIN:MIXINS */
 

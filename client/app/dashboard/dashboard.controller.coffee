@@ -1,7 +1,13 @@
 'use strict'
 
 angular.module 'pfcLaminasNodeApp'
-.controller 'DashboardCtrl', ($scope, $q, DashCalendar) ->
+.controller 'DashboardCtrl', ($scope, $q, DashCalendar, $translatePartialLoader, $translate) ->
+
+  ## TRADUCCIONES
+  $translatePartialLoader.addPart 'dashboard_player'
+  $translate.refresh()
+  ## FIN: TRADUCCIONES
+
   $scope.player = {
     photo: "assets/images/attached_files/DatosAlumno/foto/555ee0c43a9023fc8c6ec560.png",
     level: 12,
@@ -28,6 +34,7 @@ angular.module 'pfcLaminasNodeApp'
   $scope.deliverables_log = [
     {
       name: "Pendientes",
+      is_open: true,
       items: [
         {
           title: "Lámina Ronda #3",
@@ -43,6 +50,7 @@ angular.module 'pfcLaminasNodeApp'
     },
     {
       name: "Reclamadas",
+      is_open: false,
       items: [
         {
           title: "Lámina Ronda Especial 'Otoño' (2 errores)",
@@ -58,6 +66,7 @@ angular.module 'pfcLaminasNodeApp'
     },
     {
       name: "Completas",
+      is_open: false,
       items: [
         {
           title: "Lámina Ronda #1",
@@ -73,3 +82,45 @@ angular.module 'pfcLaminasNodeApp'
     }
   ]
   ## FIN: ENTREGAS/DELIVERABLES 
+
+  ## TAREAS DE CORRECCION
+  $scope.tasks_log = [
+    {
+      name: "Pendientes",
+      is_open: true,
+      items: [
+        {
+          title: "Corrección lámina #2312 (para 23/7/2015)",
+          icon_type: "TAREA",
+          url: "/editor/21"   
+        },
+        {
+          title: "Corrección lámina #2313 (para 23/7/2015)",
+          icon_type: "TAREA",
+          url: "/editor/22"   
+        },
+        {
+          title: "Corrección lámina #2322 (para 23/7/2015)",
+          icon_type: "TAREA",
+          url: "/editor/32"   
+        }
+      ]
+    },
+    {
+      name: "Completas",
+      is_open: false,
+      items: [
+        {
+          title: "Corrección lámina #2301 (para 23/7/2015)",
+          icon_type: "TAREA",
+          url: "/editor/2"   
+        },
+        {
+          title: "Corrección lámina #2302 (para 23/7/2015)",
+          icon_type: "TAREA",
+          url: "/editor/12"   
+        }
+      ]
+    }
+  ]
+  ## FIN: TAREAS DE CORRECCION

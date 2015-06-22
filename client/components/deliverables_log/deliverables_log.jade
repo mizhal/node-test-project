@@ -4,12 +4,14 @@ section#deliverables
       header.col-md-12
         h2(translate="DELIVERABLES")
     .row
-      .deliverables-list.col-md-12
+      accordion.deliverables-list.col-md-12
         ul
           li(ng-repeat="deliverable_group in deliverables_log")
-            h4.deliverable-group {{deliverable_group.name}}
-            .row
-              ul
-                li(ng-repeat="deliverable in deliverable_group.items")
-                  ng-include(src="'components/deliverables_log/deliverable_item.html'")
+            accordion-group(is-open="deliverable_group.is_open")
+              accordion-heading
+                h4.deliverable-group {{deliverable_group.name}}
+              .row
+                ul
+                  li(ng-repeat="deliverable in deliverable_group.items")
+                    ng-include(src="'components/deliverables_log/deliverable_item.html'")
 

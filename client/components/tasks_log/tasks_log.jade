@@ -1,0 +1,17 @@
+section#tasks-log
+  .tasks-bg.col-md-12
+    .row
+      header.col-md-12
+        h2(translate="TASKS")
+    .row
+      accordion.tasks-list.col-md-12
+        ul
+          li(ng-repeat="tasks_group in tasks_log")
+            accordion-group(is-open="tasks_group.is_open")
+              accordion-heading
+                h4.tasks-group {{tasks_group.name}}
+              .row
+                ul
+                  li(ng-repeat="task in tasks_group.items")
+                    ng-include(src="'components/tasks_log/tasks_item.html'")
+
