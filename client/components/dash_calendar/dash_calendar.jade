@@ -9,7 +9,7 @@ section#dash-calendar
           ul.daynames
             li(ng-repeat="dayname in daynames track by $index")
               p.dayname {{dayname}}
-          ul
+          ul.days
             li(ng-repeat="day in calendar.prev_days track by $index")
               p.prev {{day}}
             li(ng-repeat="day in calendar.current_days track by $index")
