@@ -1,0 +1,61 @@
+section#dash-calendar {
+  .calendar-bg {
+    .standard-shadow;
+    .standard-padding;
+    background-color: #c0392b;
+    margin-top: 6px;
+  }
+  .days-bg {
+    .standard-shadow;
+    .medium-padding;
+    background-color: @background-white;
+
+    .header {
+      text-align: center;
+      margin-bottom: 12px;
+      h3 {
+        display: inline;
+        padding: 5px 15px;
+        font-size: 18px;
+        background-color: @background-black;
+        color: @main-text-white;
+        text-align: center;
+      }
+    }
+
+    ul{
+      float:left;
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+
+      &.daynames {
+        width: 100%;
+        background-color: @background-black;
+        color: @main-text-white;
+      }
+
+      li{
+        display: block;
+        float: left;
+        width: 14.2%;
+
+        p {
+          margin: 0;
+          padding: 0;
+          text-align: center;
+
+          &.prev {
+            color: blue;
+          }
+          &.current {
+            color: black;
+          }
+          &.next {
+            color: blue;
+          }
+        }
+      }
+    }
+  }
+}

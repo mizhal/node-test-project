@@ -1,0 +1,26 @@
+section.player-data.col-md-12
+  .row
+    .photo.col-md-4
+      .photo-frame
+        img(src="{{player.photo}}")
+    .right-up.col-md-8
+      .row
+        .level.col-md-6
+          p Nivel {{player.level}}
+        .experience.col-md-6
+          .row
+            .progress-section.col-md-12
+              progressbar(value=70) {{player.level_percent}}
+            .exp-points.col-md-12
+              | {{player.experience}} / {{player.next_level_exp}}
+      .row
+        .achievements.col-md-12
+          ul 
+            li(ng-repeat="achievement in player.achievements")
+              .achievement-frame
+                img(src="{{achievement.image_url}}")
+  .row
+    .name.col-md-9 
+      | {{player.name}}
+    .life-points.col-md-3
+      | {{player.life_points}}
