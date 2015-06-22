@@ -1,0 +1,15 @@
+section#deliverables
+  .deliverables-bg.col-md-12
+    .row
+      header.col-md-12
+        h2(translate="DELIVERABLES")
+    .row
+      .deliverables-list.col-md-12
+        ul
+          li(ng-repeat="deliverable_group in deliverables_log")
+            h4.deliverable-group {{deliverable_group.name}}
+            .row
+              ul
+                li(ng-repeat="deliverable in deliverable_group.items")
+                  ng-include(src="'components/deliverables_log/deliverable_item.html'")
+

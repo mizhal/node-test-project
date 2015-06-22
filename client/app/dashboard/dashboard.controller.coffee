@@ -16,8 +16,60 @@ angular.module 'pfcLaminasNodeApp'
     life_points: 3012
   }
 
+  ## CALENDARIO
   $scope.calendar = DashCalendar
   $scope.current_month = 6
   $scope.current_month_name = "CAL_JUNE"
   $scope.calendar = DashCalendar.getDayArray(6, 2015)
   $scope.daynames = ["L", "M", "X", "J", "V", "S", "D"]
+  ## FIN: CALENDARIO
+
+  ## ENTREGAS/DELIVERABLES
+  $scope.deliverables_log = [
+    {
+      name: "Pendientes",
+      items: [
+        {
+          title: "Lámina Ronda #3",
+          icon_type: "LAMINA",
+          url: "/upload/deliverable/123121"
+        },
+        {
+          title: "Lámina Ronda Especial 'Navidad'",
+          icon_type: "LAMINA_ESPECIAL",
+          url: "/upload/deliverable/123122"
+        },        
+      ]
+    },
+    {
+      name: "Reclamadas",
+      items: [
+        {
+          title: "Lámina Ronda Especial 'Otoño' (2 errores)",
+          icon_type: "LAMINA_ESPECIAL_RECLAMADA",
+          url: "/editor/234121"
+        },
+        {
+          title: "Lámina Competición #1 (5 errores)",
+          icon_type: "LAMINA_COMPETICION_RECLAMADA",
+          url: "/editor/234121"          
+        }
+      ]
+    },
+    {
+      name: "Completas",
+      items: [
+        {
+          title: "Lámina Ronda #1",
+          icon_type: "LAMINA",
+          url: "/editor/2341"   
+        },
+        {
+          title: "Lámina Ronda #2",
+          icon_type: "LAMINA",
+          url: "/editor/21"   
+        }
+      ]
+    }
+  ]
+  ## FIN: ENTREGAS/DELIVERABLES 
