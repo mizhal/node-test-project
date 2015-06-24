@@ -2,6 +2,64 @@ section#editor {
   .toolbar {
     .standard-shadow;
     background-color: @background-editor-sidebar;
-  }
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    padding-top: 40px;
 
+    .control-pad {
+      display: block;
+      float: left;
+      position: relative;
+      min-heigth: 150px;
+      height: 150px;
+      width: 250px;
+
+      .button {
+        position: absolute;
+        display: block;
+        float: left;
+        width: 50px;
+        height: 50px;
+        margin: 0;
+      }
+      .left {
+        margin: 50px 100px 50px 0;
+      }
+      .up {
+        margin: 0 50px 100px 50px;
+      }
+      .right {
+        margin: 50px 0 50px 100px;
+      }
+      .down {
+        margin: 100px 50px 0 50px;
+      }
+      .zoom-minus {
+        margin: 100px 50px 0 140px;
+      }
+      .zoom-plus {
+        margin: 100px 0 0 200px;
+      }
+    }
+
+    .drawing-data {
+      margin-top: 1em;
+      margin-bottom: 1em;
+    }
+  }
+  #drawing {
+    background-color: @background-grey;
+    position: absolute;
+    overflow: hidden;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding-left: 0;
+    img {
+      position: absolute;
+    }
+  }
 }

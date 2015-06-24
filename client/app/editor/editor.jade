@@ -1,11 +1,17 @@
 section#editor
   .row
-    .drawing.col-md-9
-      img(src="")
+    #drawing.col-md-9
+      img(src="assets/attached_files/Deliverable/file/000001.jpg" alcahest-pan-zoom)
     .toolbar.col-md-3
       .row
         .control-pad.col-md-12
-          img(src="")
+          img.button.left(src="assets/images/arrow-left.png" ng-click="pan_left()")
+          img.button.up(src="assets/images/arrow-up.png" ng-click="pan_up()")
+          img.button.right(src="assets/images/arrow-right.png" ng-click="pan_right()")
+          img.button.down(src="assets/images/arrow-down.png" ng-click="pan_down()")
+          img.button.zoom-minus(src="assets/images/zoom-minus.png" ng-click="zoom_minus()")
+          img.button.zoom-plus(src="assets/images/zoom-plus.png" ng-click="zoom_plus()")
+      .row
         .drawing-data.col-md-12
           p 
             span.label Lámina 
@@ -22,7 +28,9 @@ section#editor
           p
             span.label Fecha Entregada:
             | 10/06/2015
+      .row
         .errors.col-md-21
+          
 
 
 
