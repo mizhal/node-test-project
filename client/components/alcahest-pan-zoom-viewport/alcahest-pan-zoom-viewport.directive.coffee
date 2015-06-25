@@ -97,7 +97,6 @@ angular.module 'pfcLaminasNodeApp'
           this.translation[1] + "px) " + formula
         
         this.dom_element.css 'transform', formula
-        console.log("DRAW transform: %s", formula)
 
       update: () ->
         this.origin[0] = this.dom_element.position().left
