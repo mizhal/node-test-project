@@ -1,7 +1,9 @@
 section#editor
   .row
     #drawing.col-md-9
-      img(src="assets/attached_files/Deliverable/file/000001.jpg" alcahest-pan-zoom)
+      .viewport(alcahest-pan-zoom-viewport)
+        .overlay(alcahest-error-annotable)
+          img.background(src="assets/attached_files/Deliverable/file/000001.jpg")
     .toolbar.col-md-3
       .row
         .control-pad.col-md-12
@@ -11,6 +13,7 @@ section#editor
           img.button.down(src="assets/images/arrow-down.png" ng-click="pan_down()")
           img.button.zoom-minus(src="assets/images/zoom-minus.png" ng-click="zoom_minus()")
           img.button.zoom-plus(src="assets/images/zoom-plus.png" ng-click="zoom_plus()")
+          .edit.button(ng-click="activate_error_editor()") EDIT
       .row
         .drawing-data.col-md-12
           p 

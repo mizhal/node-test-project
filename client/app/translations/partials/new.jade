@@ -5,7 +5,7 @@ div#new-translation
         h1(translate="NEW_TRANSLATION")
     .row
       .col-lg-12
-        alert(ng-repeat="alert in notif.pending()" type="{{alert.type}}" close="notif.closeNotification($index)"){{alert.msg}}
+        alert(ng-repeat="alert in notif.pending()" type="{{alert.type}}" close="notif.closeNotification($index)") {{alert.msg}}
     form(ng-submit="submit()")
       .row
         .col-lg-12

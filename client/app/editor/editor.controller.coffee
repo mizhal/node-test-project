@@ -2,6 +2,8 @@
 
 angular.module 'pfcLaminasNodeApp'
 .controller 'EditorCtrl', ($scope) ->
+  $scope.editing = false
+
   ## ERRORES
   $scope.errors = [ ## no nos importan de momento los correctores de los errores
     {
@@ -45,5 +47,13 @@ angular.module 'pfcLaminasNodeApp'
     $scope.$emit("alcahest:zoom-minus")
 
   $scope.zoom_plus = (event) ->
-    $scope.$emit("alcahest:zoom-plus")    
+    $scope.$emit("alcahest:zoom-plus") 
+
+  $scope.activate_error_editor = () ->
+    if $scope.editing
+      $scope.$emit("alcahest-error:deactivate-canvas")
+      $scope.editing = false
+    else
+      $scope.$emit("alcahest-error:activate-canvas")  
+      $scope.editing = true
   ## FIN: Alcahest-Pan

@@ -65,8 +65,8 @@ angular.module 'pfcLaminasNodeApp'
 
       activePan: () ->
         return this.active_pan
-
     }
+
     scope.world = {
       dom_element: null,
       viewport: null,
@@ -89,15 +89,19 @@ angular.module 'pfcLaminasNodeApp'
           escala del mundo y traslacion (inversa) del viewport
           en este modelo no se mueve el viewport sino el mundo 
         ###
+        viewport_translation = this.translationFromViewport(this.viewport.translation) 
         formula = "scale(" + this.scale + ", " + this.scale +
-          ") translate(" + this.viewport.translation[0] + "px," + 
-          this.viewport.translation[1] + "px)"
+          ") translate(" + viewport_translation[0] + "px," + 
+          viewport_translation[1] + "px)"
         ### traslacion inicial del mundo para compensar el escalado centrado ###
         formula = "translate(" + this.translation[0] + "px," + 
           this.translation[1] + "px) " + formula
         
         this.dom_element.css 'transform', formula
 
+      translationFromViewport: (translation) ->
+        return vec2DScale(1 / this.scale, translation)
+        
       update: () ->
         this.origin[0] = this.dom_element.position().left
         this.origin[1] = this.dom_element.position().top

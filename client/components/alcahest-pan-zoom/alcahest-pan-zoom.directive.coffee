@@ -91,7 +91,6 @@ angular.module 'pfcLaminasNodeApp'
         scope.drawing.width * (1 - scope.zoom_level) / 2,
         scope.drawing.height * (1 - scope.zoom_level) / 2
       ]
-      console.log("** calculated delta zoom = <%s, %s>", delta_zoom[0], delta_zoom[1])
       delta_zoom_sr1 = vec2DScale(-1 / scope.zoom_level, delta_zoom)
       scope.zoom_anchor = delta_zoom_sr1
       applyTransform(element, scope, scope.zoom_anchor)
