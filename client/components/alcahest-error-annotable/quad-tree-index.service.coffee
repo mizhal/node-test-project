@@ -50,60 +50,66 @@ angular.module "pfcLaminasNodeApp"
   D = 3
 
   ### Class Positionable ###
-  Positionable = (item, start_vec2D, width, height) ->
-    this.id = this.getId()
-    this.item = item
-    this.box = [
-      start_vec2D,
-      vec2DSum(start_vec2D, [width, 0]),
-      vec2DSum(start_vec2D, [width, height]),
-      vec2DSum(start_vec2D, [0, height]),
-    ]
+  class Positionable 
+    constructor: (item, start_vec2D, width, height) ->
+      @id = this.getId()
+      @item = item
+      @box = [
+        start_vec2D,
+        vec2DSum(start_vec2D, [width, 0]),
+        vec2DSum(start_vec2D, [width, height]),
+        vec2DSum(start_vec2D, [0, height]),
+      ]
 
-  Positionable.prototype = {
-    counter: 0,
+    @counter: 0
+
+    ### getId
+      Asigna un Id unico a cada objeto posicionable para eliminar
+      duplicados mas facilmente
+    ###
     getId: () ->
       tmp = Positionable.counter
       Positionable.counter++
       return tmp
+
     bounds: () ->
-      return this.box
-  }
+      return @box
+
   ### FIN: Class Positionable ###
 
   ### Class Node ###
-  Node = (start_vec2D, width, height) ->
-    this.start = start_vec2D
-    this.width = width
-    this.height = height
-    ## VERTICES
-    this.box = [
-      start_vec2D,
-      vec2DSum(start_vec2D, [width, 0]),
-      vec2DSum(start_vec2D, [width, height]),
-      vec2DSum(start_vec2D, [0, height])
-    ]
+  class Node
+    constructor: (start_vec2D, width, height) ->
+      @start = start_vec2D
+      @width = width
+      @height = height
+      ## VERTICES
+      @box = [
+        start_vec2D,
+        vec2DSum(start_vec2D, [width, 0]),
+        vec2DSum(start_vec2D, [width, height]),
+        vec2DSum(start_vec2D, [0, height])
+      ]
 
-    this.objects = []
-    this.children = []
+      @objects = []
+      @children = []
 
-  Node.prototype = {
     ### 
       @param object: Positionable
     ###
     appendObject: (object) ->
-      if this.objects.length >= MAX_OBJECTS_PER_NODE
-        this.split()
+      if @objects.length >= MAX_OBJECTS_PER_NODE
+        split()
 
-      if this.hasChildren()
-        for child in this.children
+      if hasChildren()
+        for child in @children
           if child.overlaps(object)
             child.appendObject(object)
       else
-        this.objects.push(object)
+        @objects.push(object)
 
     hasChildren: () ->
-      return this.children.length > 0
+      return @children.length > 0
 
     ###
       @param object: Positionable
@@ -112,10 +118,10 @@ angular.module "pfcLaminasNodeApp"
       object_box = object.bounds()
 
       return !(
-        (this.box[A][X] > object_box[B][X]) ||
-        (this.box[B][X] < object_box[A][X]) ||
-        (this.box[A][Y] > object_box[C][Y]) ||
-        (this.box[D][Y] < object_box[A][Y])
+        (@box[A][X] > object_box[B][X]) ||
+        (@box[B][X] < object_box[A][X]) ||
+        (@box[A][Y] > object_box[C][Y]) ||
+        (@box[D][Y] < object_box[A][Y])
       )
 
     ###
@@ -127,10 +133,10 @@ angular.module "pfcLaminasNodeApp"
       B = [C[X], A[Y]]
 
       return !(
-        (this.box[A][X] > B[X]) ||
-        (this.box[B][X] < A[X]) ||
-        (this.box[A][Y] > C[Y]) ||
-        (this.box[D][Y] < A[Y])
+        (@box[A][X] > B[X]) ||
+        (@box[B][X] < A[X]) ||
+        (@box[A][Y] > C[Y]) ||
+        (@box[D][Y] < A[Y])
       )
 
     ###
@@ -139,14 +145,14 @@ angular.module "pfcLaminasNodeApp"
     ###
     searchRect: (A, C) ->
       found_objects = []
-      if this.hasChildren()
-        for child in this.children
-          if this.overlapsRect(A, C)
+      if hasChildren()
+        for child in @children
+          if overlapsRect(A, C)
             for found_object in child.searchRect(A, C)
               found_objects.push(found_object)
       else
-        if this.overlapsRect(A, C)
-          for found_object in this.objects
+        if @overlapsRect(A, C)
+          for found_object in @objects
             found_objects.push(found_object)
 
       ## Habra duplicados (objetos de mayor tamanyo que un nodo)
@@ -160,42 +166,48 @@ angular.module "pfcLaminasNodeApp"
       return found_objects
 
     splitObjects: () ->
-      for object in this.objects
-        for subnode in this.children
+      for object in @objects
+        for subnode in @children
           if subnode.overlaps(object)
             subnode.appendObject(object)
-      this.objects = []
+      @objects = []
 
     split: () ->
-      new_w = this.width/2.0
-      new_h = this.height/2.0
-      this.children = [
-        new Node(this.start, new_w, new_h),
+      new_w = @width/2.0
+      new_h = @height/2.0
+      @children = [
+        new Node(@start, new_w, new_h),
         new Node(
-          vec2DSum(this.start, [new_w, 0]), 
+          vec2DSum(@start, [new_w, 0]), 
           new_w, 
           new_h
         ),
         new Node(
-          vec2DSum(this.start, [new_w, new_h]), 
+          vec2DSum(@start, [new_w, new_h]), 
           new_w, new_h
         ),
         new Node(
-          vec2DSum(this.start, [0, new_h]), 
+          vec2DSum(@start, [0, new_h]), 
           new_w, new_h
         )
       ]
-      this.splitObjects()
-  }
+      splitObjects()
+  
   ### FIN: Class Node ###
 
   ### Class QuadTree ###
-  QuadTree = () ->
-    this.index_root = null
+  class QuadTree
+    constructor: () ->
+      @index_root = new Node([0,0], 100, 100)
 
-  QuadTree.prototype = {
     init: (width, height) ->
-      return Node([0,0], width, height)
+      this.index_root = new Node([0,0], width, height)
+
+    width: () ->
+      return this.index_root.width
+
+    height: () ->
+      return this.index_root.height
 
     put: (vec2D, width, height, item) ->
       object_positionable = new Positionable(item, vec2D, width, height)
@@ -207,10 +219,9 @@ angular.module "pfcLaminasNodeApp"
     ###
     get: (A, C) ->
       found = this.index_root.searchRect(A, C)
-      return $.map(found, (positionable)->
+      return $.map found, (positionable)->
         return positionable.item
-      )
-  }
+
   ### FIN: Class QuadTree ###
 
   return (new QuadTree())

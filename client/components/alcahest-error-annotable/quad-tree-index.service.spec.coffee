@@ -13,4 +13,4 @@ describe 'Service: quadTreeIndex', ->
 
   it 'should init', ->
     quadTreeIndex.init(1024, 1024)
-    quadTreeIndex.width.should.beEqual(1024)
+    expect(quadTreeIndex.width()).toBe(1024)
