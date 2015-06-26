@@ -11,7 +11,11 @@ describe 'Controller: TranslationsCtrl', ->
   beforeEach inject ($controller, $rootScope) ->
     scope = $rootScope.$new()
     TranslationsCtrl = $controller 'TranslationsCtrl',
-      $scope: scope
+      $scope: scope,
+      socket: {
+        syncUpdates: ->
+        unsyncUpdates: ->
+      }
 
   it 'should ...', ->
     expect(1).toEqual 1

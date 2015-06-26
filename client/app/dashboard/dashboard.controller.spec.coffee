@@ -11,7 +11,11 @@ describe 'Controller: DashboardCtrl', ->
   beforeEach inject ($controller, $rootScope) ->
     scope = $rootScope.$new()
     DashboardCtrl = $controller 'DashboardCtrl',
-      $scope: scope
+      $scope: scope,
+      socket: {
+        syncUpdates: ->
+        unsyncUpdates: ->
+      }
 
   it 'should ...', ->
     expect(1).toEqual 1
