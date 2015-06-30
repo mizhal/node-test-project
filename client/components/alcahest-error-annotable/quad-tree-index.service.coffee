@@ -2,6 +2,8 @@
   Todas las listas siguen el orden de las agujas del reloj empezando por 
   la esquina del origen de la pantalla (top-left)
     A:topleft B:topright C:bottomrigth D:bottomleft
+    
+    0:topleft 1:topright 2:bottomrigth 3:bottomleft
 ###
 
 angular.module "pfcLaminasNodeApp"
@@ -71,6 +73,9 @@ angular.module "pfcLaminasNodeApp"
       tmp = Positionable.counter
       Positionable.counter++
       return tmp
+
+    position: () ->
+      return @box[0]
 
     bounds: () ->
       return @box
