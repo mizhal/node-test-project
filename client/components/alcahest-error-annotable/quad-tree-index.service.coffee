@@ -77,12 +77,15 @@ angular.module "pfcLaminasNodeApp"
 
   ### FIN: Class Positionable ###
 
-  ### Class Node ###
-  class Node
-    constructor: (start_vec2D, width, height) ->
+  ### Class QNode ###
+  class QNode
+    constructor: (start_vec2D, width, height, quad_tree_index) ->
       @start = start_vec2D
       @width = width
       @height = height
+      @parent = quad_tree_index
+      if @parent == undefined
+        throw "Parent undefined"
       ## VERTICES
       @box = [
         start_vec2D,
@@ -94,19 +97,36 @@ angular.module "pfcLaminasNodeApp"
       @objects = []
       @children = []
 
+    NW: () ->
+      if @children.length > 0
+        return @children[0]
+
+    NE: () ->
+      if @children.length > 0
+        return @children[1]   
+
+    SE: () ->
+      if @children.length > 0
+        return @children[2]
+
+    SW: () ->
+      if @children.length > 0
+        return @children[3]         
+
     ### 
       @param object: Positionable
     ###
     appendObject: (object) ->
       if @objects.length >= MAX_OBJECTS_PER_NODE
-        split()
+        @split()
 
-      if hasChildren()
+      if @hasChildren()
         for child in @children
           if child.overlaps(object)
             child.appendObject(object)
       else
-        @objects.push(object)
+        if @overlaps(object)
+          @objects.push(object)
 
     hasChildren: () ->
       return @children.length > 0
@@ -116,7 +136,6 @@ angular.module "pfcLaminasNodeApp"
     ###
     overlaps: (object) ->
       object_box = object.bounds()
-
       return !(
         (@box[A][X] > object_box[B][X]) ||
         (@box[B][X] < object_box[A][X]) ||
@@ -128,15 +147,15 @@ angular.module "pfcLaminasNodeApp"
       @param A: vec2D
       @param B: vec2D
     ###
-    overlapsRect: (A, C) ->
-      D = [A[X], C[Y]]
-      B = [C[X], A[Y]]
+    overlapsRect: (Av, Cv) ->
+      Dv = [Av[X], Cv[Y]]
+      Bv = [Cv[X], Av[Y]]
 
       return !(
-        (@box[A][X] > B[X]) ||
-        (@box[B][X] < A[X]) ||
-        (@box[A][Y] > C[Y]) ||
-        (@box[D][Y] < A[Y])
+        (@box[A][X] > Bv[X]) ||
+        (@box[B][X] < Av[X]) ||
+        (@box[A][Y] > Cv[Y]) ||
+        (@box[D][Y] < Av[Y])
       )
 
     ###
@@ -145,15 +164,17 @@ angular.module "pfcLaminasNodeApp"
     ###
     searchRect: (A, C) ->
       found_objects = []
-      if hasChildren()
+      if @hasChildren()
         for child in @children
-          if overlapsRect(A, C)
+          if @overlapsRect(A, C)
             for found_object in child.searchRect(A, C)
               found_objects.push(found_object)
       else
         if @overlapsRect(A, C)
           for found_object in @objects
             found_objects.push(found_object)
+
+      return found_objects
 
       ## Habra duplicados (objetos de mayor tamanyo que un nodo)
       uniq = {}
@@ -173,54 +194,116 @@ angular.module "pfcLaminasNodeApp"
       @objects = []
 
     split: () ->
+      if @with <= @parent.min_width || @height <= @parent.min_height
+        ## if we have reached the minimum size in any dimension
+        ## we won't be doing any more splits
+        return
+
       new_w = @width/2.0
       new_h = @height/2.0
+
       @children = [
-        new Node(@start, new_w, new_h),
-        new Node(
+        new QNode(@start, new_w, new_h, @parent),
+        new QNode(
           vec2DSum(@start, [new_w, 0]), 
           new_w, 
-          new_h
+          new_h,
+          @parent
         ),
-        new Node(
+        new QNode(
           vec2DSum(@start, [new_w, new_h]), 
-          new_w, new_h
+          new_w, 
+          new_h, 
+          @parent
         ),
-        new Node(
-          vec2DSum(@start, [0, new_h]), 
-          new_w, new_h
+        new QNode(
+          vec2DSum(@start, [0, new_h], @parent), 
+          new_w, 
+          new_h,
+          @parent
         )
       ]
-      splitObjects()
+      @splitObjects()
+
+    clear: () ->
+      @objects = []
+      for child in @children
+        child.clear()
+      @children = []
+
+    annotateObjectIds: () ->
+      ids = []
+      for object in @objects
+        ids.push(object.id)
+      for child in @children
+        for id in child.annotateObjectIds()
+          ids.push(id)
+      return ids
+
+    countNodes: () ->
+      count = 1
+      if @hasChildren()
+        for child in @children
+          count += child.countNodes()
+      return count
   
-  ### FIN: Class Node ###
+  ### FIN: Class QNode ###
 
   ### Class QuadTree ###
   class QuadTree
     constructor: () ->
-      @index_root = new Node([0,0], 100, 100)
+      @index_root = new QNode([0,0], 100, 100, this)
+      @min_width = 10
+      @min_height = 10
 
-    init: (width, height) ->
-      this.index_root = new Node([0,0], width, height)
+    init: (width, height, min_width, min_height) ->
+      @index_root = new QNode([0,0], width, height, this)
+      ### cinco divisiones 2^5 ###
+      @min_height = min_height || width / 32
+      @min_width = min_width || height / 32
 
     width: () ->
-      return this.index_root.width
+      return @index_root.width
 
     height: () ->
-      return this.index_root.height
+      return @index_root.height
 
     put: (vec2D, width, height, item) ->
       object_positionable = new Positionable(item, vec2D, width, height)
-      this.index_root.appendObject(object_positionable)
+      @index_root.appendObject(object_positionable)
 
     ### QuadTreeIndex.get
-      Returns al objects found inside a rectangle formed by 
+      Returns all objects found inside a rectangle formed by 
       the two vectors passed as parameters.
     ###
-    get: (A, C) ->
-      found = this.index_root.searchRect(A, C)
-      return $.map found, (positionable)->
+    getObjects: (A, C) ->
+      found = @index_root.searchRect(A, C)
+      return $.map found, (positionable, index)->
         return positionable.item
+
+    ### QuadTreeIndex.getPositionables
+      Returns all objects with bounding box and z-index found inside a rectangle formed by 
+      the two vectors passed as parameters.
+    ###
+    getPositionables: (A, C) ->
+      return @index_root.searchRect(A, C)
+
+    newNode: (start, w, h) ->
+      return new QNode(start, w, h, this)
+
+    clear: () ->
+      @index_root.clear()
+      @index_root = new QNode([0,0], @index_root.width, @index_root.height, this)
+
+    countObjects: () ->
+      ids_found = @index_root.annotateObjectIds()
+      unique = new Array()
+      for id in ids_found
+        unique[id] = 1
+      return unique.length
+
+    countNodes: () ->
+      return @index_root.countNodes()
 
   ### FIN: Class QuadTree ###
 
