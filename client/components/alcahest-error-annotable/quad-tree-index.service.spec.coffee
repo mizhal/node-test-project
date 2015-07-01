@@ -256,6 +256,22 @@ describe 'Service: quadTreeIndex', ->
         object: {
           data: "B2"
         }
+      },
+      {
+        start: [400, 100],
+        w: 50,
+        h: 50,
+        object: {
+          data: "B3"
+        }
+      },
+      {
+        start: [400, 100],
+        w: 12,
+        h: 17,
+        object: {
+          data: "B4"
+        }
       }
     ]
 
@@ -268,6 +284,7 @@ describe 'Service: quadTreeIndex', ->
     ### prueba de grupo a ###
     printf("Pruebas grupo A")
     found_a = quadTreeIndex.getObjects(grupo_a_start, grupo_a_end)
+    expect(found_a.length).toBe(grupo_a.length)
     for found in found_a
       name = found.data
       msg = "Elemento " + name + " encontrado en el grupo A"
@@ -276,6 +293,8 @@ describe 'Service: quadTreeIndex', ->
     ### prueba de grupo a ###
     printf("Pruebas grupo B")
     found_b = quadTreeIndex.getObjects(grupo_b_start, grupo_b_end)
+    console.log("found_b:", found_b)
+    expect(found_b.length).toBe(grupo_b.length)
     for found in found_b
       name = found.data
       msg = "Elemento " + name + " encontrado en el grupo B"

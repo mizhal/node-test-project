@@ -202,17 +202,16 @@ angular.module "pfcLaminasNodeApp"
             if found_object.overlapsRect(A ,C)
               found_objects.push(found_object)
 
-      return found_objects
-
       ## Habra duplicados (objetos de mayor tamanyo que un nodo)
       uniq = {}
       for obj in found_objects
         uniq[obj.id] = obj
-      found_objects = []
-      for key in uniq
-        found_objects.push(uniq[key])
 
-      return found_objects
+      found_objects_uniq = []
+      for key, value of uniq
+        found_objects_uniq.push(value)
+
+      return found_objects_uniq
 
     splitObjects: () ->
       for object in @objects
