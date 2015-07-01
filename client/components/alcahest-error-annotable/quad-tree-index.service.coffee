@@ -22,6 +22,16 @@ angular.module "pfcLaminasNodeApp"
     }
   ###
 
+  ### printf ###
+  printf = (str) ->
+    args = [].slice.call(arguments, 1)
+    i = 0
+
+    interp = str.replace /%s/g, () ->
+        return args[i++]
+
+    console.log(interp)
+
   ## OPERACIONES DE VECTORES 2D
   vec2DSum = (vec2D1, vec2D2) ->
     return [vec2D1[0] + vec2D2[0], vec2D1[1] + vec2D2[1]]
@@ -51,17 +61,41 @@ angular.module "pfcLaminasNodeApp"
   C = 2
   D = 3
 
+  ### Class Box ###
+  class Box
+    constructor: (@A, @B, @C, @D) ->
+
+    overlapsRect: (Av, Cv) ->
+      Dv = [Av[X], Cv[Y]]
+      Bv = [Cv[X], Av[Y]]
+
+      return !(
+        (@A[X] > Bv[X]) ||
+        (@B[X] < Av[X]) ||
+        (@A[Y] > Cv[Y]) ||
+        (@D[Y] < Av[Y])
+      )
+
+    overlaps: (other_box) ->
+
+      return !(
+        (@A[X] > other_box.B[X]) ||
+        (@B[X] < other_box.A[X]) ||
+        (@A[Y] > other_box.C[Y]) ||
+        (@D[Y] < other_box.A[Y])
+      )
+
   ### Class Positionable ###
   class Positionable 
     constructor: (item, start_vec2D, width, height) ->
       @id = this.getId()
       @item = item
-      @box = [
+      @box = new Box(
         start_vec2D,
         vec2DSum(start_vec2D, [width, 0]),
         vec2DSum(start_vec2D, [width, height]),
         vec2DSum(start_vec2D, [0, height]),
-      ]
+      )
 
     @counter: 0
 
@@ -80,6 +114,9 @@ angular.module "pfcLaminasNodeApp"
     bounds: () ->
       return @box
 
+    overlapsRect: (Av, Cv) ->
+      return @box.overlapsRect(Av, Cv)
+
   ### FIN: Class Positionable ###
 
   ### Class QNode ###
@@ -92,12 +129,12 @@ angular.module "pfcLaminasNodeApp"
       if @parent == undefined
         throw "Parent undefined"
       ## VERTICES
-      @box = [
+      @box = new Box(
         start_vec2D,
         vec2DSum(start_vec2D, [width, 0]),
         vec2DSum(start_vec2D, [width, height]),
         vec2DSum(start_vec2D, [0, height])
-      ]
+      )
 
       @objects = []
       @children = []
@@ -140,28 +177,13 @@ angular.module "pfcLaminasNodeApp"
       @param object: Positionable
     ###
     overlaps: (object) ->
-      object_box = object.bounds()
-      return !(
-        (@box[A][X] > object_box[B][X]) ||
-        (@box[B][X] < object_box[A][X]) ||
-        (@box[A][Y] > object_box[C][Y]) ||
-        (@box[D][Y] < object_box[A][Y])
-      )
-
+      return @box.overlaps(object.bounds())
     ###
       @param A: vec2D
       @param B: vec2D
     ###
     overlapsRect: (Av, Cv) ->
-      Dv = [Av[X], Cv[Y]]
-      Bv = [Cv[X], Av[Y]]
-
-      return !(
-        (@box[A][X] > Bv[X]) ||
-        (@box[B][X] < Av[X]) ||
-        (@box[A][Y] > Cv[Y]) ||
-        (@box[D][Y] < Av[Y])
-      )
+      return @box.overlapsRect(Av, Cv)
 
     ###
       @param A: vec2D
@@ -177,7 +199,8 @@ angular.module "pfcLaminasNodeApp"
       else
         if @overlapsRect(A, C)
           for found_object in @objects
-            found_objects.push(found_object)
+            if found_object.overlapsRect(A ,C)
+              found_objects.push(found_object)
 
       return found_objects
 
