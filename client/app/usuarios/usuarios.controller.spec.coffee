@@ -13,7 +13,6 @@ describe 'Controller: UsuariosCtrl', ->
     "/api/auth/roles"
   ]
 
-
   # Initialize the controller and a mock scope
   beforeEach inject ($controller, $rootScope, _$httpBackend_) ->
     scope = $rootScope.$new()

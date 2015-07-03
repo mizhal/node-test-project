@@ -9,7 +9,8 @@ angular.module 'pfcLaminasNodeApp', [
   'ui.bootstrap',
   'pascalprecht.translate',
   'ui.grid',
-  'angular-carousel'
+  'angular-carousel',
+  'alcahest'
 ]
 .config ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, $translateProvider, $translatePartialLoaderProvider) ->
   $urlRouterProvider

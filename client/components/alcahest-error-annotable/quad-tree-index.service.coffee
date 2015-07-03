@@ -1,59 +1,31 @@
 ### Service QuadTreeIndex
-  Todas las listas siguen el orden de las agujas del reloj empezando por 
-  la esquina del origen de la pantalla (top-left)
-    A:topleft B:topright C:bottomrigth D:bottomleft
-    
-    0:topleft 1:topright 2:bottomrigth 3:bottomleft
+  Todas las listas siguen el orden de las agujas del reloj empezando por
+  la esquina del origen de la pantalla (top - left)
+    A: topleft B: topright C: bottomrigth D: bottomleft
+
+    0: topleft 1: topright 2: bottomrigth 3: bottomleft
 ###
 
-angular.module "pfcLaminasNodeApp"
-.factory "quadTreeIndex", () ->
+angular.module "alcahest"
+.factory "quadTreeIndex", (Vector2D) ->
   ###
     typedef vec2D float[2] <- [x, y]
-    typedef rect2D float[4] <- [topleft, toprigth, bottomrigth, bottomleft] 
+    typedef rect2D float[4] <- [topleft, toprigth, bottomrigth, bottomleft]
     typedef node2D struct {
       rect2D bounds
       float width
       float height
     }
     interface Positionable {
-      vec2D position() : returns x,y of topleft of object boundingbox
-      rect2D bounds(): returns object boundingbox
+      vec2D position() : returns x, y of topleft of object boundingbox
+      rect2D bounds() : returns object boundingbox
     }
   ###
-
-  ### printf ###
-  printf = (str) ->
-    args = [].slice.call(arguments, 1)
-    i = 0
-
-    interp = str.replace /%s/g, () ->
-        return args[i++]
-
-    console.log(interp)
-
-  ## OPERACIONES DE VECTORES 2D
-  vec2DSum = (vec2D1, vec2D2) ->
-    return [vec2D1[0] + vec2D2[0], vec2D1[1] + vec2D2[1]]
-  vec2DDif = (vec2D1, vec2D2) ->
-    return [vec2D1[0] - vec2D2[0], vec2D1[1] - vec2D2[1]]
-  vec2DInv = (vec2D1, vec2D2) ->
-    return [-vec2D1[0] , -vec2D1[1]]
-  vec2DScale = (scale, vec2D) ->
-    return [scale*vec2D[0], scale*vec2D[1]]
-  vec2DPrint = (vec2D) ->
-    console.log("<%s, %s>", vec2D[0], vec2D[1])
-  vec2DSet = (vec2D, x, y) ->
-    vec2D[0] = x
-    vec2D[1] = y
-  vec2DNorm = (vec2D) ->
-    return Math.sqrt(vec2D[0]*vec2D[0] + vec2D[1]*vec2D[1]);
-  ## FIN: OPERACIONES DE VECTORES 2D
 
   MAX_OBJECTS_PER_NODE = 5
 
   ## VECTOR CONSTANTS
-  X = 0 
+  X = 0
   Y = 1
   ## RECT CONSTANTS
   A = 0
@@ -86,15 +58,15 @@ angular.module "pfcLaminasNodeApp"
       )
 
   ### Class Positionable ###
-  class Positionable 
+  class Positionable
     constructor: (item, start_vec2D, width, height) ->
       @id = this.getId()
       @item = item
       @box = new Box(
         start_vec2D,
-        vec2DSum(start_vec2D, [width, 0]),
-        vec2DSum(start_vec2D, [width, height]),
-        vec2DSum(start_vec2D, [0, height]),
+        Vector2D.sum(start_vec2D, [width, 0]),
+        Vector2D.sum(start_vec2D, [width, height]),
+        Vector2D.sum(start_vec2D, [0, height]),
       )
 
     @counter: 0
@@ -130,10 +102,10 @@ angular.module "pfcLaminasNodeApp"
         throw "Parent undefined"
       ## VERTICES
       @box = new Box(
-        start_vec2D,
-        vec2DSum(start_vec2D, [width, 0]),
-        vec2DSum(start_vec2D, [width, height]),
-        vec2DSum(start_vec2D, [0, height])
+         start_vec2D,
+         Vector2D.sum(start_vec2D, [width, 0]),
+         Vector2D.sum(start_vec2D, [width, height]),
+         Vector2D.sum(start_vec2D, [0, height])
       )
 
       @objects = []
@@ -145,7 +117,7 @@ angular.module "pfcLaminasNodeApp"
 
     NE: () ->
       if @children.length > 0
-        return @children[1]   
+        return @children[1]
 
     SE: () ->
       if @children.length > 0
@@ -153,9 +125,9 @@ angular.module "pfcLaminasNodeApp"
 
     SW: () ->
       if @children.length > 0
-        return @children[3]         
+        return @children[3]
 
-    ### 
+    ###
       @param object: Positionable
     ###
     appendObject: (object) ->
@@ -177,7 +149,7 @@ angular.module "pfcLaminasNodeApp"
       @param object: Positionable
     ###
     overlaps: (object) ->
-      return @box.overlaps(object.bounds())
+      return @box.overlaps(object.bounds() )
     ###
       @param A: vec2D
       @param B: vec2D
@@ -199,7 +171,7 @@ angular.module "pfcLaminasNodeApp"
       else
         if @overlapsRect(A, C)
           for found_object in @objects
-            if found_object.overlapsRect(A ,C)
+            if found_object.overlapsRect(A , C)
               found_objects.push(found_object)
 
       ## Habra duplicados (objetos de mayor tamanyo que un nodo)
@@ -226,26 +198,26 @@ angular.module "pfcLaminasNodeApp"
         ## we won't be doing any more splits
         return
 
-      new_w = @width/2.0
-      new_h = @height/2.0
+      new_w = @width / 2.0
+      new_h = @height / 2.0
 
       @children = [
         new QNode(@start, new_w, new_h, @parent),
         new QNode(
-          vec2DSum(@start, [new_w, 0]), 
-          new_w, 
+          Vector2D.sum(@start, [new_w, 0]),
+          new_w,
           new_h,
           @parent
         ),
         new QNode(
-          vec2DSum(@start, [new_w, new_h]), 
-          new_w, 
-          new_h, 
+          Vector2D.sum(@start, [new_w, new_h]),
+          new_w,
+          new_h,
           @parent
         ),
         new QNode(
-          vec2DSum(@start, [0, new_h], @parent), 
-          new_w, 
+          Vector2D.sum(@start, [0, new_h], @parent),
+          new_w,
           new_h,
           @parent
         )
@@ -273,18 +245,30 @@ angular.module "pfcLaminasNodeApp"
         for child in @children
           count += child.countNodes()
       return count
-  
+
+    removeById: (object_id) ->
+      found = @objects.filter (object) ->
+        return object.id == object_id
+      if found.length > 0
+        for found_i in found
+          idx = @objects.indexOf(found_i)
+          @objects.splice(idx, 1)
+      if @hasChildren()
+        for child in @children
+          child.removeById(object_id)
+
   ### FIN: Class QNode ###
 
   ### Class QuadTree ###
   class QuadTree
     constructor: () ->
-      @index_root = new QNode([0,0], 100, 100, this)
+      @index_root = new QNode([0, 0], 100, 100, this)
       @min_width = 10
       @min_height = 10
 
     init: (width, height, min_width, min_height) ->
-      @index_root = new QNode([0,0], width, height, this)
+      @clear()
+      @index_root = new QNode([0, 0], width, height, this)
       ### cinco divisiones 2^5 ###
       @min_height = min_height || width / 32
       @min_width = min_width || height / 32
@@ -299,17 +283,22 @@ angular.module "pfcLaminasNodeApp"
       object_positionable = new Positionable(item, vec2D, width, height)
       @index_root.appendObject(object_positionable)
 
+    putWithForcedId: (id, vec2D, width, height, item) ->
+      object_positionable = new Positionable(item, vec2D, width, height)
+      object_positionable.id = id
+      @index_root.appendObject(object_positionable)
+
     ### QuadTreeIndex.get
-      Returns all objects found inside a rectangle formed by 
+      Returns all objects found inside a rectangle formed by
       the two vectors passed as parameters.
     ###
     getObjects: (A, C) ->
       found = @index_root.searchRect(A, C)
-      return $.map found, (positionable, index)->
+      return $.map found, (positionable, index) ->
         return positionable.item
 
     ### QuadTreeIndex.getPositionables
-      Returns all objects with bounding box and z-index found inside a rectangle formed by 
+      Returns all objects with bounding box and z - index found inside a rectangle formed by
       the two vectors passed as parameters.
     ###
     getPositionables: (A, C) ->
@@ -320,18 +309,21 @@ angular.module "pfcLaminasNodeApp"
 
     clear: () ->
       @index_root.clear()
-      @index_root = new QNode([0,0], @index_root.width, @index_root.height, this)
+      @index_root = new QNode([0, 0], @index_root.width, @index_root.height, this)
 
     countObjects: () ->
       ids_found = @index_root.annotateObjectIds()
-      unique = new Array()
+      unique = {}
       for id in ids_found
         unique[id] = 1
-      return unique.length
+      return Object.keys(unique).length
 
     countNodes: () ->
       return @index_root.countNodes()
 
+    removeById: (object_id) ->
+      @index_root.removeById(object_id)
+
   ### FIN: Class QuadTree ###
 
-  return (new QuadTree())
+  return new QuadTree()
