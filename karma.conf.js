@@ -44,8 +44,14 @@ module.exports = function(config) {
       'client/app/**/*.jade',
       'client/components/**/*.jade',
       'client/app/**/*.html',
-      'client/components/**/*.html'
+      'client/components/**/*.html',
+      {pattern: 'client/fixtures/images/**/*', watched: false, included: false, served: true},
+      {pattern: 'client/assets/**/*', watched: false, included: false, served: true}
     ],
+
+    proxies: {
+      'assets': '/base/client/assets'
+    },
 
     preprocessors: {
       '**/*.jade': 'ng-jade2js',
