@@ -22,3 +22,4 @@ describe 'Controller: MainCtrl', ->
     scope = $rootScope.$new()
     MainCtrl = $controller 'MainCtrl',
       $scope: scope
+    $httpBackend.whenGET('assets/i18n/main/es.json').respond(200)
