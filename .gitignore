@@ -10,3 +10,5 @@ npm-debug.log
 /client/assets/attached_files/
 /server/config/database.json
 .vagrant
+/tests/*
+/coverage/*
