@@ -9,6 +9,13 @@ module.exports = function(config) {
     // testing framework to use (jasmine/mocha/qunit/...)
     frameworks: ['jasmine'],
 
+    reporters: ['progress', 'coverage'],
+
+    coverageReporter: {
+      type : 'html',
+      dir : 'coverage/'
+    },
+
     // list of files / patterns to load in the browser
     files: [
       // bower:js
@@ -57,6 +64,7 @@ module.exports = function(config) {
       '**/*.jade': 'ng-jade2js',
       '**/*.html': 'html2js',
       '**/*.coffee': 'coffee',
+      '**/*.js': ['coverage']
     },
 
     ngHtml2JsPreprocessor: {
