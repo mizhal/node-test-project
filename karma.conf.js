@@ -13,7 +13,13 @@ module.exports = function(config) {
 
     coverageReporter: {
       type : 'html',
-      dir : 'coverage/'
+      dir : 'coverage/',
+      instrumenters: {
+        ibrik : require('ibrik')
+      },
+      instrumenter: {
+        '**/*.coffee': 'ibrik'
+      }
     },
 
     // list of files / patterns to load in the browser
@@ -59,6 +65,12 @@ module.exports = function(config) {
       '**/*.html': 'html2js',
       '**/*.coffee': 'coffee',
       '**/*.js': ['coverage']
+    },
+
+    coffeePreprocessor: {
+      options: {
+        sourceMap: true
+      }
     },
 
     ngHtml2JsPreprocessor: {
