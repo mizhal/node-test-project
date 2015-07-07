@@ -29,4 +29,9 @@ angular.module "alcahest"
     norm: (vec2D) ->
       return Math.sqrt(vec2D[0] * vec2D[0] + vec2D[1] * vec2D[1])
 
+    dist: (vec2D_start, vec2D_end) ->
+      d_x = vec2D_end[0] - vec2D_start[0]
+      d_y = vec2D_end[1] - vec2D_start[1]
+      return Math.sqrt(d_x * d_x + d_y * d_y)
+
   return new Vector2D()

@@ -1,7 +1,7 @@
 ### Renders errors over a canvas ###
 
 angular.module "pfcLaminasNodeApp"
-.factory "ErrorRenderer", (quadTreeIndex, Vector2D, $q) ->
+.factory "ErrorRenderer", (quadTreeIndex, Vector2D, $q, BoxFactory) ->
 
   ## VECTOR CONSTANTS
   X = 0
@@ -16,11 +16,11 @@ angular.module "pfcLaminasNodeApp"
     interface IError {
         public int id;
         public int zIndex;
-        public Vec2D topleftVec2D();
-        public float width();
-        public float height();
+        public Vec2D topleftVec2D() ;
+        public float width() ;
+        public float height() ;
         public void drawYourself(context: Canvas2DContext)
-        public Box bounds();
+        public Box bounds() ;
     }
   ###
 
@@ -31,12 +31,19 @@ angular.module "pfcLaminasNodeApp"
     @COLOR: "#ff0000"
     @LINE_WIDTH: 5
 
-    constructor: (center_vec2D, radius, category_slug, id) ->
+    @counter: 0
+
+    @getErrorId: () ->
+      tmp = Error.counter
+      Error.counter++
+      return tmp
+
+    constructor: (center_vec2D, radius, category_slug, category_weigth, id) ->
       ### id
         identificador numerico del error, requerido para funcionar con el index
       ###
       if id == undefined
-        @id = getErrorId()
+        @id = Error.getErrorId()
       else
         @id = id
       ### center
@@ -48,35 +55,36 @@ angular.module "pfcLaminasNodeApp"
       ###
       @radius = radius
       ### category_slug
-        identificador normalizado del tipo/categoria de error
-      ### 
+        identificador normalizado del tipo / categoria de error
+      ###
       @category_slug = category_slug
+      ### category_weights
+        peso de las categoria de error
+      ###
+      @category_weigth = category_weigth
       ### created_at
       ###
       @created_at = new Date()
       ### updated_at
       ###
       @updated_at = new Date()
-      ### author_slug 
+      ### author_slug
         Contiene el identificador normalizado del autor
       ###
       @author_slug = null
-      ### max_error_level
-        valor de la densidad de error en el centro del error
-      ###
-      @max_error_level = 1
       ### decay_function:
-        Funcion de decadencia: calcula la densidad de error a medida que nos 
+        Funcion de decadencia: calcula la densidad de error a medida que nos
         alejamos del centro
       ###
       @decay_function = (r) ->
-        return 1 / (r*r)
+        K = (Math.E - 1) / @radius
+        return 1 - Math.log(1 + K * r)
 
       ### zIndex
         Posicion del error en el eje Z, se usa para saber
         que errores se dibujan primero.
         No tiene utilidad en general, pero por ejemplo cuando un error
-        esta seleccionado, su zIndex puede aumentar para asegurarnos de que 
+        esta seleccionado, su zIndex puede aumentar para asegurarnos de que
         se dibuja por encima del resto
       ###
       @zIndex = 0
@@ -91,22 +99,28 @@ angular.module "pfcLaminasNodeApp"
     topleftVec2D: () ->
       return Vector2D.sum(@center, [-@radius, -@radius])
 
+    bottomrightVec2D: () ->
+      return Vector2D.sum(@center, [@radius, @radius])  
+    
+    bottomleftVec2D: () ->
+      return Vector2D.sum(@center, [-@radius, @radius])  
+
     bounds: () ->
-      return new Box(
-        Vector2D.sum(@center, [-@radius, -@radius]),
-        Vector2D.sum(@center, [@radius, -@radius]),
+      return BoxFactory.create(
+        Vector2D.sum(@center, [ - @radius, - @radius]),
+        Vector2D.sum(@center, [@radius, - @radius]),
         Vector2D.sum(@center, [@radius, @radius]),
-        Vector2D.sum(@center, [-@radius, @radius])
+        Vector2D.sum(@center, [ - @radius, @radius])
       )
 
     ###
-      @param Canvas2DContext ctx 
-    ### 
+      @param Canvas2DContext ctx
+    ###
     drawYourself: (ctx) ->
       ctx.beginPath()
       ctx.arc(@center[X], @center[Y], @radius, 0, Math.PI * 2)
       ctx.lineWidth = Error.LINE_WIDTH
-      ctx.strokeStyle = ERROR.COLOR
+      ctx.strokeStyle = Error.COLOR
       ctx.stroke()
 
     ### ENDSECTION funciones del interface ###
@@ -118,9 +132,9 @@ angular.module "pfcLaminasNodeApp"
       @param Vec2D B
     ###
     getAreaErrorLevel: (A, C) ->
-      center = [A[X] + (C[X] - A[X])/2, A[Y] + (C[Y] - A[Y])/2]
-      R = Vector2D.norm(center, @center)
-      error_level = @decay_function(R) * @max_error_level
+      center = [A[X] + (C[X] - A[X]) /2, A[Y] + (C[Y] - A[Y])/2]
+      r = Vector2D.dist(center, @center)
+      error_level = @decay_function(r) * @category_weigth
       return error_level
 
     ### ENDSECTION metodos para mapa de calor ###
@@ -141,7 +155,7 @@ angular.module "pfcLaminasNodeApp"
       @bg.className = "hidden"
 
       @error_hash = {}
-      @dirty_errors = []
+      @dirty_errors = {}
       @canvas_jquery_node = undefined
       @quad_tree_index = quadTreeIndex
       @root_scope = undefined
@@ -159,7 +173,7 @@ angular.module "pfcLaminasNodeApp"
     init: (canvas_jquery_node, background_image, rootScope) ->
       @root_scope = rootScope
       defer = $q.defer()
-      
+
       host = this
       @bg.onload = () ->
         host.initCanvas()
@@ -168,7 +182,7 @@ angular.module "pfcLaminasNodeApp"
 
       @bg.onerror = () ->
         host.perror("error loading background image (" + background_image + ")")
-        rootScope.$apply(defer.reject);
+        rootScope.$apply(defer.reject) ;
 
       @bg.src = background_image
       @canvas_jquery_node = canvas_jquery_node
@@ -193,40 +207,51 @@ angular.module "pfcLaminasNodeApp"
       @param Vec2D A
       @param Vec2D C
     ###
-    drawBackgroundRect: (A, C) ->
-      w = C[X] - A[X]
-      h = C[Y] - A[Y]
-      ctx.drawImage(@bg, A[X], A[Y], w, h, A[X], A[Y], w, h)
+    drawBackgroundRect: (A, C, ctx) ->
+      ### El canvas no maneja indices negativos ###
+      if A[X] < 0
+        a_x = 0
+      else
+        a_x = A[X]
+
+      if A[Y] < 0
+        a_y = 0
+      else
+        a_y = A[Y]
+
+      if C[X] < 0
+        c_x = 0
+      else
+        c_x = C[X]
+
+      if C[Y] < 0
+        c_y = 0
+      else
+        c_y = C[Y] 
+
+      w = c_x - a_x
+      h = c_y - a_y
+      ctx.drawImage(@bg, a_x, a_y, w, h, a_x, a_y, w, h)
 
     ###
-      @param List<Error> error_list
+      @param List < Error > error_list
     ###
     setErrors: (error_list) ->
+      @dirty_errors = {}
+      @error_hash = {}
       for error, index in error_list
-        @error_hash[error.id] = error
+        @addError(error)
 
     ###
     ###
-    updateError: (error_id, error_data) ->
-      @error_hash[error_id] = error_data
-      @dirty_errors[error.id] = error
-      @quad_tree_index.removeById(error.id)
-      @quad_tree_index.putWithForcedId(error_data.id, 
-        error_data, 
-        error_data.topleftVec2D(), 
-        error_data.width(),
-        error_data.height(),
-        error_data
-      )
-
-    ###
-    ###
-    addError: (error) ->
-      @error_hash[error.id] = error
-      @dirty_errors[error.id] = error
-      @quad_tree_index.putWithForcedId(error.id, 
-        error, 
-        error.topleftVec2D(), 
+    updateError: (center_vec2D, radius, category_slug, category_weigth, id) ->
+      error = @createError(center_vec2D, radius, category_slug, category_weigth, id)
+      @error_hash[id] = error
+      @dirty_errors[id] = error
+      @quad_tree_index.removeById(id)
+      @quad_tree_index.putWithForcedId(error.id,
+        error,
+        error.topleftVec2D(),
         error.width(),
         error.height(),
         error
@@ -234,10 +259,28 @@ angular.module "pfcLaminasNodeApp"
 
     ###
     ###
+    addError: (error) ->
+      @error_hash[error.id] = error
+      @dirty_errors[error.id] = error
+      @quad_tree_index.putWithForcedId(error.id,
+        error.topleftVec2D(),
+        error.width(),
+        error.height(),
+        error
+      )
+
+    ### 
+    ###
+    findErrorById: (id) ->
+      return @error_hash[id]
+
+    ###
+    ###
     redraw: () ->
-      for id, error of dirty_errors
+      for id, error of @dirty_errors
         box = error.bounds()
         @redrawRect(box.A, box.C)
+      @dirty_errors = {}
 
     ###
     ###
@@ -254,8 +297,8 @@ angular.module "pfcLaminasNodeApp"
     ###
     ###
     redrawRect: (A, C) ->
-      canvas_2d_context = @canvas_jquery_node.getContext("2d")
-      @drawBackgroundRect(A, C)
+      canvas_2d_context = @canvas_jquery_node.get(0).getContext("2d")
+      @drawBackgroundRect(A, C, canvas_2d_context)
       objects = @quad_tree_index.getObjects(A, C)
       objects = objects.sort(ErrorRenderer.sortByZIndex)
       for object in objects
@@ -264,15 +307,18 @@ angular.module "pfcLaminasNodeApp"
     ###
     ###
     @sortByZIndex: (error_A, error_B) ->
-      zindexA = error_A.zindex
-      zindexB = error_B.zindex
+      return error_A.zIndex - error_B.zIndex
 
-      if zindexA < zindexB
-        return -1
-      else if zindexA == zindexB
-        return 0
-      else if zindexA > zindexB
-        return 1
+    sortErrors: (error_list) ->
+      return error_list.sort(ErrorRenderer.sortByZIndex)
+
+    createError: (center_vec2D, radius, category_slug, category_weigth, id) ->
+      return new Error(center_vec2D, radius, category_slug, category_weigth, id)
+
+    clear: () ->
+      @error_hash = {}
+      @dirty_errors = {}
+      @quad_tree_index.clear()
 
   ### FIN: Clase ErrorRenderer ###
 
