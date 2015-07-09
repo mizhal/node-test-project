@@ -1,23 +1,9 @@
 'use strict'
 
-angular.module 'pfcLaminasNodeApp'
-.directive 'alcahestPanZoomViewport', ->
+angular.module 'alcahest'
+.directive 'alcahestPanZoomViewport', (Vector2D) ->
   restrict: 'EA'
   link: (scope, element, attrs) ->
-
-    ## OPERACIONES DE VECTORES 2D
-    vec2DSum = (vec2D1, vec2D2) ->
-      return [vec2D1[0] + vec2D2[0], vec2D1[1] + vec2D2[1]]
-    vec2DDif = (vec2D1, vec2D2) ->
-      return [vec2D1[0] - vec2D2[0], vec2D1[1] - vec2D2[1]]
-    vec2DInv = (vec2D1, vec2D2) ->
-      return [-vec2D1[0] , -vec2D1[1]]
-    vec2DScale = (scale, vec2D) ->
-      return [scale*vec2D[0], scale*vec2D[1]]
-    vec2DPrint = (vec2D) ->
-      console.log("<%s, %s>", vec2D[0], vec2D[1])
-    ## FIN: OPERACIONES DE VECTORES 2D
-
     ### MODELOS ###
 
     ## NOTA: como se usan trasformaciones CSS3 los origenes fisicos de los elementos de la UI
@@ -40,7 +26,7 @@ angular.module 'pfcLaminasNodeApp'
         this.translation = translation
 
       move: (translation) ->
-        this.translation = vec2DSum(this.translation, translation)
+        this.translation = Vector2D.sum(this.translation, translation)
 
       zoom: (scale) ->
         this.world.zoom(scale)
@@ -58,7 +44,7 @@ angular.module 'pfcLaminasNodeApp'
         this.dom_element.css "cursor", "move" 
 
       pan: (point) ->  
-        delta = vec2DDif(point, this.pan_start_point)
+        delta = Vector2D.dif(point, this.pan_start_point)
         this.move(delta)
         this.pan_start_point = point
         this.draw()
@@ -82,8 +68,8 @@ angular.module 'pfcLaminasNodeApp'
           - this.height * (1 - this.scale) / 2
         ]
         # Hay que poner el vector de compensacion en la escala 1
-        compensation_vector = vec2DScale(1 / this.scale, compensation_vector)
-        this.translation = vec2DSum(this.translation, compensation_vector)
+        compensation_vector = Vector2D.scale(1 / this.scale, compensation_vector)
+        this.translation = Vector2D.sum(this.translation, compensation_vector)
       draw: () ->
         ### 
           escala del mundo y traslacion (inversa) del viewport
@@ -100,7 +86,7 @@ angular.module 'pfcLaminasNodeApp'
         this.dom_element.css 'transform', formula
 
       translationFromViewport: (translation) ->
-        return vec2DScale(1 / this.scale, translation)
+        return Vector2D.scale(1 / this.scale, translation)
         
       update: () ->
         this.origin[0] = this.dom_element.position().left

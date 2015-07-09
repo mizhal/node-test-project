@@ -1,9 +1,8 @@
 'use strict'
 
 describe 'Directive: alcahestPanZoomViewport', ->
-
-  # load the directive's module
-  beforeEach module 'pfcLaminasNodeApp'
+  
+  beforeEach module 'alcahest'
   element = undefined
   scope = undefined
   beforeEach inject ($rootScope) ->
