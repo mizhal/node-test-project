@@ -2,8 +2,6 @@
 
 angular.module 'pfcLaminasNodeApp'
 .controller 'EditorCtrl', ($scope) ->
-  $scope.editing = false
-
   ## ERRORES
   $scope.errors = [ ## no nos importan de momento los correctores de los errores
     {
@@ -30,6 +28,26 @@ angular.module 'pfcLaminasNodeApp'
   ]
   ## FIN: ERRORES
 
+  ### CONEXION editableCamera -> errorRenderer ###
+  $scope.$on "alcahest-error:commit", (event, error) ->
+    console.log("Commited error data:", error)
+  ### FIN: CONEXION editableCamera -> errorRenderer ###
+
+  ### ESTADO DE BOTONES Y FEEDBACK DE LA GUI ###
+  $scope.gui_state = {
+    editing: false,
+    edit_class: "inactive",
+
+    toggleEdit: () ->
+      if this.editing
+        this.editing = false
+        this.edit_class = "inactive"
+      else
+        this.editing = true
+        this.edit_class = "active"
+  }
+  ### FIN: ESTADO DE BOTONES Y FEEDBACK DE LA GUI ###
+
   ## Alcahest-Pan
   $scope.pan_left = (event) ->
     $scope.$emit("alcahest:pan-left")
@@ -50,10 +68,10 @@ angular.module 'pfcLaminasNodeApp'
     $scope.$emit("alcahest:zoom-plus") 
 
   $scope.activate_error_editor = () ->
-    if $scope.editing
+    if $scope.gui_state.editing
       $scope.$emit("alcahest-error:deactivate-canvas")
-      $scope.editing = false
+      $scope.gui_state.toggleEdit()
     else
       $scope.$emit("alcahest-error:activate-canvas")  
-      $scope.editing = true
+      $scope.gui_state.toggleEdit()
   ## FIN: Alcahest-Pan

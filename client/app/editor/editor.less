@@ -1,27 +1,4 @@
 section#editor {
-  .positionable {
-    position:absolute;
-  }
-  .overlay {
-    z-index: 10;
-    .handle {
-      z-index: 11;
-      background-color: black;
-      height: 30px;
-      width: 30px;
-    }
-    .center-cross {
-      z-index: 9;
-      height: 10px;
-      width: 10px;
-      background-color: red;
-    }
-    .error {
-      z-index: 9;
-      border: 5px solid red;
-      border-radius: 50%;
-    }
-  }
   .toolbar {
     .standard-shadow;
     background-color: @background-editor-sidebar;
@@ -74,6 +51,9 @@ section#editor {
         line-height: 50px;
         text-align: center;
         border-radius: 50%;
+        &[ng-class="active"] {
+          background: red;/*@edit-button-active;*/
+        }
       }
     }
 

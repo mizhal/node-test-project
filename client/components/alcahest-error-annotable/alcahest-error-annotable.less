@@ -1,0 +1,40 @@
+/* Alcahest Error Annotable Stylesheet */
+
+.circle {
+  border-radius: 50%;
+}
+
+[alcahest-error-annotable] {
+  background-color: red;
+  z-index: 10;
+
+  .ui-error {
+    position: absolute;
+    z-index: 9;
+
+    .positionable{
+      position: absolute;
+    }
+
+    .handle {
+      .circle;
+      width: 20px;
+      height: 20px;
+      background-color: @error-handle-bg;
+      border: 1px solid @error-handle-border;
+    } 
+    .border {
+      .circle;
+      border: 2px solid red;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+    }
+    .center-cross {
+      background-color: blue;
+      width: 10px;
+      height: 10px;
+    }
+  }
+}
