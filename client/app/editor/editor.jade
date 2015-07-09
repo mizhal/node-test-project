@@ -1,9 +1,8 @@
 section#editor
   .row
-    #drawing.col-md-9
-      .overlay(alcahest-error-annotable)
-        .viewport()
-          img.background(src="assets/attached_files/Deliverable/file/000001.jpg")
+    #drawing.col-md-9(alcahest-error-annotable)
+      .viewport(alcahest-pan-zoom-viewport)
+        img.background(src="assets/attached_files/Deliverable/file/000001.jpg")
     .toolbar.col-md-3
       .row
         .control-pad.col-md-12

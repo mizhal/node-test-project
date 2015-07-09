@@ -66,7 +66,7 @@ angular.module "alcahest"
         (v_center[Y] - @radius * Math.sin(@angle_rads)) - ui_element.height() / 2
       )
 
-    mouseCoords:(event) ->
+    mouseCoords: (event) ->
       return [event.pageX, event.pageY]
   
     centerInMouse: (event) ->
@@ -107,6 +107,8 @@ angular.module "alcahest"
 
       @current = null
 
+      @temp_handlers = {}
+
     init: (scope, element) ->
       @viewport_translation = null
       @viewport_zoom = 1
@@ -129,8 +131,15 @@ angular.module "alcahest"
       scope.$on "alcahest:viewport-translation", @onViewportTranslation
 
     registerMouseEvents: (element) ->
-      element.on "click", @onClick
-      element.on "mousemove", @onMouseMove
+      ### 
+        nos interesa capturar el evento en lugar
+        de cogerlo al primer bote (bubbling)
+      ###
+      element.get(0).addEventListener "click", @onClick, true
+      element.get(0).addEventListener "mousemove", @onMouseMove, true
+
+    replaceMouseEvents: (element) ->
+      @temp_element.on "click"
 
     onActivateCanvas: () =>
       @selected_annotation_tool = true
@@ -149,21 +158,22 @@ angular.module "alcahest"
       @current = null
 
     onClick: (event) =>
-      event.stopPropagation()
       if @selected_annotation_tool
         if @setting_radius
           @commitError()
           @setting_radius = false
+          event.stopPropagation()
         else
           @setting_radius = true
           @createUIElement(@element, event)
           @updateUIElement(event)
+          event.stopPropagation()
 
     onMouseMove: (event) =>
-      event.stopPropagation()
       if @selected_annotation_tool
         if @setting_radius
           @updateUIElement(event)
+          event.stopPropagation()
 
     createUIElement: (element, event) ->
       @current = new ErrorUIElement(element, event)
