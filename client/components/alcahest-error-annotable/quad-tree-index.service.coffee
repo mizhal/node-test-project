@@ -7,7 +7,7 @@
 ###
 
 angular.module "alcahest"
-.factory "quadTreeIndex", (Vector2D) ->
+.factory "quadTreeIndex", (Vector2D, BoxFactory) ->
   ###
     typedef vec2D float[2] <- [x, y]
     typedef rect2D float[4] <- [topleft, toprigth, bottomrigth, bottomleft]
@@ -32,37 +32,13 @@ angular.module "alcahest"
   B = 1
   C = 2
   D = 3
-
-  ### Class Box ###
-  class Box
-    constructor: (@A, @B, @C, @D) ->
-
-    overlapsRect: (Av, Cv) ->
-      Dv = [Av[X], Cv[Y]]
-      Bv = [Cv[X], Av[Y]]
-
-      return !(
-        (@A[X] > Bv[X]) ||
-        (@B[X] < Av[X]) ||
-        (@A[Y] > Cv[Y]) ||
-        (@D[Y] < Av[Y])
-      )
-
-    overlaps: (other_box) ->
-
-      return !(
-        (@A[X] > other_box.B[X]) ||
-        (@B[X] < other_box.A[X]) ||
-        (@A[Y] > other_box.C[Y]) ||
-        (@D[Y] < other_box.A[Y])
-      )
-
+  
   ### Class Positionable ###
   class Positionable
     constructor: (item, start_vec2D, width, height) ->
       @id = this.getId()
       @item = item
-      @box = new Box(
+      @box = BoxFactory.create(
         start_vec2D,
         Vector2D.sum(start_vec2D, [width, 0]),
         Vector2D.sum(start_vec2D, [width, height]),
@@ -101,7 +77,7 @@ angular.module "alcahest"
       if @parent == undefined
         throw "Parent undefined"
       ## VERTICES
-      @box = new Box(
+      @box = BoxFactory.create(
          start_vec2D,
          Vector2D.sum(start_vec2D, [width, 0]),
          Vector2D.sum(start_vec2D, [width, height]),

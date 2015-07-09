@@ -1,5 +1,10 @@
-angular.module "pfcLaminasNodeApp"
+angular.module "alcahest"
 .factory "BoxFactory", () ->
+  ### CONSTANTES DE COORDENADAS ###
+  X = 0
+  Y = 1
+  ### FIN: CONSTANTES DE COORDENADAS ###
+
   ### Class Box ###
   class Box
     constructor: (@A, @B, @C, @D) ->
