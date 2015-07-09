@@ -1,31 +1,64 @@
 QuestLog
 
-=FOCO======== 
-
-  Q#00040 CONTROL OPEN  Reorganizar el repositorio
-    RAMA: production (1)
-    RAMA: production-setup  (1.1)
-    RAMA: production-authentication (2)
-    RAMA: production-landing (3.1)
-    RAMA: production-student-dashboard (3.2)
-    RAMA: production-editor (4)
-    RAMA: production-students-courses (5)
-    RAMA: production-teacher-dashboard (6)
+=FOCO========
+  Q#00042 FEAT Proveer server de producción
     DESC: 
-      El orden de features ha sido 
-        1. inicial
-          1.1 setup tests y traslations
-        2. usuarios-y-control-de-acceso
-        3. landing-y-dashboard
-        4. editor-combate
-        5. alumnos-y-grupos
-        6. dashboard-del-profesor
-
-      Se pueden ver las dependencias en [26:1].
-      Idealmente, sería necesario reorganizar el repo para que representara las dependencias.
-      Ire cogiendo los commits con "cherry-pick" e integrandolos en ramas de producción.
-
+      Hay una máquina fisica y hay que provisionarla. Mucho no se sabe de ella.
+    SUBQUESTS:
+      Q#00038 FEAT Investigación: provisionar máquinas físicas con Vagrant
+    TRACK:
+      [DONE] Saber si el procesador es de 32 bits o 64.
+      [DONE] Instalar Trusty
+        [DONE] Generar USB
+        [DONE] Instalación
+          [DONE] Memtest
+          [DONE] Instalación
+        [DONE] Arranque estandar
+          [TODO] Corregir resolucion del GRUB
+            [DONE] Intentar acceder por SSH (192.168.2.17)
+            [DONE] Editar /etc/default/grub
+            [CANCEL] Seleccionar la resolución correcta
+            [DONE] Arrancar en modo texto 
+              Usar [004]
+      [TODO] Provisionar con Vagrant [->Q#00038]
+        [TODO] Crear un setup con varias máquinas para Vagrant, una con la virtual y otra con la fisica
+          Usar info en [002] y [003]
+          [TODO] Proporcionar un usuario adecuado para el provisionamiento de la máquina 
+            Que seguramente requerira capacidades de root.
+      [TODO] Autentificacion con claves publicas para el acceso al servidor.
+    JOURNAL:
+      - Tenemos Karmic Koala instalado, cuya temporada de soporte expiro en 2011.
+      - Es conveniente instalar Trusty Tahir que es LTS (llega hasta abril de 2019).
+      - Parece que el procesador es de 64.
+      - He bajado la distro 
+      - He instalado el programa para generar el usb.
+      - No se puede instalar docker directamente para emular un entorno más moderno. Vale más instalar directamente trusty y de ahí p'alante.
+      - El grub toma una resolucion que no le gusta al monitor. 
+      - Para grub en este caso mejor modo texto.
+    REFERENCIAS:
+      [001] Datos del servidor en [27:3]
+      [002] Vagrant: Multi Machine Setup
+        http://docs.vagrantup.com/v2/multi-machine/index.html
+      [003] Plugin: Vagrant managed servers 
+        https://github.com/tknerr/vagrant-managed-servers
+      [004] AskUbuntu: How do I boot into true text mode 
+        http://askubuntu.com/questions/92276/how-do-i-boot-into-true-text-mode
+      [005] Vagrant::Butcher “sudo: no tty present and no askpass program specified” when trying to “cat /etc/chef/client.pem”
+        http://stackoverflow.com/questions/22467706/vagrantbutcher-sudo-no-tty-present-and-no-askpass-program-specified-when-tr
+  Q#00038 FEAT Investigación: provisionar máquinas físicas con Vagrant
+    DESC: 
+      Para implementar el servidor local de la aplicación, es conveniente preparar una 
+      Vagrantfile con todo lo necesario.
+      Ver [001].
+    OBJETIVOS:
+      - Servidor de Gitolite.
+      - NodeJS 0.12.0
+      - Nginx como proxy inverso para la app de NodeJS
+    REFERENCES:
+      [001] Plugin: Vagrant managed servers 
+        https://github.com/tknerr/vagrant-managed-servers
   Q#00034/1 SUB Implementación de ErrorRenderer
+    UP: Q#00034
     DESC:
       ErrorRenderer es una clase que maneja el canvas y renderiza los errores.
       Tiene métodos para dibujar y redibujar los errores.
@@ -34,7 +67,10 @@ QuestLog
       El error de peticion no esperada lo causaba la clase ErrorRenderer al cargar la imagen en el nodo DOM IMG. Por alguna razón el plugin de traducciones lanza la peticion (me imagino que se dispare el "onload" de la página)
     TRACK:
       [DONE] Corregidos los tests de karma+jasmine para que pasen sin dar errores que no son.
-      [TODO] Implementar el pintado de errores (mockeando los errores de momento)
+      [DONE] Implementar el pintado de errores (mockeando los errores de momento)
+      [DONE] Probar ErrorRenderer
+      [FOCUS] Implementar y probar el Visor Editable (EditableCamera) 
+        [FOCUS] Pruebas de creación de errores
       [TODO] Estudiar como hacer blitting con canvas.
         La técnica consiste en usar un buffer alternativo para dibujar y cuando termine cambiarlo al buffer principal para que no se vea el proceso de composición.
         Usar [001]
@@ -48,7 +84,56 @@ QuestLog
         http://atomicrobotdesign.com/blog/web-development/html5-canvas-you-dont-always-have-to-clear-the-entire-thing/
       [003] Use Quadtrees to detect collisions in 2D space 
         http://gamedevelopment.tutsplus.com/tutorials/quick-tip-use-quadtrees-to-detect-likely-collisions-in-2d-space--gamedev-374
+      [004] What is the difference between pageX/Y clientX/Y screenX/Y in Javascript?
+        http://stackoverflow.com/questions/9262741/what-is-the-difference-between-pagex-y-clientx-y-screenx-y-in-javascript
+  Q#00041 FEAT  Deploy
+    RAMA: feat-00041-deploy
+    DESC:
+      Implementación del deploy. Esta vez sobre la máquina fisica. La idea es usar Vagrant.
+    REFERENCIAS:
+      [001] How To Host Multiple Node.js Applications On a Single VPS with nginx, forever, and crontab
+        https://www.digitalocean.com/community/tutorials/how-to-host-multiple-node-js-applications-on-a-single-vps-with-nginx-forever-and-crontab
+  Q#00029 FEAT Implementación de Front / Landing y Dashboards
+    RAMA: feat-00029-front-landing-dashboards
+    Implementar la landing/página de login ya que ya está disponible el sistema de autentificacion.
+    Para los Dashboards usar los roles, los profesores al Dashboard de profesor y los alumnos al de alumno.
+    Mockear las tareas, entregas y reclamaciones de momento.
+    TASKS:
+      [DONE] Ficha de Jugador con datos mock
+      [DONE] Calendario del jugador con datos mock
+      [DONE] Log de Entregas con datos mock
+      [DONE] Log de Tareas con datos mock
+      [DONE] Enlazar editor desde el dash del alumno.
+      [TODO] Validacion del formulario de login.
+      [TODO] Tablón de Novedades o bien area de notificaciones.
+      [TODO] Diseñar Dashboard del profesor.
+    .
+    .
+  Q#00037 FEAT Soporte de pruebas de front
+    RAMA: feat-00037-soporte-pruebas-front
+    OBJETIVOS:
+      OK Informe de cobertura
+      - Informe de progreso
+      - Informe en HTML en el navegador
+    OBJETIVOSCUMPLIDOS:
+      .
+      .
+    RESULTADOS:
+      Hay informe de cobertura. Tener en cuenta al utilizarlo lo siguiente:
+        - Se genera solo al reiniciar el modo continuo de Karma, no solo al cambiar los archivos.
+        - Si esta activado, no salen los números de línea de los errores, asi que hay que desactivarlo cuando estas en depuración del código.
+    DESC:
+      Asi nos quitamos los problemas de antemano.
+    REFS:
+      [001] Can not load “IE”, it is not registered! error message on Karma
+        http://stackoverflow.com/questions/19764243/can-not-load-ie-it-is-not-registered-error-message-on-karma
+    TRACK:
+      [DONE] Informe de cobertura
+        [DONE] Instalar karma-coverage
+    .
+    .
   Q#00034 ENH Implementar el editor con CANVAS
+    UP: Q#00031
     DESC:
       Una implementación alternativa que use canvas y que permita dibujar directamente sobre la lámina.
       Tiene la ventaja de que no es necesario andar replicando las transformaciones de Zoom y Pan para cada div de error independientemente, sino que las aplicamos directamente sobre todo el canvas
@@ -62,18 +147,14 @@ QuestLog
     TASKS:
       [TODO] Sustituir en las factories y servicios las funciones de vectores 2D por la dependencia del modulo/clase Vector2D
       [TODO] Implementar un Quadtree para acelerar la busqueda de objetos en 2D al repintar
-        [NEXT] Corregir los metodos del QuadTree para que casen con los nuevos mencionados en el renderer de errores.
-          [NEXT] Actualizar karma-jasmine para que se puedan usar tests asincronos con done.
+        [DONE] Corregir los metodos del QuadTree para que casen con los nuevos mencionados en el renderer de errores.
+          [DONE] Actualizar karma-jasmine para que se puedan usar tests asincronos con done.
       [TODO] [Q#00034/1]
-      
-      [FOCUS] Implementar el repintado de errores
-
-
-    .
-    .
   Q#00031 FEAT Módulo de Combate / Front - EDITOR
     RAMA: feat-00031-combate-editor
-    Implementar con datos mock, el editor de láminas (detección de errores).
+    NEXTQUEST: Q#00030 FEAT Módulo de Combate / Back
+    DESC:
+      Implementar con datos mock, el editor de láminas (detección de errores).
     TASK:
       [DONE] Imagen con Zoom y Pan.
       [TODO] Directiva que permite marcación de errores.
@@ -121,11 +202,6 @@ QuestLog
     REFERENCES: 
       [001] Karma tests not running Issue#251 / Github DaftMonk/generator-angular-fullstack
         https://github.com/DaftMonk/generator-angular-fullstack/issues/251
-    .
-    .
-  Q#00030 FEAT Módulo de Combate / Back
-    He visto que puedo implementar el modulo de combate solo con dependencia del modulo de usuarios.
-    Conviene implementarlo para hacer la vista de editor que ya está diseñada.
     .
     .
   Q#00028 FEAT Diseño
@@ -180,29 +256,36 @@ QuestLog
         http://www.flaticon.com/
       .
       .
-  Q#00038 FEAT Investigación: provisionar máquinas físicas con Vagrant
-    DESC: 
-      Para implementar el servidor local de la aplicación, es conveniente preparar una 
-      Vagrantfile con todo lo necesario.
-      Ver [001].
-    OBJETIVOS:
-      - Servidor de Gitolite.
-      - NodeJS 0.12.0
-      - Nginx como proxy inverso para la app de NodeJS
-    REFERENCES:
-      [001] Plugin: Vagrant managed servers 
-        https://github.com/tknerr/vagrant-managed-servers
 =ACTIVAS=====
+  Q#00030 FEAT Módulo de Combate / Back
+    He visto que puedo implementar el modulo de combate solo con dependencia del modulo de usuarios.
+    Conviene implementarlo para hacer la vista de editor que ya está diseñada.
+    .
+    .
+  Q#00040 CONTROL OPEN  Reorganizar el repositorio
+    RAMA: production (1)
+    RAMA: production-setup  (1.1)
+    RAMA: production-authentication (2)
+    RAMA: production-landing (3.1)
+    RAMA: production-student-dashboard (3.2)
+    RAMA: production-editor (4)
+    RAMA: production-students-courses (5)
+    RAMA: production-teacher-dashboard (6)
+    DESC: 
+      El orden de features ha sido 
+        1. inicial
+          1.1 setup tests y traslations
+        2. usuarios-y-control-de-acceso
+        3. landing-y-dashboard
+        4. editor-combate
+        5. alumnos-y-grupos
+        6. dashboard-del-profesor
+
+      Se pueden ver las dependencias en [26:1].
+      Idealmente, sería necesario reorganizar el repo para que representara las dependencias.
+      Ire cogiendo los commits con "cherry-pick" e integrandolos en ramas de producción.
   [TODO] Integrar Sikuli en el mapa de recursos.
     De http://www.sikuli.org/
-  Q#00037 FIX Instalar los plugins de Karma para probar con el IE, el Chrome y el Firefox
-    DESC:
-      Asi nos quitamos los problemas de antemano.
-    REFS:
-      [001] Can not load “IE”, it is not registered! error message on Karma
-        http://stackoverflow.com/questions/19764243/can-not-load-ie-it-is-not-registered-error-message-on-karma
-    .
-    .
   Q#00039 ENH Mejoras de la quest log
     RAMA: enh-00039-mejoras-de-la-quest-log
     DESC:
@@ -214,20 +297,6 @@ QuestLog
   Q#00036 FEAT Hosting alternativo
     DESC:
       Preparar un hosting alternativo por si las moscas
-    .
-    .
-  Q#00029 FEAT Implementación de Front / Landing y Dashboards
-    RAMA: feat-00029-front-landing-dashboards
-    Implementar la landing/página de login ya que ya está disponible el sistema de autentificacion.
-    Para los Dashboards usar los roles, los profesores al Dashboard de profesor y los alumnos al de alumno.
-    Mockear las tareas, entregas y reclamaciones de momento.
-    TASKS:
-      [DONE] Ficha de Jugador con datos mock
-      [DONE] Calendario del jugador con datos mock
-      [DONE] Log de Entregas con datos mock
-      [DONE] Log de Tareas con datos mock
-      [TODO] Tablón de Novedades o bien area de notificaciones.
-      [TODO] Diseñar Dashboard del profesor
     .
     .
   [TODO] Sustituir todos los border-radius por un mixin de less.
