@@ -1,9 +1,22 @@
 'use strict'
 
 angular.module 'pfcLaminasNodeApp'
-.directive 'alcahestPanZoom', ->
+.directive 'alcahestPanZoom', (Vector2D)->
   restrict: 'EA'
   link: (scope, element, attrs) ->
+    ## OPERACIONES DE VECTORES 2D
+    vec2DSum = (vec2D1, vec2D2) ->
+      return [vec2D1[0] + vec2D2[0], vec2D1[1] + vec2D2[1]]
+    vec2DDif = (vec2D1, vec2D2) ->
+      return [vec2D1[0] - vec2D2[0], vec2D1[1] - vec2D2[1]]
+    vec2DInv = (vec2D1, vec2D2) ->
+      return [-vec2D1[0] , -vec2D1[1]]
+    vec2DScale = (scale, vec2D) ->
+      return [scale*vec2D[0], scale*vec2D[1]]
+    vec2DPrint = (vec2D) ->
+      console.log("<%s, %s>", vec2D[0], vec2D[1])
+    ## FIN: OPERACIONES DE VECTORES 2D
+
     scope.doing_pan = false
     scope.start_point = [null, null]
     scope.translated_point = [0,0]
@@ -63,7 +76,7 @@ angular.module 'pfcLaminasNodeApp'
       applyTransform(element, scope, scope.zoom_anchor)
 
     forcedMove = (element, scope, delta_x, delta_y) ->
-      delta = vect2DScale(1/scope.zoom_level, [delta_x, delta_y])
+      delta = vec2DScale(1/scope.zoom_level, [delta_x, delta_y])
       scope.translated_point = vec2DSum(scope.translated_point, delta)
       applyTransform(element, scope, scope.zoom_anchor)
 
@@ -101,19 +114,6 @@ angular.module 'pfcLaminasNodeApp'
       applyTransform(element, scope, scope.zoom_anchor)
     ## fin: funciones
 
-    ## OPERACIONES DE VECTORES 2D
-    vec2DSum = (vec2D1, vec2D2) ->
-      return [vec2D1[0] + vec2D2[0], vec2D1[1] + vec2D2[1]]
-    vec2DDif = (vec2D1, vec2D2) ->
-      return [vec2D1[0] - vec2D2[0], vec2D1[1] - vec2D2[1]]
-    vec2DInv = (vec2D1, vec2D2) ->
-      return [-vec2D1[0] , -vec2D1[1]]
-    vec2DScale = (scale, vec2D) ->
-      return [scale*vec2D[0], scale*vec2D[1]]
-    vec2DPrint = (vec2D) ->
-      console.log("<%s, %s>", vec2D[0], vec2D[1])
-    ## FIN: OPERACIONES DE VECTORES 2D
-
     ## METODOS DE DEBUG
     framePrint = (frame) ->
       console.log("(O:<%s, %s>, W:%s, H:%s, C:<%s, %s>)", 
@@ -147,8 +147,7 @@ angular.module 'pfcLaminasNodeApp'
 
     ## eventos de angular
     scope.$on "alcahest:pan-left", () ->
-      centerDrawing(element, scope)
-      #forcedMove(element, scope, -50, 0)
+      forcedMove(element, scope, -50, 0)
     scope.$on "alcahest:pan-up", () ->
       forcedMove(element, scope, 0, -50)
     scope.$on "alcahest:pan-right", () ->
