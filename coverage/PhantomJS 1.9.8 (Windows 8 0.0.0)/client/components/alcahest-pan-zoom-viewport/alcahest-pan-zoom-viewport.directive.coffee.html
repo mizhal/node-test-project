@@ -1,0 +1,543 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for ./client/components/alcahest-pan-zoom-viewport/alcahest-pan-zoom-viewport.directive.coffee</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../../../prettify.css">
+    <link rel="stylesheet" href="../../../base.css">
+    <style type='text/css'>
+        div.coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class="header low">
+    <h1>Code coverage report for <span class="entity">./client/components/alcahest-pan-zoom-viewport/alcahest-pan-zoom-viewport.directive.coffee</span></h1>
+    <h2>
+        Statements: <span class="metric">2.35% <small>(2 / 85)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">0% <small>(0 / 4)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">3.23% <small>(1 / 31)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">3.45% <small>(2 / 58)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
+    </h2>
+    <div class="path"><a href="../../../index.html">All files</a> &#187; <a href="index.html">./client/components/alcahest-pan-zoom-viewport/</a> &#187; alcahest-pan-zoom-viewport.directive.coffee</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">'use strict'
+&nbsp;
+angular.module 'pfcLaminasNodeApp'
+.directive 'alcahestPanZoomViewport', <span class="fstat-no" title="function not covered" >-</span>&gt;
+  restrict: 'EA'
+  link: <span class="fstat-no" title="function not covered" >(</span>scope, element, attrs) -&gt;
+&nbsp;
+    ## OPERACIONES DE VECTORES 2D
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >    v</span></span>ec2DSum = <span class="fstat-no" title="function not covered" >(</span>vec2D1, vec2D2) -&gt;
+<span class="cstat-no" title="statement not covered" >      return [vec2D1[0] + vec2D2[0], vec2D1[1] + vec2D2[1]]</span>
+<span class="cstat-no" title="statement not covered" >    vec2DDif = <span class="fstat-no" title="function not covered" >(</span>vec2D1, vec2D2) -&gt;</span>
+<span class="cstat-no" title="statement not covered" >      return [vec2D1[0] - vec2D2[0], vec2D1[1] - vec2D2[1]]</span>
+<span class="cstat-no" title="statement not covered" >    vec2DInv = <span class="fstat-no" title="function not covered" >(</span>vec2D1, vec2D2) -&gt;</span>
+<span class="cstat-no" title="statement not covered" >      return [-vec2D1[0] , -vec2D1[1]]</span>
+<span class="cstat-no" title="statement not covered" >    vec2DScale = <span class="fstat-no" title="function not covered" >(</span>scale, vec2D) -&gt;</span>
+<span class="cstat-no" title="statement not covered" >      return [scale*vec2D[0], scale*vec2D[1]]</span>
+<span class="cstat-no" title="statement not covered" >    vec2DPrint = <span class="fstat-no" title="function not covered" >(</span>vec2D) -&gt;</span>
+      console.log("&lt;%s, %s&gt;", vec2D[0], vec2D[1])
+    ## FIN: OPERACIONES DE VECTORES 2D
+&nbsp;
+    ### MODELOS ###
+&nbsp;
+    ## NOTA: como se usan trasformaciones CSS3 los origenes fisicos de los elementos de la UI
+    ## no cambian e inicialmente coinciden.
+<span class="cstat-no" title="statement not covered" >    scope.viewport = {</span>
+      ## el origen del viewport es fisicamente (0,0) y no se mueve
+      dom_element: null,
+      translation: [0, 0],
+      width: 0,
+      height: 0,
+      center: [0,0],
+      world: null,
+      active_pan: false,
+      pan_start_point: [0, 0]
+      update: <span class="fstat-no" title="function not covered" >(</span>) -&gt;
+<span class="cstat-no" title="statement not covered" >        t</span>his.width = this.dom_element.width()
+        this.height = this.dom_element.height()
+&nbsp;
+      moveTo: <span class="fstat-no" title="function not covered" >(</span>translation) -&gt;
+        this.translation = translation
+&nbsp;
+      move: <span class="fstat-no" title="function not covered" >(</span>translation) -&gt;
+        this.translation = vec2DSum(this.translation, translation)
+&nbsp;
+      zoom: <span class="fstat-no" title="function not covered" >(</span>scale) -&gt;
+        this.world.zoom(scale)
+&nbsp;
+      draw: <span class="fstat-no" title="function not covered" >(</span>) -&gt;
+        this.world.draw()
+&nbsp;
+      finishPan: <span class="fstat-no" title="function not covered" >(</span>) -&gt;
+<span class="cstat-no" title="statement not covered" >        t</span>his.active_pan = false
+        this.dom_element.css "cursor", "default"
+&nbsp;
+      startPan: <span class="fstat-no" title="function not covered" >(</span>point) -&gt;
+<span class="cstat-no" title="statement not covered" >        t</span>his.pan_start_point = point
+<span class="cstat-no" title="statement not covered" >        this.active_pan = true</span>
+        this.dom_element.css "cursor", "move" 
+&nbsp;
+      pan: <span class="fstat-no" title="function not covered" >(</span>point) -&gt;  
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >        d</span></span>elta = vec2DDif(point, this.pan_start_point)
+<span class="cstat-no" title="statement not covered" >        this.move(delta)</span>
+<span class="cstat-no" title="statement not covered" >        this.pan_start_point = point</span>
+        this.draw()
+&nbsp;
+      activePan: <span class="fstat-no" title="function not covered" >(</span>) -&gt;
+<span class="cstat-no" title="statement not covered" >        return this.active_pan</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    scope.world = {</span>
+      dom_element: null,
+      viewport: null,
+      scale: 1,
+      ## traslacion entre el origen inicial del mundo y la compensacion por el zoom
+      translation: [0, 0], 
+      width: element.width(),
+      height: element.height(),
+      zoom: <span class="fstat-no" title="function not covered" >(</span>scale) -&gt;
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >        t</span></span>his.scale *= scale
+<span class="cstat-no" title="statement not covered" >        compensation_vector = [</span>
+          - this.width * (1 - this.scale) / 2,
+          - this.height * (1 - this.scale) / 2
+        ]
+        # Hay que poner el vector de compensacion en la escala 1
+<span class="cstat-no" title="statement not covered" >        compensation_vector = vec2DScale(1 / this.scale, compensation_vector)</span>
+        this.translation = vec2DSum(this.translation, compensation_vector)
+      draw: <span class="fstat-no" title="function not covered" >(</span>) -&gt;
+<span class="cstat-no" title="statement not covered" >        #</span>## 
+          escala del mundo y traslacion (inversa) del viewport
+          en este modelo no se mueve el viewport sino el mundo 
+        ###
+<span class="cstat-no" title="statement not covered" >        viewport_translation = this.translationFromViewport(this.viewport.translation) </span>
+<span class="cstat-no" title="statement not covered" >        formula = "scale(" + this.scale + ", " + this.scale +</span>
+          ") translate(" + viewport_translation[0] + "px," + 
+          viewport_translation[1] + "px)"
+        ### traslacion inicial del mundo para compensar el escalado centrado ###
+<span class="cstat-no" title="statement not covered" >        formula = "translate(" + this.translation[0] + "px," + </span>
+          this.translation[1] + "px) " + formula
+        
+        this.dom_element.css 'transform', formula
+&nbsp;
+      translationFromViewport: <span class="fstat-no" title="function not covered" >(</span>translation) -&gt;
+<span class="cstat-no" title="statement not covered" >        return vec2DScale(1 / this.scale, translation)</span>
+        
+      update: <span class="fstat-no" title="function not covered" >(</span>) -&gt;
+<span class="cstat-no" title="statement not covered" >        t</span>his.origin[0] = this.dom_element.position().left
+<span class="cstat-no" title="statement not covered" >        this.origin[1] = this.dom_element.position().top</span>
+<span class="cstat-no" title="statement not covered" >        this.width = this.dom_element.width() * this.scale</span>
+<span class="cstat-no" title="statement not covered" >        this.height = this.dom_element.height() * this.scale</span>
+<span class="cstat-no" title="statement not covered" >        this.center[0] = this.origin[0] + this.width / 2.0</span>
+        this.center[1] = this.origin[1] + this.height / 2.0
+&nbsp;
+      center: <span class="fstat-no" title="function not covered" >(</span>element, scope) -&gt;
+<span class="cstat-no" title="statement not covered" >        t</span>his.moveViewportTo(this.center)
+<span class="cstat-no" title="statement not covered" >        this.moveViewport([this.viewport.width/2, this.viewport.height/2])</span>
+        this.draw()
+&nbsp;
+    }
+    ### inicializacion ###
+<span class="cstat-no" title="statement not covered" >    scope.viewport.dom_element = element.parent()</span>
+<span class="cstat-no" title="statement not covered" >    scope.world.dom_element = element</span>
+<span class="cstat-no" title="statement not covered" >    scope.world.viewport = scope.viewport</span>
+<span class="cstat-no" title="statement not covered" >    scope.viewport.world = scope.world</span>
+    ### FIN: MODELOS ###
+&nbsp;
+    ## eventos de navegador
+<span class="cstat-no" title="statement not covered" >    element.parent().mousemove <span class="fstat-no" title="function not covered" >(</span>event) -&gt;</span>
+<span class="cstat-no" title="statement not covered" >      if scope.viewport.activePan()</span>
+        scope.viewport.pan([event.screenX, event.screenY])
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    element.parent().click <span class="fstat-no" title="function not covered" >(</span>event) -&gt;</span>
+<span class="cstat-no" title="statement not covered" >      if scope.viewport.activePan()</span>
+        scope.viewport.finishPan()
+      else 
+        scope.viewport.startPan([event.screenX, event.screenY])
+    ## fin: eventos de navegador
+&nbsp;
+    ## eventos de angular
+<span class="cstat-no" title="statement not covered" >    scope.$on "alcahest:pan-center", <span class="fstat-no" title="function not covered" >(</span>) -&gt;</span>
+<span class="cstat-no" title="statement not covered" >      s</span>cope.viewport.center()
+      scope.viewport.draw()
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    scope.$on "alcahest:pan-left", <span class="fstat-no" title="function not covered" >(</span>) -&gt;</span>
+<span class="cstat-no" title="statement not covered" >      s</span>cope.viewport.move([-50, 0])
+      scope.viewport.draw()
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    scope.$on "alcahest:pan-up", <span class="fstat-no" title="function not covered" >(</span>) -&gt;</span>
+<span class="cstat-no" title="statement not covered" >      s</span>cope.viewport.move([0, -50])
+      scope.viewport.draw()
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    scope.$on "alcahest:pan-right", <span class="fstat-no" title="function not covered" >(</span>) -&gt;</span>
+<span class="cstat-no" title="statement not covered" >      s</span>cope.viewport.move([50, 0])
+      scope.viewport.draw()
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    scope.$on "alcahest:pan-down", <span class="fstat-no" title="function not covered" >(</span>) -&gt;</span>
+<span class="cstat-no" title="statement not covered" >      s</span>cope.viewport.move([0, 50])
+      scope.viewport.draw()
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    scope.$on "alcahest:zoom-minus", <span class="fstat-no" title="function not covered" >(</span>) -&gt;</span>
+<span class="cstat-no" title="statement not covered" >      s</span>cope.viewport.zoom(0.8)
+      scope.viewport.draw()
+&nbsp;
+    scope.$on "alcahest:zoom-plus", <span class="fstat-no" title="function not covered" >(</span>) -&gt;
+<span class="cstat-no" title="statement not covered" >      s</span>cope.viewport.zoom(1.25)
+      scope.viewport.draw()  
+&nbsp;
+    ## fin: eventos de angular</pre></td></tr>
+</table></pre>
+
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Thu Jul 09 2015 09:31:23 GMT+0200 (Hora de verano romance)</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>

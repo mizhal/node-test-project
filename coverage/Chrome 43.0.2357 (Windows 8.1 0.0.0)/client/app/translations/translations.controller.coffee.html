@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for ./client/app/translations/translations.controller.coffee</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../../../prettify.css">
+    <link rel="stylesheet" href="../../../base.css">
+    <style type='text/css'>
+        div.coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class="header medium">
+    <h1>Code coverage report for <span class="entity">./client/app/translations/translations.controller.coffee</span></h1>
+    <h2>
+        Statements: <span class="metric">69.57% <small>(16 / 23)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">100% <small>(0 / 0)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">42.86% <small>(3 / 7)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">92.86% <small>(13 / 14)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
+    </h2>
+    <div class="path"><a href="../../../index.html">All files</a> &#187; <a href="index.html">./client/app/translations/</a> &#187; translations.controller.coffee</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">'use strict'
+&nbsp;
+angular.module 'pfcLaminasNodeApp'
+.controller 'TranslationsCtrl', ($scope, $rootScope, socket, $http, $translate, $translatePartialLoader, $state, notificationManager) -&gt;
+  
+  ## TRADUCCIONES
+  $translatePartialLoader.addPart "translations"
+  $translate.refresh()
+  $scope.translationsTable = [];
+  ## FIN TRADUCCIONES
+&nbsp;
+  ## CONFIGURACION TABLA
+  $scope.gridOptions = {
+    data: 'translationsTable',
+    columnDefs: [
+      {field: "key", displayName: "TRANSLATION.FIELD.KEY", headerCellFilter: "translate"},
+      {field: "language", displayName: "TRANSLATION.FIELD.LANGUAGE", headerCellFilter: "translate"},
+      {field: "view", displayName: "TRANSLATION.FIELD.VIEW", headerCellFilter: "translate"},
+      {field: "value", displayName: "TRANSLATION.FIELD.VALUE", headerCellFilter: "translate"},
+      {name: "TABLE_ACTIONS", displayName: "TABLE_ACTIONS", headerCellFilter: "translate", cellTemplate: "&lt;a translate='TABLE_EDIT' href='/translations/edit/{{row.entity.id}}' class='btn btn-info'&gt;&lt;/a&gt;"}
+    ]
+  }
+  ## FIN CONFIGURACION TABLA
+&nbsp;
+  ## FILTRADO DE TABLA
+  $scope.filter = "filter"
+  ## FIN FILTRADO DE TABLA
+&nbsp;
+  ## NOTIFICACIONES
+  $scope.notif = notificationManager 
+  ## FIN NOTIFICACIONES
+&nbsp;
+  ## ACCIONES DE LA VISTA
+  $scope.addNew = <span class="fstat-no" title="function not covered" >-</span>&gt;
+    $state.go("new-translation")
+  ## FIN ACCIONES DE LA VISTA
+&nbsp;
+  ## PROVISION DE DATOS / SINCRONIZACION
+  $http.get("/api/translations")
+    .success (data, status, headers, config) -&gt;
+      socket.syncUpdates 'Translation', $scope.translationsTable
+<span class="cstat-no" title="statement not covered" >      $</span>scope.translationsTable.push(element) for element in data
+&nbsp;
+    .error <span class="fstat-no" title="function not covered" >(</span>data, status, headers, config) -&gt;
+<span class="cstat-no" title="statement not covered" >      $</span>scope.translationsTable = {}
+&nbsp;
+      $translate "WEB_SERVICE_CONNECTION_ERROR"
+        .then <span class="fstat-no" title="function not covered" >(</span>msg) -&gt;
+          $scope.alerts.push type:"danger", msg: msg
+&nbsp;
+  $scope.$on '$destroy', <span class="fstat-no" title="function not covered" >-</span>&gt;
+    socket.unsyncUpdates 'Translation'
+  ## FIN PROVISION DE DATOS / SINCRONIZACION</pre></td></tr>
+</table></pre>
+
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Thu Jul 09 2015 09:31:23 GMT+0200 (Hora de verano romance)</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>

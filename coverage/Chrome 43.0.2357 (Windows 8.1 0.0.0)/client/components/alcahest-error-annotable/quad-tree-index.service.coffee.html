@@ -1,0 +1,957 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for ./client/components/alcahest-error-annotable/quad-tree-index.service.coffee</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../../../prettify.css">
+    <link rel="stylesheet" href="../../../base.css">
+    <style type='text/css'>
+        div.coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class="header high">
+    <h1>Code coverage report for <span class="entity">./client/components/alcahest-error-annotable/quad-tree-index.service.coffee</span></h1>
+    <h2>
+        Statements: <span class="metric">94.91% <small>(205 / 216)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">76.19% <small>(32 / 42)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">85.37% <small>(35 / 41)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">91.34% <small>(116 / 127)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
+    </h2>
+    <div class="path"><a href="../../../index.html">All files</a> &#187; <a href="index.html">./client/components/alcahest-error-annotable/</a> &#187; quad-tree-index.service.coffee</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16</span>
+<span class="cline-any cline-yes">16</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16</span>
+<span class="cline-any cline-yes">16</span>
+<span class="cline-any cline-yes">16</span>
+<span class="cline-any cline-yes">16</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16</span>
+<span class="cline-any cline-yes">16</span>
+<span class="cline-any cline-yes">181</span>
+<span class="cline-any cline-yes">181</span>
+<span class="cline-any cline-yes">181</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">181</span>
+<span class="cline-any cline-yes">181</span>
+<span class="cline-any cline-yes">181</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">487389</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">41</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16</span>
+<span class="cline-any cline-yes">16</span>
+<span class="cline-any cline-yes">5565</span>
+<span class="cline-any cline-yes">5565</span>
+<span class="cline-any cline-yes">5565</span>
+<span class="cline-any cline-yes">5565</span>
+<span class="cline-any cline-yes">5565</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5565</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5565</span>
+<span class="cline-any cline-yes">5565</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">273824</span>
+<span class="cline-any cline-yes">185792</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">273824</span>
+<span class="cline-any cline-yes">61975</span>
+<span class="cline-any cline-yes">247900</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">211849</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">279361</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">487389</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">67</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">41</span>
+<span class="cline-any cline-yes">41</span>
+<span class="cline-any cline-yes">8</span>
+<span class="cline-any cline-yes">32</span>
+<span class="cline-any cline-yes">32</span>
+<span class="cline-any cline-yes">41</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">33</span>
+<span class="cline-any cline-yes">21</span>
+<span class="cline-any cline-yes">41</span>
+<span class="cline-any cline-yes">33</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">41</span>
+<span class="cline-any cline-yes">41</span>
+<span class="cline-any cline-yes">74</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">41</span>
+<span class="cline-any cline-yes">41</span>
+<span class="cline-any cline-yes">66</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">41</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1382</span>
+<span class="cline-any cline-yes">6910</span>
+<span class="cline-any cline-yes">27640</span>
+<span class="cline-any cline-yes">27392</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">185792</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">184410</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1382</span>
+<span class="cline-any cline-yes">1382</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1382</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">35</span>
+<span class="cline-any cline-yes">35</span>
+<span class="cline-any cline-yes">24</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">43</span>
+<span class="cline-any cline-yes">43</span>
+<span class="cline-any cline-yes">67</span>
+<span class="cline-any cline-yes">43</span>
+<span class="cline-any cline-yes">40</span>
+<span class="cline-any cline-yes">330</span>
+<span class="cline-any cline-yes">43</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5486</span>
+<span class="cline-any cline-yes">5486</span>
+<span class="cline-any cline-yes">1371</span>
+<span class="cline-any cline-yes">5484</span>
+<span class="cline-any cline-yes">5486</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10</span>
+<span class="cline-any cline-yes">11</span>
+<span class="cline-any cline-yes">10</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">10</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">8</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16</span>
+<span class="cline-any cline-yes">16</span>
+<span class="cline-any cline-yes">16</span>
+<span class="cline-any cline-yes">16</span>
+<span class="cline-any cline-yes">16</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9</span>
+<span class="cline-any cline-yes">9</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">158</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">23</span>
+<span class="cline-any cline-yes">23</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9</span>
+<span class="cline-any cline-yes">9</span>
+<span class="cline-any cline-yes">25</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-yes">67</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16</span></td><td class="text"><pre class="prettyprint lang-js">### Service QuadTreeIndex
+  Todas las listas siguen el orden de las agujas del reloj empezando por
+  la esquina del origen de la pantalla (top - left)
+    A: topleft B: topright C: bottomrigth D: bottomleft
+&nbsp;
+    0: topleft 1: topright 2: bottomrigth 3: bottomleft
+###
+&nbsp;
+angular.module "alcahest"
+.factory "quadTreeIndex", (Vector2D, BoxFactory) -&gt;
+  ###
+    typedef vec2D float[2] &lt;- [x, y]
+    typedef rect2D float[4] &lt;- [topleft, toprigth, bottomrigth, bottomleft]
+    typedef node2D struct {
+      rect2D bounds
+      float width
+      float height
+    }
+    interface Positionable {
+      vec2D position() : returns x, y of topleft of object boundingbox
+      rect2D bounds() : returns object boundingbox
+    }
+  ###
+&nbsp;
+  MAX_OBJECTS_PER_NODE = 5
+&nbsp;
+  ## VECTOR CONSTANTS
+  X = 0
+  Y = 1
+  ## RECT CONSTANTS
+  A = 0
+  B = 1
+  C = 2
+  D = 3
+  
+  ### Class Positionable ###
+  class Positionable
+    constructor: (item, start_vec2D, width, height) -&gt;
+      @id = this.getId()
+      @item = item
+      @box = BoxFactory.create(
+        start_vec2D,
+        Vector2D.sum(start_vec2D, [width, 0]),
+        Vector2D.sum(start_vec2D, [width, height]),
+        Vector2D.sum(start_vec2D, [0, height]),
+      )
+&nbsp;
+    @counter: 0
+&nbsp;
+    ### getId
+      Asigna un Id unico a cada objeto posicionable para eliminar
+      duplicados mas facilmente
+    ###
+    getId: () -&gt;
+      tmp = Positionable.counter
+      Positionable.counter++
+      return tmp
+&nbsp;
+    position: <span class="fstat-no" title="function not covered" >(</span>) -&gt;
+<span class="cstat-no" title="statement not covered" >      return @box[0]</span>
+&nbsp;
+    bounds: () -&gt;
+      return @box
+&nbsp;
+    overlapsRect: (Av, Cv) -&gt;
+      return @box.overlapsRect(Av, Cv)
+&nbsp;
+  ### FIN: Class Positionable ###
+&nbsp;
+  ### Class QNode ###
+  class QNode
+    constructor: (start_vec2D, width, height, quad_tree_index) -&gt;
+      @start = start_vec2D
+      @width = width
+      @height = height
+      @parent = quad_tree_index
+      <span class="missing-if-branch" title="if path not taken" >I</span>if @parent == undefined
+<span class="cstat-no" title="statement not covered" >        throw "Parent undefined"</span>
+      ## VERTICES
+      @box = BoxFactory.create(
+         start_vec2D,
+         Vector2D.sum(start_vec2D, [width, 0]),
+         Vector2D.sum(start_vec2D, [width, height]),
+         Vector2D.sum(start_vec2D, [0, height])
+      )
+&nbsp;
+      @objects = []
+      @children = []
+&nbsp;
+    NW: <span class="fstat-no" title="function not covered" >(</span>) -&gt;
+<span class="cstat-no" title="statement not covered" >      if @children.length &gt; 0</span>
+<span class="cstat-no" title="statement not covered" >        return @children[0]</span>
+&nbsp;
+    NE: <span class="fstat-no" title="function not covered" >(</span>) -&gt;
+<span class="cstat-no" title="statement not covered" >      if @children.length &gt; 0</span>
+<span class="cstat-no" title="statement not covered" >        return @children[1]</span>
+&nbsp;
+    SE: <span class="fstat-no" title="function not covered" >(</span>) -&gt;
+<span class="cstat-no" title="statement not covered" >      if @children.length &gt; 0</span>
+<span class="cstat-no" title="statement not covered" >        return @children[2]</span>
+&nbsp;
+    SW: <span class="fstat-no" title="function not covered" >(</span>) -&gt;
+<span class="cstat-no" title="statement not covered" >      if @children.length &gt; 0</span>
+<span class="cstat-no" title="statement not covered" >        return @children[3]</span>
+&nbsp;
+    ###
+      @param object: Positionable
+    ###
+    appendObject: (object) -&gt;
+      if @objects.length &gt;= MAX_OBJECTS_PER_NODE
+        @split()
+&nbsp;
+      if @hasChildren()
+        for child in @children
+          if child.overlaps(object)
+            child.appendObject(object)
+      else
+        if @overlaps(object)
+          @objects.push(object)
+&nbsp;
+    hasChildren: () -&gt;
+      return @children.length &gt; 0
+&nbsp;
+    ###
+      @param object: Positionable
+    ###
+    overlaps: (object) -&gt;
+      return @box.overlaps(object.bounds() )
+    ###
+      @param A: vec2D
+      @param B: vec2D
+    ###
+    overlapsRect: (Av, Cv) -&gt;
+      return @box.overlapsRect(Av, Cv)
+&nbsp;
+    ###
+      @param A: vec2D
+      @param B: vec2D
+    ###
+    searchRect: (A, C) -&gt;
+      found_objects = []
+      if @hasChildren()
+        for child in @children
+          <span class="missing-if-branch" title="else path not taken" >E</span>if @overlapsRect(A, C)
+            for found_object in child.searchRect(A, C)
+              found_objects.push(found_object)
+      else
+        if @overlapsRect(A, C)
+          for found_object in @objects
+            if found_object.overlapsRect(A , C)
+              found_objects.push(found_object)
+&nbsp;
+      ## Habra duplicados (objetos de mayor tamanyo que un nodo)
+      uniq = {}
+      for obj in found_objects
+        uniq[obj.id] = obj
+&nbsp;
+      found_objects_uniq = []
+      for key, value of uniq
+        found_objects_uniq.push(value)
+&nbsp;
+      return found_objects_uniq
+&nbsp;
+    splitObjects: () -&gt;
+      for object in @objects
+        for subnode in @children
+          if subnode.overlaps(object)
+            subnode.appendObject(object)
+      @objects = []
+&nbsp;
+    split: () -&gt;
+      if @with &lt;= @parent.min_width || @height &lt;= @parent.min_height
+        ## if we have reached the minimum size in any dimension
+        ## we won't be doing any more splits
+        return
+&nbsp;
+      new_w = @width / 2.0
+      new_h = @height / 2.0
+&nbsp;
+      @children = [
+        new QNode(@start, new_w, new_h, @parent),
+        new QNode(
+          Vector2D.sum(@start, [new_w, 0]),
+          new_w,
+          new_h,
+          @parent
+        ),
+        new QNode(
+          Vector2D.sum(@start, [new_w, new_h]),
+          new_w,
+          new_h,
+          @parent
+        ),
+        new QNode(
+          Vector2D.sum(@start, [0, new_h], @parent),
+          new_w,
+          new_h,
+          @parent
+        )
+      ]
+      @splitObjects()
+&nbsp;
+    clear: () -&gt;
+      @objects = []
+      for child in @children
+        child.clear()
+      @children = []
+&nbsp;
+    annotateObjectIds: () -&gt;
+      ids = []
+      for object in @objects
+        ids.push(object.id)
+      for child in @children
+        for id in child.annotateObjectIds()
+          ids.push(id)
+      return ids
+&nbsp;
+    countNodes: () -&gt;
+      count = 1
+      if @hasChildren()
+        for child in @children
+          count += child.countNodes()
+      return count
+&nbsp;
+    removeById: (object_id) -&gt;
+      found = @objects.filter (object) -&gt;
+        return object.id == object_id
+      if found.length &gt; 0
+        for found_i in found
+          idx = @objects.indexOf(found_i)
+          @objects.splice(idx, 1)
+      if @hasChildren()
+        for child in @children
+          child.removeById(object_id)
+&nbsp;
+  ### FIN: Class QNode ###
+&nbsp;
+  ### Class QuadTree ###
+  class QuadTree
+    constructor: () -&gt;
+      @index_root = new QNode([0, 0], 100, 100, this)
+      @min_width = 10
+      @min_height = 10
+&nbsp;
+    init: (width, height, min_width, min_height) -&gt;
+      @clear()
+      @index_root = new QNode([0, 0], width, height, this)
+      ### cinco divisiones 2^5 ###
+      @min_height = min_height || width / 32
+      @min_width = min_width || height / 32
+&nbsp;
+    width: () -&gt;
+      return @index_root.width
+&nbsp;
+    height: () -&gt;
+      return @index_root.height
+&nbsp;
+    put: (vec2D, width, height, item) -&gt;
+      object_positionable = new Positionable(item, vec2D, width, height)
+      @index_root.appendObject(object_positionable)
+&nbsp;
+    putWithForcedId: (id, vec2D, width, height, item) -&gt;
+      object_positionable = new Positionable(item, vec2D, width, height)
+      object_positionable.id = id
+      @index_root.appendObject(object_positionable)
+&nbsp;
+    ### QuadTreeIndex.get
+      Returns all objects found inside a rectangle formed by
+      the two vectors passed as parameters.
+    ###
+    getObjects: (A, C) -&gt;
+      found = @index_root.searchRect(A, C)
+      return $.map found, (positionable, index) -&gt;
+        return positionable.item
+&nbsp;
+    ### QuadTreeIndex.getPositionables
+      Returns all objects with bounding box and z - index found inside a rectangle formed by
+      the two vectors passed as parameters.
+    ###
+    getPositionables: <span class="fstat-no" title="function not covered" >(</span>A, C) -&gt;
+<span class="cstat-no" title="statement not covered" >      return @index_root.searchRect(A, C)</span>
+&nbsp;
+    newNode: (start, w, h) -&gt;
+      return new QNode(start, w, h, this)
+&nbsp;
+    clear: () -&gt;
+      @index_root.clear()
+      @index_root = new QNode([0, 0], @index_root.width, @index_root.height, this)
+&nbsp;
+    countObjects: () -&gt;
+      ids_found = @index_root.annotateObjectIds()
+      unique = {}
+      for id in ids_found
+        unique[id] = 1
+      return Object.keys(unique).length
+&nbsp;
+    countNodes: () -&gt;
+      return @index_root.countNodes()
+&nbsp;
+    removeById: (object_id) -&gt;
+      @index_root.removeById(object_id)
+&nbsp;
+  ### FIN: Class QuadTree ###
+&nbsp;
+  return new QuadTree()</pre></td></tr>
+</table></pre>
+
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Thu Jul 09 2015 09:31:23 GMT+0200 (Hora de verano romance)</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>

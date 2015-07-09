@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for ./client/app/main/main.controller.coffee</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../../../prettify.css">
+    <link rel="stylesheet" href="../../../base.css">
+    <style type='text/css'>
+        div.coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class="header low">
+    <h1>Code coverage report for <span class="entity">./client/app/main/main.controller.coffee</span></h1>
+    <h2>
+        Statements: <span class="metric">11.76% <small>(2 / 17)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">0% <small>(0 / 2)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">16.67% <small>(1 / 6)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">16.67% <small>(2 / 12)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
+    </h2>
+    <div class="path"><a href="../../../index.html">All files</a> &#187; <a href="index.html">./client/app/main/</a> &#187; main.controller.coffee</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">'use strict'
+&nbsp;
+angular.module 'pfcLaminasNodeApp'
+.controller 'MainCtrl', <span class="fstat-no" title="function not covered" >(</span>$scope, $http, socket, $translate, $translatePartialLoader, Auth, $location, $window) -&gt;
+  ## TRADUCCIONES
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >  $</span></span>translatePartialLoader.addPart 'main'
+<span class="cstat-no" title="statement not covered" >  $translate.refresh()</span>
+  ## FIN: TRADUCCIONES
+&nbsp;
+  ## CARRUSELES 
+<span class="cstat-no" title="statement not covered" >  text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras ac dapibus ex. Etiam pellentesque nibh tellus, non bibendum justo eleifend lacinia. Etiam non ultrices nibh, sed accumsan nisi. Nulla porttitor lacus ac congue ullamcorper. Mauris felis purus, ultrices eget leo sed, lobortis venenatis nulla. In sodales cursus mauris, vel rhoncus sapien sagittis a. Nam aliquet nisl vitae elementum fermentum. Morbi ligula nibh, dignissim id tincidunt et, ornare sed velit. Quisque rutrum metus id neque ultrices sodales. Maecenas id ligula dapibus, elementum nulla et, hendrerit lectus. Curabitur dolor neque, fringilla ac malesuada placerat, placerat at enim. Aenean ut euismod augue. Phasellus sit amet commodo massa.\nMaecenas lobortis nisl eu lacus posuere hendrerit. Nunc venenatis efficitur viverra. Duis pharetra, purus ut condimentum luctus, dui purus bibendum diam, et ornare est nibh et nisi. Praesent sed porttitor urna. Donec nunc purus, ultrices vitae ullamcorper et, convallis nec sapien. Morbi id tristique tellus. Praesent a tempus orci, ac rutrum magna. Nullam gravida, quam quis efficitur ullamcorper, odio odio feugiat odio, vel faucibus sapien felis tincidunt risus. Nullam arcu augue, semper a vulputate quis, hendrerit vitae tortor. Sed venenatis nulla quis lacus volutpat, et mattis sem tincidunt. Pellentesque ullamcorper turpis a eros varius semper. Sed sollicitudin ultricies laoreet. Mauris quis consequat massa. Suspendisse potenti. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;\nCras vitae pulvinar arcu. Etiam eu elit iaculis, semper ex sed, ultrices neque. Praesent nisl nibh, tincidunt id mi eget, lobortis dignissim lectus. Nunc quis tellus volutpat, tempus sem quis, egestas elit. Mauris fermentum nunc ut libero venenatis pharetra. Morbi congue risus quam, sed blandit eros luctus at. Nulla ac mauris iaculis, imperdiet sapien vel, molestie velit. Duis finibus diam ut leo luctus pulvinar.\nFusce efficitur elit sit amet augue luctus, eu sollicitudin ipsum efficitur. Maecenas eu velit feugiat, maximus sapien quis, aliquam est. Phasellus blandit est in nisl semper, at fringilla odio aliquet. Maecenas a nisi pharetra, maximus tortor vel, commodo magna. Proin venenatis sit amet dolor vitae elementum. Sed quis lorem et est vestibulum viverra at sed mi. Suspendisse a metus nibh. Maecenas pretium lacus condimentum, rutrum risus sed, viverra dolor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Maecenas quis sagittis lorem. Donec nisl sem, aliquet a lorem sit amet, dapibus iaculis lectus."</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  $scope.slides = [</span>
+    {url: "assets/images/carousel1.png", title: "Slide1", text: text},
+    {url: "assets/images/carousel2.png", title: "Slide2", text: text},
+    {url: "assets/images/carousel3.png", title: "Slide3", text: text}
+  ]
+  ## FIN: CARRUSELES 
+&nbsp;
+  ## LOGIN
+<span class="cstat-no" title="statement not covered" >  $scope.user = {}</span>
+<span class="cstat-no" title="statement not covered" >  $scope.errors = {}</span>
+<span class="cstat-no" title="statement not covered" >  $scope.login = <span class="fstat-no" title="function not covered" >(</span>form) -&gt;</span>
+<span class="cstat-no" title="statement not covered" >    $</span>scope.submitted = true
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if form.$valid</span>
+      # Logged in, redirect to home
+      Auth.login
+        login: $scope.user.login
+        password: $scope.user.password
+&nbsp;
+      .then <span class="fstat-no" title="function not covered" >(</span>data) -&gt;
+        $location.path '/dashboard'
+&nbsp;
+      .catch <span class="fstat-no" title="function not covered" >(</span>err) -&gt;
+        $scope.errors.other = err.message
+&nbsp;
+  $scope.loginOauth = <span class="fstat-no" title="function not covered" >(</span>provider) -&gt;
+    $window.location.href = '/auth/' + provider
+  ## FIN: LOGIN
+&nbsp;</pre></td></tr>
+</table></pre>
+
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Thu Jul 09 2015 09:31:23 GMT+0200 (Hora de verano romance)</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>

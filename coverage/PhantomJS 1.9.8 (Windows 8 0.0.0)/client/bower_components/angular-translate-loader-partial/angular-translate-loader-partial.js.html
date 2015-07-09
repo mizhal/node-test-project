@@ -1,0 +1,1614 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for ./client/bower_components/angular-translate-loader-partial/angular-translate-loader-partial.js</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../../../prettify.css">
+    <link rel="stylesheet" href="../../../base.css">
+    <style type='text/css'>
+        div.coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class="header medium">
+    <h1>Code coverage report for <span class="entity">./client/bower_components/angular-translate-loader-partial/angular-translate-loader-partial.js</span></h1>
+    <h2>
+        Statements: <span class="metric">51.01% <small>(76 / 149)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">21.69% <small>(18 / 83)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">56.25% <small>(18 / 32)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">51.01% <small>(76 / 149)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
+    </h2>
+    <div class="path"><a href="../../../index.html">All files</a> &#187; <a href="index.html">./client/bower_components/angular-translate-loader-partial/</a> &#187; angular-translate-loader-partial.js</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369
+370
+371
+372
+373
+374
+375
+376
+377
+378
+379
+380
+381
+382
+383
+384
+385
+386
+387
+388
+389
+390
+391
+392
+393
+394
+395
+396
+397
+398
+399
+400
+401
+402
+403
+404
+405
+406
+407
+408
+409
+410
+411
+412
+413
+414
+415
+416
+417
+418
+419
+420
+421
+422
+423
+424
+425
+426
+427
+428
+429
+430
+431
+432
+433
+434
+435
+436
+437
+438
+439
+440
+441
+442
+443
+444
+445
+446
+447
+448
+449
+450
+451
+452
+453
+454
+455
+456
+457
+458
+459
+460
+461
+462
+463
+464
+465
+466
+467
+468
+469
+470
+471
+472
+473
+474
+475
+476
+477
+478
+479
+480
+481
+482
+483
+484
+485
+486
+487
+488
+489
+490
+491
+492
+493
+494
+495
+496
+497
+498
+499
+500
+501
+502
+503
+504
+505
+506
+507
+508
+509
+510
+511
+512
+513
+514
+515
+516
+517
+518
+519
+520
+521
+522
+523
+524</td><td class="line-coverage"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">15</span>
+<span class="cline-any cline-yes">15</span>
+<span class="cline-any cline-yes">15</span>
+<span class="cline-any cline-yes">15</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">15</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">41</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/*!
+ * angular-translate - v2.7.0 - 2015-05-02
+ * http://github.com/angular-translate/angular-translate
+ * Copyright (c) 2015 ; Licensed MIT
+ */
+(function (root, factory) {
+  <span class="missing-if-branch" title="if path not taken" >I</span>if (typeof define === 'function' &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >define.amd)</span> {
+    // AMD. Register as an anonymous module unless amdModuleId is set
+<span class="cstat-no" title="statement not covered" >    define([], <span class="fstat-no" title="function not covered" >function () {</span></span>
+<span class="cstat-no" title="statement not covered" >      return (factory());</span>
+    });
+  } else <span class="missing-if-branch" title="if path not taken" >I</span>if (typeof exports === 'object') {
+    // Node. Does not work with strict CommonJS, but
+    // only CommonJS-like environments that support module.exports,
+    // like Node.
+<span class="cstat-no" title="statement not covered" >    module.exports = factory();</span>
+  } else {
+    factory();
+  }
+}(this, function () {
+&nbsp;
+angular.module('pascalprecht.translate')
+/**
+ * @ngdoc object
+ * @name pascalprecht.translate.$translatePartialLoaderProvider
+ *
+ * @description
+ * By using a $translatePartialLoaderProvider you can configure a list of a needed
+ * translation parts directly during the configuration phase of your application's
+ * lifetime. All parts you add by using this provider would be loaded by
+ * angular-translate at the startup as soon as possible.
+ */
+  .provider('$translatePartialLoader', $translatePartialLoader);
+&nbsp;
+function $translatePartialLoader() {
+&nbsp;
+  'use strict';
+&nbsp;
+  /**
+   * @constructor
+   * @name Part
+   *
+   * @description
+   * Represents Part object to add and set parts at runtime.
+   */
+  function Part(name, priority) {
+    this.name = name;
+    this.isActive = true;
+    this.tables = {};
+    this.priority = priority || 0;
+  }
+&nbsp;
+  /**
+   * @name parseUrl
+   * @method
+   *
+   * @description
+   * Returns a parsed url template string and replaces given target lang
+   * and part name it.
+   *
+   * @param {string|function} urlTemplate - Either a string containing an url pattern (with
+   *                                        '{part}' and '{lang}') or a function(part, lang)
+   *                                        returning a string.
+   * @param {string} targetLang - Language key for language to be used.
+   * @return {string} Parsed url template string
+   */
+  Part.prototype.parseUrl = function(urlTemplate, targetLang) {
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (angular.isFunction(urlTemplate)) {
+<span class="cstat-no" title="statement not covered" >      return urlTemplate(this.name, targetLang);</span>
+    }
+    return urlTemplate.replace(/\{part\}/g, this.name).replace(/\{lang\}/g, targetLang);
+  };
+&nbsp;
+  Part.prototype.getTable = function(lang, $q, $http, $httpOptions, urlTemplate, errorHandler) {
+    var deferred = $q.defer();
+&nbsp;
+    <span class="missing-if-branch" title="else path not taken" >E</span>if (!this.tables[lang]) {
+      var self = this;
+&nbsp;
+      $http(angular.extend({
+        method : 'GET',
+        url: this.parseUrl(urlTemplate, lang)
+      }, $httpOptions)).success(function(data){
+        self.tables[lang] = data;
+        deferred.resolve(data);
+      }).error(<span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >        if (errorHandler) {</span>
+<span class="cstat-no" title="statement not covered" >          errorHandler(self.name, lang).then(<span class="fstat-no" title="function not covered" >function(data) {</span></span>
+<span class="cstat-no" title="statement not covered" >            self.tables[lang] = data;</span>
+<span class="cstat-no" title="statement not covered" >            deferred.resolve(data);</span>
+          }, <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >            deferred.reject(self.name);</span>
+          });
+        } else {
+<span class="cstat-no" title="statement not covered" >          deferred.reject(self.name);</span>
+        }
+      });
+&nbsp;
+    } else {
+<span class="cstat-no" title="statement not covered" >      deferred.resolve(this.tables[lang]);</span>
+    }
+    return deferred.promise;
+  };
+&nbsp;
+  var parts = {};
+&nbsp;
+  function hasPart(name) {
+    return Object.prototype.hasOwnProperty.call(parts, name);
+  }
+&nbsp;
+  function isStringValid(str) {
+    return angular.isString(str) &amp;&amp; str !== '';
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  function isPartAvailable(name) {</span>
+<span class="cstat-no" title="statement not covered" >    if (!isStringValid(name)) {</span>
+<span class="cstat-no" title="statement not covered" >      throw new TypeError('Invalid type of a first argument, a non-empty string expected.');</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return (hasPart(name) &amp;&amp; parts[name].isActive);</span>
+  }
+&nbsp;
+  function deepExtend(dst, src) {
+    for (var property in src) {
+<span class="cstat-no" title="statement not covered" >      if (src[property] &amp;&amp; src[property].constructor &amp;&amp;</span>
+       src[property].constructor === Object) {
+<span class="cstat-no" title="statement not covered" >        dst[property] = dst[property] || {};</span>
+<span class="cstat-no" title="statement not covered" >        deepExtend(dst[property], src[property]);</span>
+      } else {
+<span class="cstat-no" title="statement not covered" >        dst[property] = src[property];</span>
+      }
+    }
+    return dst;
+  }
+&nbsp;
+  function getPrioritizedParts() {
+    var prioritizedParts = [];
+    for(var part in parts) {
+      <span class="missing-if-branch" title="else path not taken" >E</span>if (parts[part].isActive) {
+        prioritizedParts.push(parts[part]);
+      }
+    }
+    prioritizedParts.sort(<span class="fstat-no" title="function not covered" >function (a, b) {</span>
+<span class="cstat-no" title="statement not covered" >      return a.priority - b.priority;</span>
+    });
+    return prioritizedParts;
+  }
+&nbsp;
+&nbsp;
+  /**
+   * @ngdoc function
+   * @name pascalprecht.translate.$translatePartialLoaderProvider#addPart
+   * @methodOf pascalprecht.translate.$translatePartialLoaderProvider
+   *
+   * @description
+   * Registers a new part of the translation table to be loaded once the
+   * `angular-translate` gets into runtime phase. It does not actually load any
+   * translation data, but only registers a part to be loaded in the future.
+   *
+   * @param {string} name A name of the part to add
+   * @param {int} [priority=0] Sets the load priority of this part.
+   *
+   * @returns {object} $translatePartialLoaderProvider, so this method is chainable
+   * @throws {TypeError} The method could throw a **TypeError** if you pass the param
+   * of the wrong type. Please, note that the `name` param has to be a
+   * non-empty **string**.
+   */
+  this.addPart = function(name, priority) {
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (!isStringValid(name)) {
+<span class="cstat-no" title="statement not covered" >      throw new TypeError('Couldn\'t add part, part name has to be a string!');</span>
+    }
+&nbsp;
+    <span class="missing-if-branch" title="else path not taken" >E</span>if (!hasPart(name)) {
+      parts[name] = new Part(name, priority);
+    }
+    parts[name].isActive = true;
+&nbsp;
+    return this;
+  };
+&nbsp;
+  /**
+   * @ngdocs function
+   * @name pascalprecht.translate.$translatePartialLoaderProvider#setPart
+   * @methodOf pascalprecht.translate.$translatePartialLoaderProvider
+   *
+   * @description
+   * Sets a translation table to the specified part. This method does not make the
+   * specified part available, but only avoids loading this part from the server.
+   *
+   * @param {string} lang A language of the given translation table
+   * @param {string} part A name of the target part
+   * @param {object} table A translation table to set to the specified part
+   *
+   * @return {object} $translatePartialLoaderProvider, so this method is chainable
+   * @throws {TypeError} The method could throw a **TypeError** if you pass params
+   * of the wrong type. Please, note that the `lang` and `part` params have to be a
+   * non-empty **string**s and the `table` param has to be an object.
+   */
+  this.setPart = <span class="fstat-no" title="function not covered" >function (lang, part, table) {</span>
+<span class="cstat-no" title="statement not covered" >    if (!isStringValid(lang)) {</span>
+<span class="cstat-no" title="statement not covered" >      throw new TypeError('Couldn\'t set part.`lang` parameter has to be a string!');</span>
+    }
+<span class="cstat-no" title="statement not covered" >    if (!isStringValid(part)) {</span>
+<span class="cstat-no" title="statement not covered" >      throw new TypeError('Couldn\'t set part.`part` parameter has to be a string!');</span>
+    }
+<span class="cstat-no" title="statement not covered" >    if (typeof table !== 'object' || table === null) {</span>
+<span class="cstat-no" title="statement not covered" >      throw new TypeError('Couldn\'t set part. `table` parameter has to be an object!');</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (!hasPart(part)) {</span>
+<span class="cstat-no" title="statement not covered" >      parts[part] = new Part(part);</span>
+<span class="cstat-no" title="statement not covered" >      parts[part].isActive = false;</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    parts[part].tables[lang] = table;</span>
+<span class="cstat-no" title="statement not covered" >    return this;</span>
+  };
+&nbsp;
+  /**
+   * @ngdoc function
+   * @name pascalprecht.translate.$translatePartialLoaderProvider#deletePart
+   * @methodOf pascalprecht.translate.$translatePartialLoaderProvider
+   *
+   * @description
+   * Removes the previously added part of the translation data. So, `angular-translate` will not
+   * load it at the startup.
+   *
+   * @param {string} name A name of the part to delete
+   *
+   * @returns {object} $translatePartialLoaderProvider, so this method is chainable
+   *
+   * @throws {TypeError} The method could throw a **TypeError** if you pass the param of the wrong
+   * type. Please, note that the `name` param has to be a non-empty **string**.
+   */
+  this.deletePart = <span class="fstat-no" title="function not covered" >function (name) {</span>
+<span class="cstat-no" title="statement not covered" >    if (!isStringValid(name)) {</span>
+<span class="cstat-no" title="statement not covered" >      throw new TypeError('Couldn\'t delete part, first arg has to be string.');</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (hasPart(name)) {</span>
+<span class="cstat-no" title="statement not covered" >      parts[name].isActive = false;</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return this;</span>
+  };
+&nbsp;
+&nbsp;
+  /**
+   * @ngdoc function
+   * @name pascalprecht.translate.$translatePartialLoaderProvider#isPartAvailable
+   * @methodOf pascalprecht.translate.$translatePartialLoaderProvider
+   *
+   * @description
+   * Checks if the specific part is available. A part becomes available after it was added by the
+   * `addPart` method. Available parts would be loaded from the server once the `angular-translate`
+   * asks the loader to that.
+   *
+   * @param {string} name A name of the part to check
+   *
+   * @returns {boolean} Returns **true** if the part is available now and **false** if not.
+   *
+   * @throws {TypeError} The method could throw a **TypeError** if you pass the param of the wrong
+   * type. Please, note that the `name` param has to be a non-empty **string**.
+   */
+  this.isPartAvailable = isPartAvailable;
+&nbsp;
+  /**
+   * @ngdoc object
+   * @name pascalprecht.translate.$translatePartialLoader
+   *
+   * @requires $q
+   * @requires $http
+   * @requires $injector
+   * @requires $rootScope
+   * @requires $translate
+   *
+   * @description
+   *
+   * @param {object} options Options object
+   *
+   * @throws {TypeError}
+   */
+  this.$get = ['$rootScope', '$injector', '$q', '$http',
+  function($rootScope, $injector, $q, $http) {
+&nbsp;
+    /**
+     * @ngdoc event
+     * @name pascalprecht.translate.$translatePartialLoader#$translatePartialLoaderStructureChanged
+     * @eventOf pascalprecht.translate.$translatePartialLoader
+     * @eventType broadcast on root scope
+     *
+     * @description
+     * A $translatePartialLoaderStructureChanged event is called when a state of the loader was
+     * changed somehow. It could mean either some part is added or some part is deleted. Anyway when
+     * you get this event the translation table is not longer current and has to be updated.
+     *
+     * @param {string} name A name of the part which is a reason why the event was fired
+     */
+&nbsp;
+    var service = function(options) {
+      <span class="missing-if-branch" title="if path not taken" >I</span>if (!isStringValid(options.key)) {
+<span class="cstat-no" title="statement not covered" >        throw new TypeError('Unable to load data, a key is not a non-empty string.');</span>
+      }
+&nbsp;
+      <span class="missing-if-branch" title="if path not taken" >I</span>if (!isStringValid(options.urlTemplate) &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >!angular.isFunction(options.urlTemplate))</span> {
+<span class="cstat-no" title="statement not covered" >        throw new TypeError('Unable to load data, a urlTemplate is not a non-empty string or not a function.');</span>
+      }
+&nbsp;
+      var errorHandler = options.loadFailureHandler;
+      <span class="missing-if-branch" title="if path not taken" >I</span>if (errorHandler !== undefined) {
+<span class="cstat-no" title="statement not covered" >        if (!angular.isString(errorHandler)) {</span>
+<span class="cstat-no" title="statement not covered" >          throw new Error('Unable to load data, a loadFailureHandler is not a string.');</span>
+        } else {
+<span class="cstat-no" title="statement not covered" >          errorHandler = $injector.get(errorHandler);</span>
+        }
+      }
+&nbsp;
+      var loaders = [],
+          deferred = $q.defer(),
+          prioritizedParts = getPrioritizedParts();
+&nbsp;
+      angular.forEach(prioritizedParts, function(part) {
+        loaders.push(
+          part.getTable(options.key, $q, $http, options.$http, options.urlTemplate, errorHandler)
+        );
+        part.urlTemplate = options.urlTemplate;
+      });
+&nbsp;
+      $q.all(loaders).then(
+        function() {
+          var table = {};
+          angular.forEach(prioritizedParts, function(part) {
+            deepExtend(table, part.tables[options.key]);
+          });
+          deferred.resolve(table);
+        },
+<span class="fstat-no" title="function not covered" >        function() {</span>
+<span class="cstat-no" title="statement not covered" >          deferred.reject(options.key);</span>
+        }
+      );
+&nbsp;
+      return deferred.promise;
+    };
+&nbsp;
+    /**
+     * @ngdoc function
+     * @name pascalprecht.translate.$translatePartialLoader#addPart
+     * @methodOf pascalprecht.translate.$translatePartialLoader
+     *
+     * @description
+     * Registers a new part of the translation table. This method does not actually perform any xhr
+     * requests to get translation data. The new parts will be loaded in order of priority from the server next time
+     * `angular-translate` asks the loader to load translations.
+     *
+     * @param {string} name A name of the part to add
+     * @param {int} [priority=0] Sets the load priority of this part.
+     *
+     * @returns {object} $translatePartialLoader, so this method is chainable
+     *
+     * @fires {$translatePartialLoaderStructureChanged} The $translatePartialLoaderStructureChanged
+     * event would be fired by this method in case the new part affected somehow on the loaders
+     * state. This way it means that there are a new translation data available to be loaded from
+     * the server.
+     *
+     * @throws {TypeError} The method could throw a **TypeError** if you pass the param of the wrong
+     * type. Please, note that the `name` param has to be a non-empty **string**.
+     */
+    service.addPart = function(name, priority) {
+      <span class="missing-if-branch" title="if path not taken" >I</span>if (!isStringValid(name)) {
+<span class="cstat-no" title="statement not covered" >        throw new TypeError('Couldn\'t add part, first arg has to be a string');</span>
+      }
+&nbsp;
+      <span class="missing-if-branch" title="else path not taken" >E</span>if (!hasPart(name)) {
+        parts[name] = new Part(name, priority);
+        $rootScope.$emit('$translatePartialLoaderStructureChanged', name);
+      } else <span class="cstat-no" title="statement not covered" >if (!parts[name].isActive) {</span>
+<span class="cstat-no" title="statement not covered" >        parts[name].isActive = true;</span>
+<span class="cstat-no" title="statement not covered" >        $rootScope.$emit('$translatePartialLoaderStructureChanged', name);</span>
+      }
+&nbsp;
+      return service;
+    };
+&nbsp;
+    /**
+     * @ngdoc function
+     * @name pascalprecht.translate.$translatePartialLoader#deletePart
+     * @methodOf pascalprecht.translate.$translatePartialLoader
+     *
+     * @description
+     * Deletes the previously added part of the translation data. The target part could be deleted
+     * either logically or physically. When the data is deleted logically it is not actually deleted
+     * from the browser, but the loader marks it as not active and prevents it from affecting on the
+     * translations. If the deleted in such way part is added again, the loader will use the
+     * previously loaded data rather than loading it from the server once more time. But if the data
+     * is deleted physically, the loader will completely remove all information about it. So in case
+     * of recycling this part will be loaded from the server again.
+     *
+     * @param {string} name A name of the part to delete
+     * @param {boolean=} [removeData=false] An indicator if the loader has to remove a loaded
+     * translation data physically. If the `removeData` if set to **false** the loaded data will not be
+     * deleted physically and might be reused in the future to prevent an additional xhr requests.
+     *
+     * @returns {object} $translatePartialLoader, so this method is chainable
+     *
+     * @fires {$translatePartialLoaderStructureChanged} The $translatePartialLoaderStructureChanged
+     * event would be fired by this method in case a part deletion process affects somehow on the
+     * loaders state. This way it means that some part of the translation data is now deprecated and
+     * the translation table has to be recompiled with the remaining translation parts.
+     *
+     * @throws {TypeError} The method could throw a **TypeError** if you pass some param of the
+     * wrong type. Please, note that the `name` param has to be a non-empty **string** and
+     * the `removeData` param has to be either **undefined** or **boolean**.
+     */
+    service.deletePart = <span class="fstat-no" title="function not covered" >function(name, removeData) {</span>
+<span class="cstat-no" title="statement not covered" >      if (!isStringValid(name)) {</span>
+<span class="cstat-no" title="statement not covered" >        throw new TypeError('Couldn\'t delete part, first arg has to be string');</span>
+      }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      if (removeData === undefined) {</span>
+<span class="cstat-no" title="statement not covered" >        removeData = false;</span>
+      } else <span class="cstat-no" title="statement not covered" >if (typeof removeData !== 'boolean') {</span>
+<span class="cstat-no" title="statement not covered" >        throw new TypeError('Invalid type of a second argument, a boolean expected.');</span>
+      }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      if (hasPart(name)) {</span>
+<span class="cstat-no" title="statement not covered" >        var wasActive = parts[name].isActive;</span>
+<span class="cstat-no" title="statement not covered" >        if (removeData) {</span>
+<span class="cstat-no" title="statement not covered" >          var $translate = $injector.get('$translate');</span>
+<span class="cstat-no" title="statement not covered" >          var cache = $translate.loaderCache();</span>
+<span class="cstat-no" title="statement not covered" >          if (typeof(cache) === 'string') {</span>
+            // getting on-demand instance of loader
+<span class="cstat-no" title="statement not covered" >            cache = $injector.get(cache);</span>
+          }
+          // Purging items from cache...
+<span class="cstat-no" title="statement not covered" >          if (typeof(cache) === 'object') {</span>
+<span class="cstat-no" title="statement not covered" >            angular.forEach(parts[name].tables, <span class="fstat-no" title="function not covered" >function(value, key) {</span></span>
+<span class="cstat-no" title="statement not covered" >                cache.remove(parts[name].parseUrl(parts[name].urlTemplate, key));</span>
+            });
+          }
+<span class="cstat-no" title="statement not covered" >          delete parts[name];</span>
+        } else {
+<span class="cstat-no" title="statement not covered" >          parts[name].isActive = false;</span>
+        }
+<span class="cstat-no" title="statement not covered" >        if (wasActive) {</span>
+<span class="cstat-no" title="statement not covered" >          $rootScope.$emit('$translatePartialLoaderStructureChanged', name);</span>
+        }
+      }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      return service;</span>
+    };
+&nbsp;
+    /**
+     * @ngdoc function
+     * @name pascalprecht.translate.$translatePartialLoader#isPartLoaded
+     * @methodOf pascalprecht.translate.$translatePartialLoader
+     *
+     * @description
+     * Checks if the registered translation part is loaded into the translation table.
+     *
+     * @param {string} name A name of the part
+     * @param {string} lang A key of the language
+     *
+     * @returns {boolean} Returns **true** if the translation of the part is loaded to the translation table and **false** if not.
+     *
+     * @throws {TypeError} The method could throw a **TypeError** if you pass the param of the wrong
+     * type. Please, note that the `name` and `lang` params have to be non-empty **string**.
+     */
+    service.isPartLoaded = <span class="fstat-no" title="function not covered" >function(name, lang) {</span>
+<span class="cstat-no" title="statement not covered" >      return angular.isDefined(parts[name]) &amp;&amp; angular.isDefined(parts[name].tables[lang]);</span>
+    };
+&nbsp;
+    /**
+     * @ngdoc function
+     * @name pascalprecht.translate.$translatePartialLoader#getRegisteredParts
+     * @methodOf pascalprecht.translate.$translatePartialLoader
+     *
+     * @description
+     * Gets names of the parts that were added with the `addPart`.
+     *
+     * @returns {array} Returns array of registered parts, if none were registered then an empty array is returned.
+     */
+    service.getRegisteredParts = <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >      var registeredParts = [];</span>
+<span class="cstat-no" title="statement not covered" >      angular.forEach(parts, <span class="fstat-no" title="function not covered" >function(p){</span></span>
+<span class="cstat-no" title="statement not covered" >        if(p.isActive) {</span>
+<span class="cstat-no" title="statement not covered" >          registeredParts.push(p.name);</span>
+        }
+      });
+<span class="cstat-no" title="statement not covered" >      return registeredParts;</span>
+    };
+&nbsp;
+&nbsp;
+&nbsp;
+    /**
+     * @ngdoc function
+     * @name pascalprecht.translate.$translatePartialLoader#isPartAvailable
+     * @methodOf pascalprecht.translate.$translatePartialLoader
+     *
+     * @description
+     * Checks if a target translation part is available. The part becomes available just after it was
+     * added by the `addPart` method. Part's availability does not mean that it was loaded from the
+     * server, but only that it was added to the loader. The available part might be loaded next
+     * time the loader is called.
+     *
+     * @param {string} name A name of the part to delete
+     *
+     * @returns {boolean} Returns **true** if the part is available now and **false** if not.
+     *
+     * @throws {TypeError} The method could throw a **TypeError** if you pass the param of the wrong
+     * type. Please, note that the `name` param has to be a non-empty **string**.
+     */
+    service.isPartAvailable = isPartAvailable;
+&nbsp;
+    return service;
+&nbsp;
+  }];
+&nbsp;
+}
+&nbsp;
+$translatePartialLoader.displayName = '$translatePartialLoader';
+return 'pascalprecht.translate';
+&nbsp;
+}));
+&nbsp;</pre></td></tr>
+</table></pre>
+
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Thu Jul 09 2015 09:31:23 GMT+0200 (Hora de verano romance)</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>

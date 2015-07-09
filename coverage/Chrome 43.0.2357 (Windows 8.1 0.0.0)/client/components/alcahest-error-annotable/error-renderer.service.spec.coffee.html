@@ -1,0 +1,516 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for ./client/components/alcahest-error-annotable/error-renderer.service.spec.coffee</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../../../prettify.css">
+    <link rel="stylesheet" href="../../../base.css">
+    <style type='text/css'>
+        div.coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class="header high">
+    <h1>Code coverage report for <span class="entity">./client/components/alcahest-error-annotable/error-renderer.service.spec.coffee</span></h1>
+    <h2>
+        Statements: <span class="metric">98.45% <small>(127 / 129)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">100% <small>(0 / 0)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">95.45% <small>(21 / 22)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">98.95% <small>(94 / 95)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
+    </h2>
+    <div class="path"><a href="../../../index.html">All files</a> &#187; <a href="index.html">./client/components/alcahest-error-annotable/</a> &#187; error-renderer.service.spec.coffee</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">8</span>
+<span class="cline-any cline-yes">8</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">5</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">###
+  Spec de ErrorRenderer
+###
+&nbsp;
+'use strict'
+&nbsp;
+describe 'Factory: ErrorRenderer', -&gt;
+&nbsp;
+  beforeEach module 'pfcLaminasNodeApp'
+&nbsp;
+  errorRenderer = undefined
+  scope = undefined
+  $httpBackend = undefined
+  beforeEach inject ($rootScope, _ErrorRenderer_, _$httpBackend_) -&gt;
+    $httpBackend = _$httpBackend_
+    errorRenderer = _ErrorRenderer_
+    scope = $rootScope.$new()
+&nbsp;
+  it 'should init', (done) -&gt;
+    ### el modulo de traducciones se lanza al cargar la imagen 
+      por la razon que sea, y hace una peticion a servidor que
+      hay que contemplar
+    ###
+    $httpBackend.expectGET("assets/i18n/main/es.json").respond(200)
+&nbsp;
+    inject () -&gt;
+      IMAGE = "/base/client/fixtures/images/carousel1.png"
+      promise = errorRenderer.init($("&lt;canvas/&gt;"), IMAGE, scope)
+        .then () -&gt;
+          expect(errorRenderer.canvas_jquery_node.width()).toBe(574)
+          expect(errorRenderer.canvas_jquery_node.height()).toBe(549)
+&nbsp;
+          done()
+        .catch <span class="fstat-no" title="function not covered" >(</span>) -&gt;
+<span class="cstat-no" title="statement not covered" >          e</span>xpect(false).toBe(true, "ErrorRenderer has run into an error while initiating")       
+          done()
+&nbsp;
+  it 'creates new errors', (done) -&gt;
+    $httpBackend.expectGET("assets/i18n/main/es.json").respond(200)
+    IMAGE = "/base/client/fixtures/images/carousel1.png"
+    promise = errorRenderer.init($("&lt;canvas/&gt;"), IMAGE, scope)
+    promise.then () -&gt;
+      error = errorRenderer.createError([0,0], 10, 'cat-1-error', 10, 1)
+      error = errorRenderer.createError([0,0], 10, 'cat-1-error', 10)
+      done()
+&nbsp;
+  it 'notifies unloadable image', (done) -&gt;
+    $httpBackend.expectGET("assets/i18n/main/es.json").respond(200)
+    IMAGE = "/ninonino.png"
+    promise = errorRenderer.init($("&lt;canvas/&gt;"), IMAGE, scope)
+    promise.catch () -&gt;
+      expect(errorRenderer.error_log.length).toBeGreaterThan(0)
+      done()
+&nbsp;
+  it 'sets and draws errors', (done) -&gt;
+    $httpBackend.expectGET("assets/i18n/main/es.json").respond(200)
+    IMAGE = "/base/client/fixtures/images/carousel1.png"
+    promise = errorRenderer.init($("&lt;canvas/&gt;"), IMAGE, scope)
+    promise.then () -&gt;
+      error1 = errorRenderer.createError([0,0], 10, 'cat-1-error', 10, 1)
+      error2 = errorRenderer.createError([0,0], 10, 'cat-1-error', 10, 2)
+      errorRenderer.setErrors([error1, error2])
+      errorRenderer.redraw()
+      expect(errorRenderer.dirty_errors).toEqual({})
+      done()
+&nbsp;
+  it 'updates errors', (done) -&gt;
+    $httpBackend.expectGET("assets/i18n/main/es.json").respond(200)
+    IMAGE = "/base/client/fixtures/images/carousel1.png"
+    promise = errorRenderer.init($("&lt;canvas/&gt;"), IMAGE, scope)
+    promise.then () -&gt;
+      CENTER1 = [12, 12]
+      CENTER2 = [231, 123]
+      error1 = errorRenderer.createError([0,0], 10, 'cat-1-error', 10, 1)
+      error2 = errorRenderer.createError(CENTER1, 10, 'cat-1-error', 10, 2)
+      errorRenderer.setErrors([error1, error2])
+      errorRenderer.redraw()
+      expect(errorRenderer.dirty_errors).toEqual({})
+&nbsp;
+      error2 = errorRenderer.findErrorById(2)
+      expect(error2.center).toEqual(CENTER1)
+&nbsp;
+      errorRenderer.updateError(CENTER2, 10, 'cat-200-Error', 10, 2)
+&nbsp;
+      error2 = errorRenderer.findErrorById(2)
+      expect(error2.center).toEqual(CENTER2)  
+      expect(error2.category_slug).toBe("cat-200-Error")    
+&nbsp;
+      done()
+&nbsp;
+  it "Can calculate error density", (done) -&gt;
+    $httpBackend.expectGET("assets/i18n/main/es.json").respond(200)
+    IMAGE = "/base/client/fixtures/images/carousel1.png"
+    MAX_ERROR_LEVEL = 20
+    promise = errorRenderer.init($("&lt;canvas/&gt;"), IMAGE, scope)
+    promise.then () -&gt;
+      error1 = errorRenderer.createError([120,120], 10, 'cat-1-error', MAX_ERROR_LEVEL, 1)
+      error2 = errorRenderer.createError([100, 100], 10, 'cat-1-error', MAX_ERROR_LEVEL, 2)
+&nbsp;
+      errorRenderer.setErrors([error1, error2])
+&nbsp;
+      expect(error1.topleftVec2D()).toEqual([110, 110], "top left coordinate")
+      expect(error1.bottomleftVec2D()).toEqual([110, 130], "bottom left coordinate")
+&nbsp;
+      ### maximo en el centro ###
+      elevel = error1.getAreaErrorLevel(error1.topleftVec2D(), error1.bottomrightVec2D())
+      expect(elevel).toBe(MAX_ERROR_LEVEL, "Maximo en en centro")
+&nbsp;
+      ### cero en el radio ###
+      elevel = error1.getAreaErrorLevel(error1.topleftVec2D(), error1.bottomleftVec2D())
+      expect(elevel).toBe(0, "Cero en el borde")      
+&nbsp;
+      done()
+&nbsp;
+  it "can create and delete errors and sort them by zIndex", (done) -&gt;
+    $httpBackend.expectGET("assets/i18n/main/es.json").respond(200)
+    IMAGE = "/base/client/fixtures/images/carousel1.png"
+    MAX_ERROR_LEVEL = 20
+    promise = errorRenderer.init($("&lt;canvas/&gt;"), IMAGE, scope)
+    promise.then () -&gt;
+      error1 = errorRenderer.createError([-500,-500], 10, 'cat-1-error', MAX_ERROR_LEVEL, 1)
+      error2 = errorRenderer.createError([100, 100], 10, 'cat-1-error', MAX_ERROR_LEVEL, 2)
+      error3 = errorRenderer.createError([90, 90], 10, 'cat-1-error', MAX_ERROR_LEVEL, 3)
+      error4 = errorRenderer.createError([200, 150], 5, 'cat-1-error', MAX_ERROR_LEVEL, 4)
+&nbsp;
+      errors = [error1, error2, error3, error4]
+      errorRenderer.setErrors(errors)
+      errorRenderer.clear()
+      errorRenderer.setErrors(errors)
+      errorRenderer.redrawAll()
+      errorRenderer.sortErrors(errors)
+      canvas = errorRenderer.canvas_jquery_node
+      ctx = canvas.get(0).getContext("2d")
+      errorRenderer.drawBackgroundRect([-10,-10], [-1,-1], ctx)
+      errorRenderer.redrawRect([0,0], [canvas.width(), canvas.height()])
+&nbsp;
+      done()
+&nbsp;
+  it "can sort errors by zIndex", (done) -&gt;
+    $httpBackend.expectGET("assets/i18n/main/es.json").respond(200)
+    IMAGE = "/base/client/fixtures/images/carousel1.png"
+    MAX_ERROR_LEVEL = 20
+    promise = errorRenderer.init($("&lt;canvas/&gt;"), IMAGE, scope)
+    promise.then () -&gt;
+      errors = [
+        {id: 1, zIndex: 5},
+        {id: 2, zIndex: 4},
+        {id: 3, zIndex: 3},
+        {id: 4, zIndex: 2},
+        {id: 5, zIndex: 1},        
+      ]
+&nbsp;
+      sorted_errors = errorRenderer.sortErrors(errors)
+      error_ids = $.map sorted_errors, (e) -&gt;
+        return e.id
+      expect(error_ids).toEqual([5,4,3,2,1])
+      done()
+&nbsp;</pre></td></tr>
+</table></pre>
+
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Thu Jul 09 2015 09:31:23 GMT+0200 (Hora de verano romance)</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>
