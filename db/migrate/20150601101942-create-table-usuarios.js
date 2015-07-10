@@ -3,6 +3,7 @@
 module.exports = {
   up: function (queryInterface, Sequelize) {
     var db = queryInterface.sequelize;
+    // ejemplo usando el SQL de postgresql
     return db.query('create table "Usuarios"(                    \
       id serial primary key not null,                     \
       login varchar(20) not null unique,                  \
