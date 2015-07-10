@@ -11,10 +11,13 @@ module.exports = function(app) {
 
   // Insert routes below
   app.use('/api/gestion/importacion_grupos', require('./api/ImportacionDeGrupo'));
-  app.use('/api/usuarios', require('./api/Usuario'));
+  app.use('/api/auth', require('./api/Usuario'));
   app.use('/api/translations', require('./api/Translation'));
 
-  //app.use('/auth', require('./auth'));
+  app.use('/auth', require('./auth'));
+  app.use('/debug', function(req, res){
+    res.json(app._router.stack);
+  });
   
   // All undefined asset or api routes should return a 404
   app.route('/:url(api|auth|components|app|bower_components|assets)/*')

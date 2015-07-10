@@ -1,7 +1,0 @@
-Uso de la grid de angular
-
-Se usa un componente "ngGrid" que declara una directiva que genera la tabla a partir de los datos en un array de hashes declarados en el scope del controlador.
-
-Para mostrar la grid se requiere:
-
-  1. Definir los datos en el controlador: bien mediante 

@@ -16,7 +16,7 @@
       "bootstrap": true,
       "uibootstrap": true,
       "socketio": true,
-      "mongoose": true,
+      "mongoose": false,
       "auth": true,
       "oauth": true,
       "googleAuth": true,

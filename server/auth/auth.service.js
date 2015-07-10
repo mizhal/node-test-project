@@ -6,7 +6,8 @@ var config = require('../config/environment');
 var jwt = require('jsonwebtoken');
 var expressJwt = require('express-jwt');
 var compose = require('composable-middleware');
-var User = require('../api/user/user.model');
+var UsuarioFacade = require('../api/Usuario/Usuario.model');
+var User = UsuarioFacade.Usuario;
 var validateJwt = expressJwt({ secret: config.secrets.session });
 
 /**
@@ -25,15 +26,19 @@ function isAuthenticated() {
     })
     // Attach user to request
     .use(function(req, res, next) {
-      User.findById(req.user._id, function (err, user) {
-        if (err) return next(err);
-        if (!user) return res.status(401).send('Unauthorized');
-
-        req.user = user;
-        next();
-      });
+      var user_id = req.user["_id"]; // el token lleva codificada la id en el campo "_id" de un hash
+      User.scope("common").findById(user_id)
+        .then(function(user){
+          req.user = user;
+          if (!user) return res.status(401).send('Unauthorized');
+          next();
+        })
+        .catch(function(error){
+          next(error);
+        });
     });
-}
+
+};
 
 /**
  * Checks if the user role meets the minimum requirements of the route

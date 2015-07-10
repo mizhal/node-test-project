@@ -22,7 +22,3 @@ describe 'Controller: MainCtrl', ->
     scope = $rootScope.$new()
     MainCtrl = $controller 'MainCtrl',
       $scope: scope
-
-  it 'should attach a list of things to the scope', ->
-    $httpBackend.flush()
-    expect(scope.awesomeThings.length).toBe 4

@@ -37,5 +37,10 @@ server.listen(config.port, config.ip, function () {
   console.log('Express server listening on %d, in %s mode', config.port, app.get('env'));
 });
 
+// set model relationships
+var sequelize = require("./components/sequelize_singleton");
+sequelize.makeRelations();
+app.orm = sequelize;
+
 // Expose app
 exports = module.exports = app;

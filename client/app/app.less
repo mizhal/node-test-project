@@ -1,8 +1,19 @@
+@import "./palette.less";
+
 @import 'bootstrap/less/bootstrap.less';
 @import 'font-awesome/less/font-awesome.less';
 
 @icon-font-path: '/bower_components/bootstrap/fonts/';
 @fa-font-path: '/bower_components/font-awesome/fonts';
+
+/** FONTS */
+
+.main-font {
+  font-family: Tahoma, Verdana, Segoe, sans-serif;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 500; 
+};
 
 /**
  * App-wide Styles
@@ -18,13 +29,80 @@
 // injector
 @import 'account/login/login.less';
 @import 'admin/admin.less';
+@import 'dashboard/dashboard.less';
 @import 'main/main.less';
+@import 'palette.less';
 @import 'translations/translations.less';
+@import 'usuarios/usuarios.less';
+@import 'dash_calendar/dash_calendar.less';
+@import 'deliverables_log/deliverables_log.less';
 @import 'modal/modal.less';
+@import 'player_data/player_data.less';
+@import 'tasks_log/tasks_log.less';
 // endinjector
+
+/** MIXINS **/
+.standard-shadow {
+    box-shadow: -5px 5px 5px @shadow-color;
+};
+.standard-text-shadow {
+    text-shadow: -5px 5px 5px @shadow-color;  
+}
+.standard-padding {
+    padding: 24px;
+}
+.medium-padding {
+    padding: 12px;
+}
+.unstyled-lists {
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    li {
+      margin: 0;
+      padding: 0;
+    }
+  }
+}
+.common-header {
+  header {
+    width: 100%;
+    background-color: @background-black;
+    padding: 0.5em 1em;
+    h2 {
+      margin: 0;
+      padding: 0;
+      font-size: 18px;
+      color: @main-text-white;
+    }
+  }  
+}
+.bootstrap-remove-accordion-styles {
+  // eliminar estilo de bootstrap
+  .panel {
+    background-color: transparent;
+    padding: 0;
+    margin: 0;
+    border-radius: 0;
+    border: 0;
+    box-shadow: 0;
+  }
+  .panel-heading, .panel-group .panel-heading + .panel-collapse .panel-body {
+    background-color: transparent;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    box-shadow: 0;
+  }
+  // FIN: eliminar estilos de bootstrap  
+}
+/** FIN:MIXINS */
 
 // TABLES/GRIDS
 .gridStyle {
+    margin-top: 1em;
+    margin-bottom: 1em;
     border: 1px solid rgb(212,212,212);
     width: 100%; 
     height: 300px;
@@ -39,3 +117,124 @@
     }
   }
 }
+
+/** Fondo comun */
+body {
+  background-color: @background-grey; 
+}
+
+/** Fondo Login **/
+section#main-center {
+  background-color: @background-grey;
+}
+
+/** Menu Bar **/
+.navbar {
+  min-height: 30px;
+  margin: 0;
+}
+
+.navbar-default {
+  .standard-shadow;
+  background-color: @menu-black;
+  border: 0;
+  .navbar-nav {
+      li {
+          a {
+              color: @menu-text-white;
+              padding: 5px 15px;
+          }
+      } 
+  }
+  .navbar-brand {
+    color: @menu-text-white;
+  }
+}
+
+.navbar-nav {
+  min-height: 30px;
+}
+
+.navbar-brand {
+  padding: 5px 15px;
+  height: auto;
+  line-height: auto;
+}
+/** FIN: Menu Bar */
+
+/*** Login Box **/
+section#login-form {
+    .standard-padding;
+    .standard-shadow;
+    z-index: 100;
+    position: absolute;
+    float:left;
+    top: 20%;
+    left: 5%;
+    background-color: @corporative-dark-blue;
+    color: @white-body-fonts;
+
+
+    input {
+        border-radius: 0px;
+        background-color: #ffffff;
+
+        &[type="submit"]{
+            background-color: #000000;
+            border: 0;
+            color: @white-body-fonts;
+        }
+    }
+}
+/*** FIN: Login Box **/
+
+/** Footer **/
+footer.footer.landing {
+  .standard-padding;
+  .standard-shadow;
+  margin: 0;
+  margin-top: -150px;
+  float: right;
+  position: absolute;
+  left: 30%;
+  text-align: left;
+  background-color: #AAA;
+  border-top: 0;
+}
+/** FIN: Footer **/
+
+/** Carrusel de Login */
+.main-carousel-frame {
+  .standard-shadow;
+  background-color: #ffffff;
+
+  .carousel-indicators{
+    display: none;
+  }
+
+  .carousel-caption {
+    .standard-padding;
+    left: auto;
+    right: 0;
+    top: 0;
+    width: 70%;
+    text-align: left;
+    height: 40%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+
+    h4 {
+      color: #000;
+    }
+    p {
+      color: #666;
+    }
+  }
+
+  .slide-frame-cutter {
+    height: 600px;
+    width: 100%;
+    overflow: hidden;
+  }
+}
+/** FIN: Carrusel de Login */

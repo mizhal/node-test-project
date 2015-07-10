@@ -1,8 +1,0 @@
-Traducciones de partials
-
-Para declarar y cargar un archivo de traducciones de partials o de controladores es necesario usar estas dos ordenes en el controlador:
-
-  $translatePartialLoader.addPart 'main'
-  $translate.refresh();
-
-NOTA: Esta operación reemplaza los valores del Diccionario de traducciones para las claves que encuentra en los archivos de traducciones del partial/controlador, pero si habia una clave definida antes que no tiene un valor en el nuevo partial, SE CONSERVA. Esto es útil para traducciones "globales".

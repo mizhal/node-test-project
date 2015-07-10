@@ -1,4 +1,4 @@
-/* Pruebas de creación de la base de datos */
+/* Creación de la base de datos */
 
 var Sequelize = require('sequelize');
 var config = require('../server/config/local.env.js');
