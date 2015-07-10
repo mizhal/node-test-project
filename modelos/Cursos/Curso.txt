@@ -1,5 +1,7 @@
 class Curso
   id:int
+  nombre:String(64)
+  anyo:int
   alumnos: has-many DatosAlumno
   profesores: has-many DatosProfesor
   ---

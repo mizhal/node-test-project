@@ -3,8 +3,11 @@ class TipoBonus
   slug:String(64)
   nombre:String(64)
   descripcion:Text
-  puntos_netos: float
-  puntos_porcentaje: float ## son dos modos alternativos, se puede dar un numero de puntos
+  vida_puntos_netos: float
+  experiencia_puntos_netos: float
+  vida_puntos_porcentaje: float
+  experiencia_puntos_porcentaje: float 
+  ## son dos modos alternativos, se puede dar un numero de puntos
   ## o bien modificar la puntuacion en un porcentaje 
   
   bonus_otorgados: has-many Bonus

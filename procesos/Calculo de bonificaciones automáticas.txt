@@ -31,5 +31,3 @@ Calculo de bonificaciones automáticas
       bonus.experiencia = puntos_obtenidos.experiencia * correccion
 
       return bonus
-
-
