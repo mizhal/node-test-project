@@ -9,6 +9,7 @@ class Ronda
   archivo: UPLOADED_FILE
   repartos: has-many(Reparto)
   entregas: has-many(Entrega)
+  dificultad: float
   fecha_inicio: Date
   fecha_fin_entregas: Date
   fecha_inicio_reclamacion: Date

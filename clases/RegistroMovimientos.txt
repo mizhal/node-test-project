@@ -1,0 +1,8 @@
+class RegistroMovimientos
+  ''' Maneja la busqueda y almacenamiento de objetos tipo 
+  Movimiento '''
+
+  ---
+  METODOS:
+
+  void anotar(movimiento:Movimiento)

@@ -1,3 +1,5 @@
 class Curso
   id:int
+  alumnos: has-many DatosAlumno
+  profesores: has-many DatosProfesor
   ---

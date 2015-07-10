@@ -3,9 +3,16 @@ class Usuario:
   password_encrypted: String[64] //usando https://www.npmjs.com/package/password-hash
   ultimo_acceso: TimestampWithTimezone
   puede_entrar: Boolean //implementa baneos etc.
+  estado: ENUM{creado, activado, baneado, borrado}
 
+  roles: has-and-belongs-to-many Role
   baneos: has-many Baneo
 
+  rondas_iniciadas: has-many Ronda as retador
+  rondas_jugadas: has-many Ronda as participante
+
+  puntos: has-one Puntuacion
+  
   ----
   tareas () ->
     return Tarea.findByUsuario(@self)

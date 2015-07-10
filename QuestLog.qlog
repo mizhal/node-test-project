@@ -1,25 +1,14 @@
 QuestLog
 
 =FOCO========
-  [TODO] Unificar el estilo de nombrado de las tablas.
-  Q#00030 FEAT Módulo de Combate / Back
-    RAMA: feat-00030-combate-back
+  Q#00018 FEAT Back: Datos Alumno
+    UNLOCK: Q#00030 FEAT Módulo de Combate / Back
     DESC:
-      He visto que puedo implementar el modulo de combate solo con dependencia del modulo de usuarios.
-      Conviene implementarlo para hacer la vista de editor que ya está diseñada.
-    TRACK:
-      [TODO] Crear las tablas con un correcto orden de dependencias.
-    RESULTADOS:
-      - Orden encontrado:
-          -1. Curso
-          0. CategoriaDeError
-          1. Ronda (belongs-to Usuario as retador, belongs-to Curso as retados)
-          2. Reparto (belongs-to Ronda)
-          3. Entrega (belongs-to Usuario)
-          3. Tarea (belongs-to Reparto, belongs-to Entrega)
-          4. Error (belongs-to Tarea, belongs-to CategoriaDeError)
-          5. Reclamacion (belongs-to Error)
-
+      Crear el endpoint de datos de alumno, asegurando que asimismo tiene un Usuario subsidiario que autoriza al uso de la aplicación.
+    RAMA: feat-0001-modulo-gestion-alumnos-grupos
+    JOURNAL:
+      En la rama de Git se ha mergeado el modelo/endpoint de Usuario y la migración asociada.
+  [TODO] Unificar el estilo de nombrado de las tablas.
   Q#00042 FEAT Proveer server de producción
     RAMA: feat-00042-provisionar-server-produccion
     DESC: 
@@ -309,12 +298,6 @@ QuestLog
     DESC:
       Preparar un hosting alternativo por si las moscas
   [TODO] Sustituir todos los border-radius por un mixin de less.
-  Q#00018 FEAT Back: Datos Alumno
-    DESC:
-      Crear el endpoint de datos de alumno, asegurando que asimismo tiene un Usuario subsidiario que autoriza al uso de la aplicación.
-    RAMA: feat-0001-modulo-gestion-alumnos-grupos
-    JOURNAL:
-      En la rama de Git se ha mergeado el modelo/endpoint de Usuario y la migración asociada.
   Q#00016 FEAT Autenticacion y Autorizacion: Usuarios y Roles
     RAMA: feat-00016-autentificacion-y-autorizacion-usuarios-y-roles
     RESULTADOS:
@@ -352,6 +335,24 @@ QuestLog
   Explorar node-postgres
     https://github.com/brianc/node-postgres
 =BLOQUEADAS==
+  Q#00030 FEAT Módulo de Combate / Back
+    RAMA: feat-00030-combate-back
+    LOCK: Q#00018 FEAT Back: Datos Alumno
+    DESC:
+      He visto que puedo implementar el modulo de combate solo con dependencia del modulo de usuarios.
+      Conviene implementarlo para hacer la vista de editor que ya está diseñada.
+    TRACK:
+      [TODO] Crear las tablas con un correcto orden de dependencias.
+    RESULTADOS:
+      - Orden encontrado:
+          -1. Curso
+          0. CategoriaDeError
+          1. Ronda (belongs-to Usuario as retador, belongs-to Curso as retados)
+          2. Reparto (belongs-to Ronda)
+          3. Entrega (belongs-to Usuario)
+          3. Tarea (belongs-to Reparto, belongs-to Entrega)
+          4. Error (belongs-to Tarea, belongs-to CategoriaDeError)
+          5. Reclamacion (belongs-to Error)
 =COMPLETAS===
   [DONE] Extraer el Diario a un submodulo con el origin en el Libro Negro con todos los demás repos locales.
   [DONE] Evitar que se envien las relaciones mediante json

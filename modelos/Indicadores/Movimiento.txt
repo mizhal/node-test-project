@@ -1,0 +1,13 @@
+class Movimiento
+  '''Registra los eventos producidos durante el combate para posterior analisis'''
+
+  atacante: belongs-to Usuario
+  receptor: belongs-to Usuario
+  puntos: float
+  ronda: belongs-to Ronda
+  error: has-zero-or-one Error
+  bonificacion_puntual: has-zero-or-one BonificacionPuntual
+  tipo: ENUM{error, bonificacion-puntual}
+  createdAt: Timestamp
+
+  

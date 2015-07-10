@@ -1,0 +1,8 @@
+class Puntuacion
+  id: int
+  ronda: belongs-to Ronda
+  usuario: belongs-to Usuario
+  vida: float
+  experiencia: float
+  bonus_vida: float
+  bonus_experiencia: float

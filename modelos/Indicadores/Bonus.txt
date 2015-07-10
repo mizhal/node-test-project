@@ -1,0 +1,18 @@
+class Bonus
+  id:int
+  vida:float
+  experiencia:float
+  razon:Text
+  creador: belongs-to-zero-or-one Usuario
+  receptor: belongs-to Usuario
+  tipo: belongs-to TipoBonus
+  puntuacion: belongs-to Puntuacion
+  createdAt: Timestamp
+  ---
+  METODOS:
+
+  static void creaBonusAutocompensacion: () ->
+    nuevo = new Bonus()
+    nuevo.tipo = TipoBonus.findBySlug("autocompensacion")
+    
+    return nuevo
