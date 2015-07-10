@@ -1,0 +1,11 @@
+class CategoriaDeError
+  id:int
+  nombre:String
+  nivel:enum{PADRE, HIJO}
+  padre: belongs-to(CategoriaDeError)
+  descripcion:Text
+  peso:{x:float | x >= 0}
+  ---
+  METODOS:
+  
+

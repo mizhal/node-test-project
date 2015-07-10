@@ -1,5 +1,0 @@
-class Usuario:
-  login: String[3..20]
-  password_encrypted: String[64] //usando https://www.npmjs.com/package/password-hash
-  ultimo_acceso: *TimestampWithTimezone
-  puede_entrar: Boolean //implementa baneos etc.

@@ -1,0 +1,19 @@
+INDICE
+  /clases
+    Contiene las clases NO PERSISTENTES del proyecto, descritas en pseudocodigo.
+  /endpoints-back
+    Contiene descripciones en pseudocodigo de los endpoints del proyecto.
+  /ipython-notebook
+    Libretas de ipython notebook con sesiones de modelado matemático necesarias para el proyecto
+  /modelos
+    Contiene las clases PERSISTENTES del proyecto, descritas en pseudocodigo.
+  /recetas
+    Contiene las explicaciones para realizar determinados productos o procesos necesarios para el desarrollo o la ampliación del proyecto.
+  /Tablas
+    Contiene tablas u hojas excel con datos del proyecto.
+  /Journal.txt
+    Anotaciones con orden cronológico.
+  /QuestLog.qlog
+    Tracking de tareas y referencias/recursos necesarios para realizarlas.
+  /SCRATCHPAD
+    Un buffer intermedio para copiar cosas de manera temporal.

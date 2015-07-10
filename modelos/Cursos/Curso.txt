@@ -1,0 +1,3 @@
+class Curso
+  id:int
+  ---

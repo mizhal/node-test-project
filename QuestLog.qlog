@@ -1,7 +1,27 @@
 QuestLog
 
 =FOCO========
+  [TODO] Unificar el estilo de nombrado de las tablas.
+  Q#00030 FEAT Módulo de Combate / Back
+    RAMA: feat-00030-combate-back
+    DESC:
+      He visto que puedo implementar el modulo de combate solo con dependencia del modulo de usuarios.
+      Conviene implementarlo para hacer la vista de editor que ya está diseñada.
+    TRACK:
+      [TODO] Crear las tablas con un correcto orden de dependencias.
+    RESULTADOS:
+      - Orden encontrado:
+          -1. Curso
+          0. CategoriaDeError
+          1. Ronda (belongs-to Usuario as retador, belongs-to Curso as retados)
+          2. Reparto (belongs-to Ronda)
+          3. Entrega (belongs-to Usuario)
+          3. Tarea (belongs-to Reparto, belongs-to Entrega)
+          4. Error (belongs-to Tarea, belongs-to CategoriaDeError)
+          5. Reclamacion (belongs-to Error)
+
   Q#00042 FEAT Proveer server de producción
+    RAMA: feat-00042-provisionar-server-produccion
     DESC: 
       Hay una máquina fisica y hay que provisionarla. Mucho no se sabe de ella.
     SUBQUESTS:
@@ -95,9 +115,10 @@ QuestLog
         https://www.digitalocean.com/community/tutorials/how-to-host-multiple-node-js-applications-on-a-single-vps-with-nginx-forever-and-crontab
   Q#00029 FEAT Implementación de Front / Landing y Dashboards
     RAMA: feat-00029-front-landing-dashboards
-    Implementar la landing/página de login ya que ya está disponible el sistema de autentificacion.
-    Para los Dashboards usar los roles, los profesores al Dashboard de profesor y los alumnos al de alumno.
-    Mockear las tareas, entregas y reclamaciones de momento.
+    DESC:
+      Implementar la landing/página de login ya que ya está disponible el sistema de autentificacion.
+      Para los Dashboards usar los roles, los profesores al Dashboard de profesor y los alumnos al de alumno.
+      Mockear las tareas, entregas y reclamaciones de momento.
     TASKS:
       [DONE] Ficha de Jugador con datos mock
       [DONE] Calendario del jugador con datos mock
@@ -107,8 +128,6 @@ QuestLog
       [TODO] Validacion del formulario de login.
       [TODO] Tablón de Novedades o bien area de notificaciones.
       [TODO] Diseñar Dashboard del profesor.
-    .
-    .
   Q#00037 FEAT Soporte de pruebas de front
     RAMA: feat-00037-soporte-pruebas-front
     OBJETIVOS:
@@ -176,10 +195,8 @@ QuestLog
       El zoom es un problema del Mundo y no del Viewport también en nuestro contexto. Aunque sería razonable pensar en escalar el Viewport, dado que el DIV HTML esta fijado a la pantalla y el tamaño de esta no cambia, debemos escalar el mundo.
       Escalar el Mundo da un pequeño problema, ya que se usan transformaciones CSS3 y estas realizan el escalado centrado en el Mundo. Para no perder el punto de Pan al hacer Zoom es necesario compensar el desplazamiento del origen. 
       Para ello consideramos tambien una "traslación del Mundo" donde acumularemos las diferentes traslaciones necesarias (aunque me imagino que esta traslacion es funcion del nivel de zoom y no es "historica").
-      Esta trasformación del mundo está referenciada al Sistema de Referencia sin Escalar, por lo tanto despues de calcularla habrá que compensar la escala dividiendo por ella. 
-    .
-    .
-  Q#00035 FIX Preparar tests del front/angular con Karma  
+      Esta trasformación del mundo está referenciada al Sistema de Referencia sin Escalar, por lo tanto despues de calcularla habrá que compensar la escala dividiendo por ella.
+  Q#00035 FIX Preparar tests del front/angular con Karma
     RAMA: fix-00035-tests-de-front
     DESC: 
       El generador tiene dos fallos respecto de los tests de front:
@@ -221,9 +238,10 @@ QuestLog
       .
       .
     TRACK:
-      [TODO] Dashboard
+      [TODO] Dashboard Alumno
         [DONE] Planteamiento esquemático web (wireframe a mano)
         [DONE] PSD web
+        [TODO] Añadir una sección de manual para el alumno
         [TODO] Planteamiento esquemático móvil
         [TODO] PSD móvil
       [TODO] Editor
@@ -257,11 +275,6 @@ QuestLog
       .
       .
 =ACTIVAS=====
-  Q#00030 FEAT Módulo de Combate / Back
-    He visto que puedo implementar el modulo de combate solo con dependencia del modulo de usuarios.
-    Conviene implementarlo para hacer la vista de editor que ya está diseñada.
-    .
-    .
   Q#00040 CONTROL OPEN  Reorganizar el repositorio
     RAMA: production (1)
     RAMA: production-setup  (1.1)
@@ -292,55 +305,37 @@ QuestLog
       Mejoras de la quest log
   Q#00027 FEAT  Crear máquina virtual y setup de producción
     RAMA: feat-00027-maquina-virtual-y-setup-de-produccion
-    .
-    .
   Q#00036 FEAT Hosting alternativo
     DESC:
       Preparar un hosting alternativo por si las moscas
-    .
-    .
   [TODO] Sustituir todos los border-radius por un mixin de less.
   Q#00018 FEAT Back: Datos Alumno
-    Crear el endpoint de datos de alumno, asegurando que asimismo tiene un Usuario subsidiario que autoriza al uso de la aplicación.
-      .
-      .
+    DESC:
+      Crear el endpoint de datos de alumno, asegurando que asimismo tiene un Usuario subsidiario que autoriza al uso de la aplicación.
     RAMA: feat-0001-modulo-gestion-alumnos-grupos
-      .
-      .
     JOURNAL:
       En la rama de Git se ha mergeado el modelo/endpoint de Usuario y la migración asociada.
-    .
-    .
   Q#00016 FEAT Autenticacion y Autorizacion: Usuarios y Roles
     RAMA: feat-00016-autentificacion-y-autorizacion-usuarios-y-roles
-
     RESULTADOS:
-      - No se va a permitir de momento la edición de roles, ya que están integrados directamente en el funcionamiento de la aplicación. 
-      .
-      .
+      - No se va a permitir de momento la edición de roles, ya que están integrados directamente en el funcionamiento de la aplicación.
     TRACK:
       [DONE] Modelos de usuarios y roles
         [DONE] Encriptar la clave
           Junto con callbacks del modelo para realizar la encriptación al salvar o bien mediante getters y setters.
       [CANCELADO] UI de Usuarios y Roles
       [TODO] Filtrado de las tablas de roles y usuarios.
-    .
-    .
   Q#00010 FEAT Comun: Filtro y Sort (server side) en las tablas ui-grid/ngGrid
     RECURSOS:
       [001] Stack Overflow: Server-side paging+filtering+sorting for ng-grid with WebAPI
         http://stackoverflow.com/questions/17786091/server-side-pagingfilteringsorting-for-ng-grid-with-webapi
-
-    [DONE] modificar la api para que el index acepte parametros y paginación.
-      Se usa el parametro "filter" con query string que pa eso está
-    [TODO] Integrar las funciones de ui-grid con la api paginada y filtrada.
-      UI-grid/ngGrid tiene soporte explícito para filtrado y para paginación con el servidor.
-    .
-    .
+    TODO:
+      [DONE] modificar la api para que el index acepte parametros y paginación.
+        Se usa el parametro "filter" con query string que pa eso está
+      [TODO] Integrar las funciones de ui-grid con la api paginada y filtrada.
+        UI-grid/ngGrid tiene soporte explícito para filtrado y para paginación con el servidor.
   Q#002 - Integrar node-debug con grunt
     Intentar que todo vaya como la seda invocando "grunt serve:debug"
-    .
-    .
   Q#00003 FEAT UI de gestión de Datos Alumno
     RAMA: todavia no iniciado
     VISTAS:

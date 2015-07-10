@@ -1,0 +1,6 @@
+class Baneo
+  id:int
+  usuario: belongs-to Usuario
+  razon: Text
+  expira: Date
+  permanente: Boolean

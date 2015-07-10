@@ -1,0 +1,10 @@
+class Reparto
+  """ Paquete de laminas/tareas encargadas a un alumno """
+
+  require(Ronda, Usuario)
+
+  id:int
+  dificultad: float
+  usuario: belongs-to(Usuario)
+  tareas: has-many(Tarea)
+  ronda: belongs-to(Ronda)

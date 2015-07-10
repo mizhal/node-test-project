@@ -1,0 +1,22 @@
+class Ronda
+  requires(
+    Usuario
+  )
+
+  id: int
+  titulo: String
+  descripcion: Text
+  archivo: UPLOADED_FILE
+  repartos: has-many(Reparto)
+  entregas: has-many(Entrega)
+  fecha_inicio: Date
+  fecha_fin_entregas: Date
+  fecha_inicio_reclamacion: Date
+  fecha_fin_reclamacion: Date
+  createdAt: Date
+  updatedAt: Date
+  usuario: belongs-to(Usuario)
+  grupo: belongs-to(Curso)
+  ---
+  METODOS:
+

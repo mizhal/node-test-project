@@ -1,0 +1,27 @@
+class Tarea
+  id:int
+  entregable: knows-one(Entrega)
+  estado: ENUM{activa, modificada, corregida, reclamada}
+  usuario: knows-one(Usuario)
+  ronda: knows-one(Ronda)
+
+  ----
+  METODOS:
+
+  ----
+  EVENTOS:
+
+  (When @ronda "repartido" ) ->
+    @estado <- "activa"
+
+  (When @usuario "crea-error") ->
+    @estado <- "modificada"
+
+  (When @usuario "marca-como-corregida") ->
+    @estado <- "corregida"
+
+  (When @usuario "desmarca-como-corregida") ->
+    @estado <- "modificada"
+
+  (When @ronda "pasa-a-reclamaciones") ->
+    @estado <- 
