@@ -2,10 +2,10 @@ QuestLog
 
 =FOCO========
   Q#00018 FEAT Back: Datos Alumno
+    RAMA: feat-0001-modulo-gestion-alumnos-grupos
     UNLOCK: Q#00030 FEAT Módulo de Combate / Back
     DESC:
-      Crear el endpoint de datos de alumno, asegurando que asimismo tiene un Usuario subsidiario que autoriza al uso de la aplicación.
-    RAMA: feat-0001-modulo-gestion-alumnos-grupos
+      Crear el endpoint de datos de alumno, asegurando que asimismo tiene un Usuario subsidiario que autoriza al uso de la aplicación. 
     JOURNAL:
       En la rama de Git se ha mergeado el modelo/endpoint de Usuario y la migración asociada.
   [TODO] Unificar el estilo de nombrado de las tablas.
