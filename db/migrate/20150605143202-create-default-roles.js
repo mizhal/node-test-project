@@ -1,31 +1,30 @@
 'use strict';
 
 // cargar el modelo
-var app = require("../../server/app.js");
-var Usuario = app.orm.getModel("Usuario");
-var Role = app.orm.getModel("Role");
+var UsuariosFacade = require("../../server/api/Usuario/Usuario.model.js")
+var Usuario = UsuariosFacade.Usuario;
+var Role = UsuariosFacade.Role;
 var Promise = require('bluebird');
 
 module.exports = {
   up: function (queryInterface, Sequelize) {
     var roles = ["admin", "usuario", "profesor", "alumno"];
 
-    return Usuario.findOne({login: "admin"})
-      .then(function(admin){
+    var sequelize = queryInterface.sequelize;
 
-        return Promise.all(
-          roles.map(function(rol){
-            return Role.create({
+    return sequelize.transaction(function(transaction){
+
+      return Promise.all(
+        roles.map(function(rol){
+          return Role.create({
               nombre: rol
-            });
-          }).map(function(rol){
-            return rol.then(function(rol_fullfilled){
-              return admin.setRoles(rol_fullfilled);
-            });
-          })
-        );
-
-      });
+            }, 
+            {transaction: transaction}
+          );
+        })
+      );
+      
+    });
   },
   down: function (queryInterface, Sequelize) {
     var db = queryInterface.sequelize;
