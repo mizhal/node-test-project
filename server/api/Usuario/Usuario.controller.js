@@ -44,7 +44,7 @@ exports.show = function(req, res) {
 exports.create = function(req, res) {
   var new_ = Usuario.create(req.body)
     .then(function(Usuario) {
-      return res.status(201);
+      return res.status(201).json(Usuario);
     }).catch(function(error){
       return handleError(res, error);
     });
@@ -114,8 +114,6 @@ exports.index_roles = function(req, res) {
       offset: page_offset,
       limit: page_size
     };
-
-    console.log(">>>>> INDEX ROLES");
 
     if(req.query.filter){
       query.where = {key: new RegExp("^.*" + req.query.filter + ".*$", "i")};

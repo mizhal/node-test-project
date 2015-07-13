@@ -25,7 +25,8 @@ module.exports = {
         return queryInterface.addIndex("Roles", ["nombre"], 
           { indicesType: "UNIQUE"}
         );  
-      }).then(function(){
+      })
+      .then(function(){
         return queryInterface.addIndex("Roles", ["slug"], 
           { indicesType: "UNIQUE"}
         );          

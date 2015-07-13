@@ -3,24 +3,17 @@
 // cargar el modelo
 var UsuariosFacade = require("../../server/api/Usuario/Usuario.model.js")
 var Usuario = UsuariosFacade.Usuario;
+var Role = UsuariosFacade.Role;
 var Promise = require('bluebird');
 
 module.exports = {
   up: function (queryInterface, Sequelize) {
-    var admin = Usuario.build({
-      login: "admin",
-      password: "admin"
-    });
-    return admin.habilitar()
+    var roles = ["admin", "usuario", "profesor", "alumno"];
+    return Usuario.find({login: "admin"})
       .then(function(admin){
-        return admin.save();
-      });
+        return admin.setRolesEnTransaccion(roles);
+      })
   },
-
   down: function (queryInterface, Sequelize) {
-    return Usuario.findOne({login: "admin"})
-      .then(function(admin){
-        return admin.destroy();
-      });
   }
 };

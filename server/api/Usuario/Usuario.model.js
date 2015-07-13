@@ -10,7 +10,7 @@ var bcrypt = Promise.promisifyAll(require('bcrypt'));
 /*** MODELO ROLE **/
 var Role = sequelize.define('Role', {
   nombre: {
-    type: Sequelize.STRING,
+    type: Sequelize.STRING(128),
     allowNull: false,
     validate: {
       // es UNIQUE por definicion en la base de datos
@@ -125,6 +125,39 @@ var Usuario = sequelize.define('Usuario',
 
       autenticar: function(password){
         return this.password_encrypted == bcrypt.hashSync(password, this.salt);
+      },
+
+      anyadirRole: function(role_slug){
+        var object = this;
+        return Role.find({
+            where: {
+              slug: role_slug
+            }
+          }).then(function(role){
+            return object.addRoles_full(role);
+          });
+      },
+
+      setRolesEnTransaccion: function(array_slugs_role){
+        var object = this;
+        return sequelize.transaction(function(trans){
+          return Promise.all(
+            array_slugs_role.map(function(role_slug){
+              return Role.find({
+                where: {
+                  slug: role_slug
+                }, 
+                transaction: trans
+              });
+            })
+          ).then(function(roles){
+            return Promise.all(
+              roles.map(function(role){
+                return object.setRoles_full(role, {transaction: trans});  
+              })
+            );
+          });
+        });
       }
 
     },

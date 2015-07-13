@@ -3,7 +3,7 @@
 module.exports = {
   up: function (queryInterface, Sequelize) {
     var db = queryInterface.sequelize;
-    return db.query('create table "Usuarios"(                    \
+    return db.query('create table "Usuarios"(             \
       id serial primary key not null,                     \
       login varchar(20) not null unique,                  \
       slug varchar(20) not null unique,                   \
