@@ -34,13 +34,22 @@ module.exports = {
       foto: {
         type: Sequelize.STRING(255),
         allowNull: false
+      },
+      cursoId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: "Cursos",
+          key: "id"
+        }
       }
     }).then(function(){
       // indices
       return Promise.all([
         queryInterface.addIndex("DatosAlumnos", ["usuarioId"]),
         queryInterface.addIndex("DatosAlumnos", ["slug"]),
-        queryInterface.addIndex("DatosAlumnos", ["codigo_uo"])
+        queryInterface.addIndex("DatosAlumnos", ["codigo_uo"]),
+        queryInterface.addIndex("DatosAlumnos", ["cursoId"])
       ]);
 
     });
