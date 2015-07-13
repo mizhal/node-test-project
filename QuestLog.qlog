@@ -1,7 +1,16 @@
 QuestLog
 
 =FOCO========
-  
+  Q#00016 FEAT Autenticacion y Autorizacion: Usuarios y Roles
+    RAMA: feat-00016-autentificacion-y-autorizacion-usuarios-y-roles
+    RESULTADOS:
+      - No se va a permitir de momento la edición de roles, ya que están integrados directamente en el funcionamiento de la aplicación.
+    TRACK:
+      [DONE] Modelos de usuarios y roles
+        [DONE] Encriptar la clave
+          Junto con callbacks del modelo para realizar la encriptación al salvar o bien mediante getters y setters.
+      [CANCELADO] UI de Usuarios y Roles
+      [TODO] Filtrado de las tablas de roles y usuarios.
   Q#00018 FEAT Back: Datos Alumno
     RAMA: feat-0001-modulo-gestion-alumnos-grupos
     UNLOCK: Q#00030 FEAT Módulo de Combate / Back
@@ -10,51 +19,6 @@ QuestLog
     JOURNAL:
       En la rama de Git se ha mergeado el modelo/endpoint de Usuario y la migración asociada.
   [TODO] Unificar el estilo de nombrado de las tablas.
-  Q#00042 FEAT Proveer server de producción
-    RAMA: feat-00042-provisionar-server-produccion
-    DESC: 
-      Hay una máquina fisica y hay que provisionarla. Mucho no se sabe de ella.
-    SUBQUESTS:
-      Q#00038 FEAT Investigación: provisionar máquinas físicas con Vagrant
-    TRACK:
-      [DONE] Saber si el procesador es de 32 bits o 64.
-      [DONE] Instalar Trusty
-        [DONE] Generar USB
-        [DONE] Instalación
-          [DONE] Memtest
-          [DONE] Instalación
-        [DONE] Arranque estandar
-          [TODO] Corregir resolucion del GRUB
-            [DONE] Intentar acceder por SSH (192.168.2.17)
-            [DONE] Editar /etc/default/grub
-            [CANCEL] Seleccionar la resolución correcta
-            [DONE] Arrancar en modo texto 
-              Usar [004]
-      [TODO] Provisionar con Vagrant [->Q#00038]
-        [TODO] Crear un setup con varias máquinas para Vagrant, una con la virtual y otra con la fisica
-          Usar info en [002] y [003]
-          [TODO] Proporcionar un usuario adecuado para el provisionamiento de la máquina 
-            Que seguramente requerira capacidades de root.
-      [TODO] Autentificacion con claves publicas para el acceso al servidor.
-    JOURNAL:
-      - Tenemos Karmic Koala instalado, cuya temporada de soporte expiro en 2011.
-      - Es conveniente instalar Trusty Tahir que es LTS (llega hasta abril de 2019).
-      - Parece que el procesador es de 64.
-      - He bajado la distro 
-      - He instalado el programa para generar el usb.
-      - No se puede instalar docker directamente para emular un entorno más moderno. Vale más instalar directamente trusty y de ahí p'alante.
-      - El grub toma una resolucion que no le gusta al monitor. 
-      - Para grub en este caso mejor modo texto.
-    REFERENCIAS:
-      [001] Datos del servidor en [27:3]
-      [002] Vagrant: Multi Machine Setup
-        http://docs.vagrantup.com/v2/multi-machine/index.html
-      [003] Plugin: Vagrant managed servers 
-        https://github.com/tknerr/vagrant-managed-servers
-      [004] AskUbuntu: How do I boot into true text mode 
-        http://askubuntu.com/questions/92276/how-do-i-boot-into-true-text-mode
-      [005] Vagrant::Butcher “sudo: no tty present and no askpass program specified” when trying to “cat /etc/chef/client.pem”
-        http://stackoverflow.com/questions/22467706/vagrantbutcher-sudo-no-tty-present-and-no-askpass-program-specified-when-tr
   Q#00038 FEAT Investigación: provisionar máquinas físicas con Vagrant
     DESC: 
       Para implementar el servidor local de la aplicación, es conveniente preparar una 
@@ -265,6 +229,51 @@ QuestLog
       .
       .
 =ACTIVAS=====
+  Q#00042 FEAT Proveer server de producción
+    RAMA: feat-00042-provisionar-server-produccion
+    DESC: 
+      Hay una máquina fisica y hay que provisionarla. Mucho no se sabe de ella.
+    SUBQUESTS:
+      Q#00038 FEAT Investigación: provisionar máquinas físicas con Vagrant
+    TRACK:
+      [DONE] Saber si el procesador es de 32 bits o 64.
+      [DONE] Instalar Trusty
+        [DONE] Generar USB
+        [DONE] Instalación
+          [DONE] Memtest
+          [DONE] Instalación
+        [DONE] Arranque estandar
+          [TODO] Corregir resolucion del GRUB
+            [DONE] Intentar acceder por SSH (192.168.2.17)
+            [DONE] Editar /etc/default/grub
+            [CANCEL] Seleccionar la resolución correcta
+            [DONE] Arrancar en modo texto 
+              Usar [004]
+      [TODO] Provisionar con Vagrant [->Q#00038]
+        [TODO] Crear un setup con varias máquinas para Vagrant, una con la virtual y otra con la fisica
+          Usar info en [002] y [003]
+          [TODO] Proporcionar un usuario adecuado para el provisionamiento de la máquina 
+            Que seguramente requerira capacidades de root.
+      [TODO] Autentificacion con claves publicas para el acceso al servidor.
+    JOURNAL:
+      - Tenemos Karmic Koala instalado, cuya temporada de soporte expiro en 2011.
+      - Es conveniente instalar Trusty Tahir que es LTS (llega hasta abril de 2019).
+      - Parece que el procesador es de 64.
+      - He bajado la distro 
+      - He instalado el programa para generar el usb.
+      - No se puede instalar docker directamente para emular un entorno más moderno. Vale más instalar directamente trusty y de ahí p'alante.
+      - El grub toma una resolucion que no le gusta al monitor. 
+      - Para grub en este caso mejor modo texto.
+    REFERENCIAS:
+      [001] Datos del servidor en [27:3]
+      [002] Vagrant: Multi Machine Setup
+        http://docs.vagrantup.com/v2/multi-machine/index.html
+      [003] Plugin: Vagrant managed servers 
+        https://github.com/tknerr/vagrant-managed-servers
+      [004] AskUbuntu: How do I boot into true text mode 
+        http://askubuntu.com/questions/92276/how-do-i-boot-into-true-text-mode
+      [005] Vagrant::Butcher “sudo: no tty present and no askpass program specified” when trying to “cat /etc/chef/client.pem”
+        http://stackoverflow.com/questions/22467706/vagrantbutcher-sudo-no-tty-present-and-no-askpass-program-specified-when-tr
   Q#00040 CONTROL OPEN  Reorganizar el repositorio
     RAMA: production (1)
     RAMA: production-setup  (1.1)
@@ -299,16 +308,6 @@ QuestLog
     DESC:
       Preparar un hosting alternativo por si las moscas
   [TODO] Sustituir todos los border-radius por un mixin de less.
-  Q#00016 FEAT Autenticacion y Autorizacion: Usuarios y Roles
-    RAMA: feat-00016-autentificacion-y-autorizacion-usuarios-y-roles
-    RESULTADOS:
-      - No se va a permitir de momento la edición de roles, ya que están integrados directamente en el funcionamiento de la aplicación.
-    TRACK:
-      [DONE] Modelos de usuarios y roles
-        [DONE] Encriptar la clave
-          Junto con callbacks del modelo para realizar la encriptación al salvar o bien mediante getters y setters.
-      [CANCELADO] UI de Usuarios y Roles
-      [TODO] Filtrado de las tablas de roles y usuarios.
   Q#00010 FEAT Comun: Filtro y Sort (server side) en las tablas ui-grid/ngGrid
     RECURSOS:
       [001] Stack Overflow: Server-side paging+filtering+sorting for ng-grid with WebAPI

@@ -5,3 +5,5 @@ MAPA:
     https://github.com/petkaantonov/bluebird/blob/master/API.md#new-promisefunctionfunction-resolve-function-reject-resolver---promise
   Chai assertion styles
     http://chaijs.com/guide/styles/
+  Supertest
+    https://github.com/visionmedia/supertest
