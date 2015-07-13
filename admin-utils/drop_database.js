@@ -44,6 +44,9 @@ var borrarBaseDeDatos = Promise.promisify(function (client, next){
       environments = [process.argv[2]]
     } else if (process.argv[2].toLowerCase() == "all"){
       environments = ["development", "test", "production"];
+    } else {
+      console.log("Para el script de BORRADO es OBLIGATORIO especificar el entorno de ejecución (development, test, production o all)");
+      return next();      
     }
   } else {
     console.log("Para el script de BORRADO es OBLIGATORIO especificar el entorno de ejecución (development, test, production o all)");
