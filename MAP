@@ -1,0 +1,7 @@
+MAPA:
+  Mocha / Chain Cheatsheet 
+    http://chaijs.com/api/bdd/
+  Bluebird API
+    https://github.com/petkaantonov/bluebird/blob/master/API.md#new-promisefunctionfunction-resolve-function-reject-resolver---promise
+  Chai assertion styles
+    http://chaijs.com/guide/styles/
