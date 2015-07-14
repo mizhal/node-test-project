@@ -26,6 +26,14 @@ module.exports = {
           model: "Usuarios",
           key: "id"
         }
+      },
+      createdAt: {
+        type: Sequelize.DATE,
+        allowNull: false
+      },
+      updatedAt: {
+        type: Sequelize.DATE,
+        allowNull: false
       }
     }).then(function(){
       // indices

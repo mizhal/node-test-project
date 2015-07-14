@@ -12,7 +12,8 @@ module.exports = {
       },
       nombre: {
         type: Sequelize.STRING(64),
-        allowNull: false
+        allowNull: false,
+        unique: true
       },
       slug: {
         type: Sequelize.STRING(64),
@@ -21,6 +22,14 @@ module.exports = {
       },
       anyo: {
         type: Sequelize.INTEGER,
+        allowNull: false
+      },
+      createdAt: {
+        type: Sequelize.DATE,
+        allowNull: false
+      },
+      updatedAt: {
+        type: Sequelize.DATE,
         allowNull: false
       }
     }).then(function(){
