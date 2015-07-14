@@ -7,22 +7,25 @@ var Promise = require("bluebird");
 //password hashing
 var bcrypt = Promise.promisifyAll(require('bcrypt'));
 
+var ROLE_SLUG_FIELD_SIZE = 32;
+
 /*** MODELO ROLE **/
 var Role = sequelize.define('Role', {
   nombre: {
-    type: Sequelize.STRING(128),
+    type: Sequelize.STRING(32),
     allowNull: false,
     validate: {
       // es UNIQUE por definicion en la base de datos
     }
   },
   slug: {
-    type: Sequelize.STRING,
+    type: Sequelize.STRING(ROLE_SLUG_FIELD_SIZE),
     allowNull: false
   }
 },
 {
   tablename: "Roles",
+  timestamps: true,
   scopes: {
     only_slug: {
       attributes: ["slug"]
@@ -36,25 +39,33 @@ var Role = sequelize.define('Role', {
 // Hook para generar el SLUG
 var slug = require('slug');
 Role.hook("beforeValidate", function(role){
-  if(role.nombre){
-    role.slug = slug(role.nombre);
-  }
+  console.log("Slug de Role = ", role.nombre, " -> ")
+  return slug.generator(
+    role, 
+    Role,
+    role.nombre,
+    "slug",
+    ROLE_SLUG_FIELD_SIZE
+  ).then(function(){
+    console.log("Slug final = ", role.slug);
+  });
 });
 
 /*** FIN: MODELO ROLE **/
 
 /*** MODELO USUARIO **/
+var USUARIO_SLUG_FIELD_SIZE = 20;
 var Usuario = sequelize.define('Usuario', 
   { // persistent fields
     login: {
-      type: Sequelize.STRING,
+      type: Sequelize.STRING(20),
       allowNull: false,
       validate: {
       }
     },
 
     slug: {
-      type: Sequelize.STRING,
+      type: Sequelize.STRING(USUARIO_SLUG_FIELD_SIZE),
       allowNull: false,
       validate: {
       }      
@@ -105,7 +116,9 @@ var Usuario = sequelize.define('Usuario',
       ]
     }
   },
-  { // Object features and non persistent fields
+  { 
+    timestamps: true,
+    // Object features and non persistent fields
     /** SCOPES **/
     scopes: {
       common: { // ATRIBUTOS MAS COMUNES
@@ -185,13 +198,17 @@ var Usuario = sequelize.define('Usuario',
 );
 
 // Hook para generar el SLUG
-//slugs 
-var slug = require('slug');
+var slug = require('../../components/slugger');
 Usuario.hook("beforeValidate", function(usuario){
-  if(usuario.login){
-    usuario.slug = slug(usuario.login);
-  }
+  return slug.generator(
+    usuario, 
+    Usuario, 
+    usuario.login,
+    "slug",
+    USUARIO_SLUG_FIELD_SIZE
+  );
 });
+
 /*** FIN: MODELO USUARIO **/
 
 /********* RELACIONES ****/
