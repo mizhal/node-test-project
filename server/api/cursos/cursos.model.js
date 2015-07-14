@@ -42,7 +42,7 @@ Curso.hook("beforeValidate", function(curso){
   return slug.generator(
     curso, 
     Curso, 
-    function(){return curso.nombre + "-" + curso.anyo;},
+    curso.nombre + "-" + curso.anyo,
     "slug",
     CURSO_SLUG_FIELD_SIZE
   );
