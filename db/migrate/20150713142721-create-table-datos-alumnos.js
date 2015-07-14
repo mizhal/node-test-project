@@ -25,7 +25,9 @@ module.exports = {
         references: {
           model: "Usuarios",
           key: "id"
-        }
+        },
+        onDelete: "cascade",
+        onUpdate: "cascade"
       },
       codigo_uo: {
         type: Sequelize.STRING(10),
@@ -41,7 +43,9 @@ module.exports = {
         references: {
           model: "Cursos",
           key: "id"
-        }
+        },
+        onDelete: "cascade",
+        onUpdate: "cascade"
       },
       createdAt: {
         type: Sequelize.DATE,
