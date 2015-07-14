@@ -114,8 +114,57 @@ DatosAlumno.belongsTo(Curso, {
   onDelete: "cascade",
   onUpdate: "cascade"
 });
-
 /** FIN: MODELO DATOSALUMNO **/
+
+/** MODELO DATOSPROFESOR **/
+var DATOS_PROFESOR_SLUG_FIELD_SIZE = 128;
+var DatosProfesor = sequelize.define('DatosProfesor', {
+    id:  Sequelize.INTEGER,
+    nombre_completo: {
+      type: Sequelize.STRING(128),
+      allowNull: false
+    },
+    slug: {
+      type: Sequelize.STRING(128),
+      allowNull: false,
+      unique: true
+    },   
+    usuarioId: {
+      type: Sequelize.INTEGER,
+      allowNull: false
+    } 
+  }, {
+    timestamps: true,
+    tablename: "DatosProfesores"
+  }
+);
+
+// Hook para generar el SLUG
+DatosProfesor.hook("beforeValidate", function(datos_profesor){
+  return slugger.generator(
+    datos_profesor,
+    DatosProfesor,
+    datos_profesor.nombre_completo,
+    "slug",
+    DATOS_PROFESOR_SLUG_FIELD_SIZE
+  );
+});
+
+// Relaciones
+DatosProfesor.belongsTo(Auth.Usuario, {
+  foreignKey: "usuarioId",
+  onDelete: "cascade",
+  onUpdate: "cascade"
+});
+Curso.belongsToMany(DatosProfesor, {
+  through: "CursosDatosProfesores",
+  as: "profesores_full"
+});
+DatosProfesor.belongsToMany(Curso, {
+  through: "CursosDatosProfesores",
+  as: "cursos_full"
+});
+/** FIN: MODELO DATOSPROFESOR **/
 
 /** Exterior del paquete de modelos **/
 var Cursos = {

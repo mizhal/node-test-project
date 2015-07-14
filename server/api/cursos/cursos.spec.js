@@ -6,9 +6,13 @@ var request = require('supertest');
 var Promise = require("bluebird");
 var join = Promise.join;
 
+// Modelos y paquetes necesarios
+var Auth = require("../Usuario/Usuario.model.js");
+var Usuario = Auth.Usuario;
 var Cursos = require("./cursos.model.js");
 var Curso = Cursos.Curso;
 var DatosAlumno = Cursos.DatosAlumno;
+// FIN: Modelos y paquetes necesarios
 
 describe('GET /api/cursos', function() {
 
@@ -75,9 +79,6 @@ describe('GET /api/cursos', function() {
   });
 
   /*** DATOSALUMNO **/
-  var Auth = require("../Usuario/Usuario.model.js");
-  var Usuario = Auth.Usuario;
-
   function prerequisitos_datosalumno_crud(){
     /*** Genera los objetos que necesitamos para crear 
     entidades DatosAlumno
@@ -154,5 +155,59 @@ describe('GET /api/cursos', function() {
     });
     
   });
+
+  /*** FIN: DATOSALUMNO **/
+
+  /*** DATOSPROFESOR **/
+
+  function prerequisitos_datos_profesor_crud(){
+    var datos_usuario = {
+        login: "profesor1",
+        password: "the-password",
+        ultimo_acceso: 1,
+        puede_entrar: true
+    };
+    var datos_curso1 = {
+        nombre: "Curso de prueba",
+        anyo: 2015,
+        slug: "prueba-1"
+    };
+    var datos_curso2 = {
+        nombre: "Curso de prueba 2",
+        anyo: 2015,
+        slug: "prueba-2"
+    };
+
+    return destroy_prerrequisitos_datosprofesor()
+      .then(function(){
+        return join(
+          Usuario.create(datos_usuario),
+          Curso.create(datos_curso1),
+          Curso.create(datos_curso2)
+        );
+      });
+  }
+
+  function destroy_prerrequisitos_datosprofesor(usuario, curso1, curso2){
+    return join(
+      Usuario.destroy({
+        where: {
+          login: usuario.login
+        }
+      }),
+      Curso.destroy({
+        where: {
+          slug: curso1.slug
+        }
+      }),
+      Curso.destroy({
+        where: {
+          slug: curso2.slug
+        }
+      })
+    );
+  }
+
+  /*** FIN: DATOSPROFESOR **/
 
 });
