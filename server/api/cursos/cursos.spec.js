@@ -8,6 +8,7 @@ var join = Promise.join;
 
 var Cursos = require("./cursos.model.js");
 var Curso = Cursos.Curso;
+var DatosAlumno = Cursos.DatosAlumno;
 
 describe('GET /api/cursos', function() {
 
@@ -23,7 +24,7 @@ describe('GET /api/cursos', function() {
       });
   });
 
-  it("should make crud and generate slug", function(done){
+  it("Cursos: should make crud and generate slug", function(done){
     var NOMBRE_CURSO = "Curso 2015/2016";
     join(
       // destruir los cursos creados por tests previos
@@ -72,4 +73,86 @@ describe('GET /api/cursos', function() {
     });
 
   });
+
+  /*** DATOSALUMNO **/
+  var Auth = require("../Usuario/Usuario.model.js");
+  var Usuario = Auth.Usuario;
+
+  function prerequisitos_datosalumno_crud(){
+    /*** Genera los objetos que necesitamos para crear 
+    entidades DatosAlumno
+    ***/
+    var Usuario_data = {
+        login: "alumno1",
+        password: "the-password",
+        ultimo_acceso: 1,
+        puede_entrar: true
+      };
+    var Curso_data = {
+        nombre: "Curso de prueba",
+        anyo: 2015
+      };
+
+    return destroy_prerrequisitos_datosalumno()
+      .then(function(){
+        return join(
+          Usuario.create(Usuario_data),
+          Curso.create(Curso_data)
+        )
+      });
+  };
+
+  function destroy_prerrequisitos_datosalumno(){
+    return join(
+      Usuario.findAll({
+          where: {
+            login: "alumno1"
+          }
+        }).map(function(usuario){
+          return usuario.destroy();
+        }),
+      Curso.findAll({
+          where: {
+            nombre: "Curso de prueba"
+          }
+        }).map(function(curso){
+          return curso.destroy();
+        })
+    )
+  };
+  
+  it("DatosAlumno: crud", function(done){
+
+    prerequisitos_datosalumno_crud()
+    .spread(function(usuario, curso){
+      var CODIGO_UO = "uo12312";
+
+      return DatosAlumno.create({
+        nombre_completo: "Pedro Pérez Mateos",
+        usuarioId: usuario.id,
+        codigo_uo: CODIGO_UO,
+        foto: "TEST!",
+        cursoId: curso.id,
+      }).then(function(datos_alumno){
+        datos_alumno.nombre_completo = "Alfredo Rodriguez Vallejo";
+        return datos_alumno.save();
+      }).then(function(){
+        return DatosAlumno.findOne({
+          where: {codigo_uo: CODIGO_UO}
+        });
+      }).then(function(datos_alumno){
+        datos_alumno.nombre_completo.should.be.eql("Alfredo Rodriguez Vallejo");
+        return datos_alumno;
+      }).then(function(datos_alumno){
+        return datos_alumno.destroy();
+      });
+
+    }).then(function(){
+      return destroy_prerrequisitos_datosalumno();
+    }).then(function(){
+      done();
+    });
+    
+  });
+
 });

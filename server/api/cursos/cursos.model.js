@@ -3,6 +3,12 @@
 var Sequelize = require('sequelize');
 var sequelize = require("../../components/sequelize_singleton");
 
+var slugger = require('../../components/slugger');
+
+// dependencias de otros paquetes
+var Auth = require("../Usuario/Usuario.model.js");
+
+/** MODELO CURSO **/
 var CURSO_SLUG_FIELD_SIZE = 128;
 var Curso = sequelize.define('Curso', 
   {//CAMPOS
@@ -37,9 +43,8 @@ var Curso = sequelize.define('Curso',
 );
 
 // Hook para generar el SLUG
-var slug = require('../../components/slugger');
 Curso.hook("beforeValidate", function(curso){
-  return slug.generator(
+  return slugger.generator(
     curso, 
     Curso, 
     curso.nombre + "-" + curso.anyo,
@@ -47,9 +52,75 @@ Curso.hook("beforeValidate", function(curso){
     CURSO_SLUG_FIELD_SIZE
   );
 });
+/** FIN: MODELO CURSO **/
 
+/** MODELO DATOSALUMNO **/
+var DATOS_ALUMNO_SLUG_FIELD_SIZE = 128;
+var DatosAlumno = sequelize.define('DatosAlumno', {
+    id: {
+      type: Sequelize.INTEGER,
+      autoIncrement: true,
+      primaryKey: true
+    },
+    nombre_completo: {
+      type: Sequelize.STRING(128),
+      allowNull: false
+    },
+    slug: {
+      type: Sequelize.STRING(DATOS_ALUMNO_SLUG_FIELD_SIZE),
+      allowNull: false,
+      unique: true
+    },
+    usuarioId: {
+      type: Sequelize.INTEGER,
+      allowNull: false
+    },
+    codigo_uo: {
+      type: Sequelize.STRING(10),
+      allowNull: false,
+    },
+    foto: {
+      type: Sequelize.STRING(255),
+      allowNull: false
+    },
+    cursoId: {
+      type: Sequelize.INTEGER,
+      allowNull: false
+    }
+  },{
+    timestamps: true,
+    tablename: "DatosAlumnos"
+  });
+
+// Hook para generar el SLUG
+DatosAlumno.hook("beforeValidate", function(datos_alumno){
+  return slugger.generator(
+    datos_alumno,
+    DatosAlumno, 
+    datos_alumno.nombre_completo,
+    "slug",
+    DATOS_ALUMNO_SLUG_FIELD_SIZE
+  );
+});
+
+// Relaciones
+DatosAlumno.belongsTo(Auth.Usuario, {
+  foreignKey: "usuarioId", 
+  onDelete: "cascade",
+  onUpdate: "cascade"
+});
+DatosAlumno.belongsTo(Curso, {
+  foreignKey: "cursoId",
+  onDelete: "cascade",
+  onUpdate: "cascade"
+});
+
+/** FIN: MODELO DATOSALUMNO **/
+
+/** Exterior del paquete de modelos **/
 var Cursos = {
-  Curso: Curso
+  Curso: Curso,
+  DatosAlumno: DatosAlumno
 };
 
 module.exports = Cursos;
