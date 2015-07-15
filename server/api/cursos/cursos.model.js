@@ -160,13 +160,23 @@ DatosProfesor.belongsTo(Auth.Usuario, {
   onDelete: "cascade",
   onUpdate: "cascade"
 });
+
+// tabla intermedia NxM
+var CursosDatosProfesores = sequelize.define("CursosDatosProfesores", {
+}, {
+  tableName: "CursosDatosProfesores"
+});
+
+// relacion DatosProfesor x Curso
 Curso.belongsToMany(DatosProfesor, {
-  through: "CursosDatosProfesores",
-  as: "profesores_full"
+  through: CursosDatosProfesores,
+  as: "profesores_full",
+  foreignKey: "cursoId"
 });
 DatosProfesor.belongsToMany(Curso, {
-  through: "CursosDatosProfesores",
-  as: "cursos_full"
+  through: CursosDatosProfesores,
+  as: "cursos_full",
+  foreignKey: "datosProfesorId"
 });
 /** FIN: MODELO DATOSPROFESOR **/
 

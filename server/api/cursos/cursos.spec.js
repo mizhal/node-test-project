@@ -31,16 +31,12 @@ describe('GET /api/cursos', function() {
 
   it("Cursos: should make crud and generate slug", function(done){
     var NOMBRE_CURSO = "Curso 2015/2016";
-    join(
-      // destruir los cursos creados por tests previos
-      // el join es necesario porque el map lleva promesas
-      Curso.findAll({
-        where: {nombre: NOMBRE_CURSO}
-      }).map(function(curso){
-        return curso.destroy();
-      })
-      
-    ).then(function(){
+
+    // destruir los cursos creados por tests previos
+    // el join es necesario porque el map lleva promesas
+    Curso.destroy({
+      where: {nombre: NOMBRE_CURSO}
+    }).then(function(){
 
       // crear y probar
       Curso.create({
@@ -61,7 +57,7 @@ describe('GET /api/cursos', function() {
           // probar actualizacion
           var curso = cursos[0];
           curso.nombre = "Otro nombre";
-          curso.slug = null // para forzar a que regenere
+          curso.slug = null // para forzar a que regenere 
           return curso.save();
         }).then(function(curso){
           // probar actualizacion del slug
@@ -190,6 +186,7 @@ describe('GET /api/cursos', function() {
     },
 
     destroy: function(){
+
       return join(
         Usuario.destroy({
           where: {
@@ -210,24 +207,64 @@ describe('GET /api/cursos', function() {
     }
   };
 
-  it("makes CRUD", function(done) {
+  it("DatosProfesor: CRUD", function(done) {
 
     DependenciasDatosProfesor.create()
       .spread(function(usuario, curso1, curso2){
+
         return DatosProfesor.create({
           nombre_completo: "Lucia Marquez Brenes",
           usuarioId: usuario.id
+        }).then(function(datos_profesor){
+          return datos_profesor.addCursos_full(curso1)
+            .then(function(){
+              return datos_profesor;
+            });
+        }).then(function(datos_profesor){
+          return datos_profesor.destroy();
         });
-      }).then(function(datos_profesor){
-        return datos_profesor.destroy();
+
+      }).then(function(){
+        return DependenciasDatosProfesor.destroy();
       }).then(function(){
         done();
       }).catch(function(error){
         done(error);
-      }).then(function(){
-        DependenciasDatosProfesor.destroy();
       });
   }) 
+
+  xit("DatosProfesor: Can bind to many courses", function(done){
+    DependenciasDatosProfesor.create()
+      .spread(function(usuario, curso1, curso2){
+
+        return DatosProfesor.create({
+          nombre_completo: "Lucia Marquez Brenes",
+          usuarioId: usuario.id
+        }).then(function(datos_profesor){
+          return datos_profesor.addCursos_full(curso1)
+            .then(function(){
+              return datos_profesor;
+            });
+        }).then(function(datos_profesor){
+          return datos_profesor.addCursos_full(curso2)
+            .then(function(){
+              return datos_profesor;
+            });
+        }).then(function(datos_profesor){
+          datos_profesor.getCursos_full().should.be.eql([curso1, curso2])
+          return datos_profesor;
+        }).then(function(datos_profesor){
+          return datos_profesor.destroy();
+        }).then(function(){
+          DependenciasDatosProfesor.destroy();
+        }).then(function(){
+          done();
+        }).catch(function(error){
+          done(error);
+        });
+
+      });
+  })
 
   /*** FIN: DATOSPROFESOR **/
 
