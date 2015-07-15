@@ -15,8 +15,10 @@ module.exports = {
         allowNull: false,
         references: {
           model: "Cursos",
-          key: "id" 
-        }
+          key: "id"
+        },
+        onDelete: "cascade",
+        onUpdate: "cascade"
       },
       datosProfesorId: {
         type: Sequelize.INTEGER,
@@ -24,7 +26,17 @@ module.exports = {
         references: { 
           model: "DatosProfesores",
           key: "id"
-        }
+        },
+        onDelete: "cascade",
+        onUpdate: "cascade"
+      },
+      createdAt: {
+        type: Sequelize.DATE,
+        allowNull: false
+      },
+      updatedAt: {
+        type: Sequelize.DATE,
+        allowNull: false
       }
     }).then(function(){
       // indices
