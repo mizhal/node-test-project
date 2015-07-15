@@ -38,7 +38,7 @@ var Curso = sequelize.define('Curso',
   },
   {//CONFIGURACION
     timestamps: true,
-    tablename: "Cursos"
+    tableName: "Cursos"
   }
 );
 
@@ -89,7 +89,7 @@ var DatosAlumno = sequelize.define('DatosAlumno', {
     }
   },{
     timestamps: true,
-    tablename: "DatosAlumnos"
+    tableName: "DatosAlumnos"
   });
 
 // Hook para generar el SLUG
@@ -119,10 +119,14 @@ DatosAlumno.belongsTo(Curso, {
 /** MODELO DATOSPROFESOR **/
 var DATOS_PROFESOR_SLUG_FIELD_SIZE = 128;
 var DatosProfesor = sequelize.define('DatosProfesor', {
-    id:  Sequelize.INTEGER,
+    id: {
+      type: Sequelize.INTEGER,
+      autoIncrement: true,
+      primaryKey: true
+    },
     nombre_completo: {
       type: Sequelize.STRING(128),
-      allowNull: false
+      allowNull: false,
     },
     slug: {
       type: Sequelize.STRING(128),
@@ -135,7 +139,7 @@ var DatosProfesor = sequelize.define('DatosProfesor', {
     } 
   }, {
     timestamps: true,
-    tablename: "DatosProfesores"
+    tableName: "DatosProfesores"
   }
 );
 
@@ -169,7 +173,8 @@ DatosProfesor.belongsToMany(Curso, {
 /** Exterior del paquete de modelos **/
 var Cursos = {
   Curso: Curso,
-  DatosAlumno: DatosAlumno
+  DatosAlumno: DatosAlumno,
+  DatosProfesor: DatosProfesor
 };
 
 module.exports = Cursos;

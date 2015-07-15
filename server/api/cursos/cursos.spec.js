@@ -12,6 +12,7 @@ var Usuario = Auth.Usuario;
 var Cursos = require("./cursos.model.js");
 var Curso = Cursos.Curso;
 var DatosAlumno = Cursos.DatosAlumno;
+var DatosProfesor = Cursos.DatosProfesor;
 // FIN: Modelos y paquetes necesarios
 
 describe('GET /api/cursos', function() {
@@ -60,6 +61,7 @@ describe('GET /api/cursos', function() {
           // probar actualizacion
           var curso = cursos[0];
           curso.nombre = "Otro nombre";
+          curso.slug = null // para forzar a que regenere
           return curso.save();
         }).then(function(curso){
           // probar actualizacion del slug
@@ -79,134 +81,153 @@ describe('GET /api/cursos', function() {
   });
 
   /*** DATOSALUMNO **/
-  function prerequisitos_datosalumno_crud(){
-    /*** Genera los objetos que necesitamos para crear 
-    entidades DatosAlumno
-    ***/
-    var Usuario_data = {
+
+  var DependenciasDatosAlumno = {
+    create: function () {
+      /*** Genera los objetos que necesitamos para crear 
+      entidades DatosAlumno
+      ***/
+      this.usuario_data = {
         login: "alumno1",
         password: "the-password",
         ultimo_acceso: 1,
         puede_entrar: true
       };
-    var Curso_data = {
+      this.curso_data = {
         nombre: "Curso de prueba",
         anyo: 2015
       };
 
-    return destroy_prerrequisitos_datosalumno()
-      .then(function(){
-        return join(
-          Usuario.create(Usuario_data),
-          Curso.create(Curso_data)
-        )
-      });
-  };
-
-  function destroy_prerrequisitos_datosalumno(){
-    return join(
-      Usuario.findAll({
+      var host = this;
+      return this.destroy()
+        .then(function(){
+          return join(
+            Usuario.create(host.usuario_data),
+            Curso.create(host.curso_data)
+          )
+        });
+    },
+    destroy: function(){
+      return join(
+        Usuario.destroy({
           where: {
-            login: "alumno1"
+            login: this.usuario_data.login
           }
-        }).map(function(usuario){
-          return usuario.destroy();
         }),
-      Curso.findAll({
+        Curso.destroy({
           where: {
-            nombre: "Curso de prueba"
+            nombre: this.curso_data.nombre
           }
-        }).map(function(curso){
-          return curso.destroy();
         })
-    )
+      )
+    }
   };
   
   it("DatosAlumno: crud", function(done){
 
-    prerequisitos_datosalumno_crud()
-    .spread(function(usuario, curso){
-      var CODIGO_UO = "uo12312";
+    DependenciasDatosAlumno.create()
+      .spread(function(usuario, curso){
+        var CODIGO_UO = "uo12312";
 
-      return DatosAlumno.create({
-        nombre_completo: "Pedro Pérez Mateos",
-        usuarioId: usuario.id,
-        codigo_uo: CODIGO_UO,
-        foto: "TEST!",
-        cursoId: curso.id,
-      }).then(function(datos_alumno){
-        datos_alumno.nombre_completo = "Alfredo Rodriguez Vallejo";
-        return datos_alumno.save();
-      }).then(function(){
-        return DatosAlumno.findOne({
-          where: {codigo_uo: CODIGO_UO}
+        return DatosAlumno.create({
+          nombre_completo: "Pedro Pérez Mateos",
+          usuarioId: usuario.id,
+          codigo_uo: CODIGO_UO,
+          foto: "TEST!",
+          cursoId: curso.id,
+        }).then(function(datos_alumno){
+          datos_alumno.nombre_completo = "Alfredo Rodriguez Vallejo";
+          return datos_alumno.save();
+        }).then(function(){
+          return DatosAlumno.findOne({
+            where: {codigo_uo: CODIGO_UO}
+          });
+        }).then(function(datos_alumno){
+          datos_alumno.nombre_completo.should.be.eql("Alfredo Rodriguez Vallejo");
+          return datos_alumno;
+        }).then(function(datos_alumno){
+          return datos_alumno.destroy();
         });
-      }).then(function(datos_alumno){
-        datos_alumno.nombre_completo.should.be.eql("Alfredo Rodriguez Vallejo");
-        return datos_alumno;
-      }).then(function(datos_alumno){
-        return datos_alumno.destroy();
-      });
 
-    }).then(function(){
-      return destroy_prerrequisitos_datosalumno();
-    }).then(function(){
-      done();
-    });
-    
+      }).then(function(){
+        DependenciasDatosAlumno.destroy();
+        done();
+      });
   });
 
   /*** FIN: DATOSALUMNO **/
 
   /*** DATOSPROFESOR **/
 
-  function prerequisitos_datos_profesor_crud(){
-    var datos_usuario = {
-        login: "profesor1",
-        password: "the-password",
-        ultimo_acceso: 1,
-        puede_entrar: true
-    };
-    var datos_curso1 = {
-        nombre: "Curso de prueba",
-        anyo: 2015,
-        slug: "prueba-1"
-    };
-    var datos_curso2 = {
-        nombre: "Curso de prueba 2",
-        anyo: 2015,
-        slug: "prueba-2"
-    };
+  var DependenciasDatosProfesor = {
+    create: function () {
+      this.datos_usuario = {
+          login: "profesor1",
+          password: "the-password",
+          ultimo_acceso: 1,
+          puede_entrar: true
+      };
+      this.datos_curso1 = {
+          nombre: "Curso de prueba",
+          anyo: 2015,
+          slug: "prueba-1"
+      };
+      this.datos_curso2 = {
+          nombre: "Curso de prueba 2",
+          anyo: 2015,
+          slug: "prueba-2"
+      };
 
-    return destroy_prerrequisitos_datosprofesor()
-      .then(function(){
-        return join(
-          Usuario.create(datos_usuario),
-          Curso.create(datos_curso1),
-          Curso.create(datos_curso2)
-        );
+      var host = this;
+      return this.destroy()
+        .then(function(){
+          return join(
+            Usuario.create(host.datos_usuario),
+            Curso.create(host.datos_curso1),
+            Curso.create(host.datos_curso2)
+          );
+        });
+    },
+
+    destroy: function(){
+      return join(
+        Usuario.destroy({
+          where: {
+            login: this.datos_usuario.login
+          }
+        }),
+        Curso.destroy({
+          where: {
+            slug: this.datos_curso1.slug
+          }
+        }),
+        Curso.destroy({
+          where: {
+            slug: this.datos_curso2.slug
+          }
+        })
+      );
+    }
+  };
+
+  it("makes CRUD", function(done) {
+
+    DependenciasDatosProfesor.create()
+      .spread(function(usuario, curso1, curso2){
+        return DatosProfesor.create({
+          nombre_completo: "Lucia Marquez Brenes",
+          usuarioId: usuario.id
+        });
+      }).then(function(datos_profesor){
+        return datos_profesor.destroy();
+      }).then(function(){
+        done();
+      }).catch(function(error){
+        done(error);
+      }).then(function(){
+        DependenciasDatosProfesor.destroy();
       });
-  }
-
-  function destroy_prerrequisitos_datosprofesor(usuario, curso1, curso2){
-    return join(
-      Usuario.destroy({
-        where: {
-          login: usuario.login
-        }
-      }),
-      Curso.destroy({
-        where: {
-          slug: curso1.slug
-        }
-      }),
-      Curso.destroy({
-        where: {
-          slug: curso2.slug
-        }
-      })
-    );
-  }
+  }) 
 
   /*** FIN: DATOSPROFESOR **/
 
