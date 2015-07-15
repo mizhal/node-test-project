@@ -67,11 +67,29 @@ describe('GET /api/auth', function() {
       ultimo_acceso: 1,
       puede_entrar: true
     }
-    var new_ = Usuario.build(body);
-    new_.save()
-      .then(function(Usuario) {
-        done(null)
-      }).catch(function(error){
+    Usuario.create(body)
+      .then(function(usuario){
+        usuario.puede_entrar = false;
+        return usuario.save();
+      })
+      .then(function(){
+        return Usuario.findOne({
+          where: {
+            login: body.login
+          }
+        });
+      })
+      .then(function(usuario){
+        usuario.puede_entrar.should.be.equal(false);
+        return usuario;
+      })
+      .then(function(usuario){
+        return usuario.destroy();
+      })
+      .then(function(){
+        done();
+      })
+      .catch(function(error){
         done(error);
       });
   });
