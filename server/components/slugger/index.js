@@ -36,53 +36,61 @@ var generator = function(
   slug_field_size,
   repeats
 ){
-  if(source_value) {
+  if (instance[slug_field_name]) {
+    // ya hay slug. Se conserva
+    return;
+
+  } else if (source_value) {
     // generar el slug en bruto
     var slug = slug_lib(source_value);
-    
-    // contador de repeticiones por si ya existe el slug en BD
-    var repeats_length = null;
-    if(repeats == null)
-      repeats_length = 0
-    else
-      repeats_length = repeats.length;
-
-    // limitar el tamanyo
-    if(slug.length + repeats_length > slug_field_size) {
-      slug = slug.slice(0, slug_field_size - repeats_length - 1);
-    }
-
-    // si estamos en repeticion, concatenar el numero de repeticion
-    if(repeats != null)
-      slug += "-" + repeats;
-
-    // check slug duplicado en BD
-    return Model.count({
-
-        where:{slug: slug}
-
-      }).then(function(count){
-
-        if(repeats == null) repeats = 0; //repeticion inicial
-
-        if(count > 0){
-
-          // llamada recursiva, 
-          // porque el check de duplicado es asincrono
-          // no se puede hacer iterativa
-          // la llamada recursiva causa un encadenamiento de
-          // promesas.
-          return generator(instance, Model, source_value,
-            slug_field_name, slug_field_size, repeats + 1);
-
-        } else {
-
-          // si todo va bien, se asigna definitivamente el campo
-          instance[slug_field_name] = slug;
-
-        }
-      });
+  } else {
+    // no hay datos fuente, no se genera nada y probablemente
+    // falle en las validaciones.
+    return;
   }
+    
+  // contador de repeticiones por si ya existe el slug en BD
+  var repeats_length = null;
+  if(repeats == null)
+    repeats_length = 0
+  else
+    repeats_length = repeats.length;
+
+  // limitar el tamanyo
+  if(slug.length + repeats_length > slug_field_size) {
+    slug = slug.slice(0, slug_field_size - repeats_length - 1);
+  }
+
+  // si estamos en repeticion, concatenar el numero de repeticion
+  if(repeats != null)
+    slug += "-" + repeats;
+
+  // check slug duplicado en BD
+  return Model.count({
+
+      where:{slug: slug}
+
+    }).then(function(count){
+
+      if(repeats == null) repeats = 0; //repeticion inicial
+
+      if(count > 0){
+
+        // llamada recursiva, 
+        // porque el check de duplicado es asincrono
+        // no se puede hacer iterativa
+        // la llamada recursiva causa un encadenamiento de
+        // promesas.
+        return generator(instance, Model, source_value,
+          slug_field_name, slug_field_size, repeats + 1);
+
+      } else {
+
+        // si todo va bien, se asigna definitivamente el campo
+        instance[slug_field_name] = slug;
+
+      }
+    });
 }
 
 module.exports = {
