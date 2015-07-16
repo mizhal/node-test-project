@@ -170,13 +170,13 @@ var CursosDatosProfesores = sequelize.define("CursosDatosProfesores", {
 // relacion DatosProfesor x Curso
 Curso.belongsToMany(DatosProfesor, {
   through: CursosDatosProfesores,
-  as: "profesores_full",
-  foreignKey: "cursoId"
+  as: "profesores",
+  foreignKey: "datosProfesorId"
 });
 DatosProfesor.belongsToMany(Curso, {
   through: CursosDatosProfesores,
-  as: "cursos_full",
-  foreignKey: "datosProfesorId"
+  as: "cursos",
+  foreignKey: "cursoId"
 });
 /** FIN: MODELO DATOSPROFESOR **/
 
@@ -184,7 +184,8 @@ DatosProfesor.belongsToMany(Curso, {
 var Cursos = {
   Curso: Curso,
   DatosAlumno: DatosAlumno,
-  DatosProfesor: DatosProfesor
+  DatosProfesor: DatosProfesor,
+  CursosDatosProfesores: CursosDatosProfesores
 };
 
 module.exports = Cursos;
