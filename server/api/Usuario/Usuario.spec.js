@@ -12,6 +12,8 @@ var request = require('supertest');
 var assert = require('chai').assert;
 var expect = require('chai').expect;
 
+var sequelize_error = require('sequelize/lib/errors.js');
+
 /*** AUXILIARES **/
 
 function login_as_admin(request){
@@ -175,7 +177,7 @@ describe('GET /api/auth', function() {
       });
   });
 
-  xit("can find with roles", function(done){
+  it("can find with roles", function(done){
       Usuario.find({
         where: {
           login: "admin"
@@ -253,17 +255,25 @@ describe('GET /api/usuarios/roles', function() {
       });
   });
 
-  xit("should be unique", function(done){
-    Role.create({nombre: "test-admin"})
-      .then(function(){
-        return Role.create({nombre: "test-admin"});    
-      })
-      .then(function(){
-        done();
-      })
-      .catch(function(error){
-        done(error, null);
-      });
+  it("assign roles to user", function(done){
 
+    Usuario.create({
+        login: "have-roles",
+        password: "the-password",
+        ultimo_acceso: 1,
+        puede_entrar: true
+      }).then(function(usuario){
+        return usuario.anyadirRole("profesor")
+          .then(function(){
+            return usuario;
+          });
+      }).then(function(usuario){
+        return usuario.reload();
+      }).then(function(usuario){
+        usuario.roles.length.should.be.equal(1);
+        done();
+      }).catch(function(error){
+        done(error);
+      });
   });
 });
