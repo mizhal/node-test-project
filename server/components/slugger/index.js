@@ -38,7 +38,7 @@ var generator = function(
 ){
   if (instance[slug_field_name]) {
     // ya hay slug. Se conserva
-    return;
+    return Promise.join();
 
   } else if (source_value) {
     // generar el slug en bruto
@@ -46,7 +46,7 @@ var generator = function(
   } else {
     // no hay datos fuente, no se genera nada y probablemente
     // falle en las validaciones.
-    return;
+    return Promise.join();
   }
     
   // contador de repeticiones por si ya existe el slug en BD
