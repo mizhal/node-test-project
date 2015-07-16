@@ -219,7 +219,7 @@ describe('GET /api/cursos', function() {
     }
   };
 
-  xit("DatosProfesor: CRUD", function(done) {
+  it("DatosProfesor: CRUD", function(done) {
 
     DependenciasDatosProfesor.create()
       .spread(function(usuario, curso1, curso2){
@@ -307,11 +307,12 @@ describe('GET /api/cursos', function() {
           return datos_profesor.destroy();
 
         }).then(function(){
-
-          DependenciasDatosProfesor.destroy();
+          // liberar las dependencias
+          return DependenciasDatosProfesor.destroy();
 
         }).then(function(){
-
+          // comprobar que no quedan elementos de la tabla
+          // del join despues de destruir el objeto
           return CursosDatosProfesores.count()
             .then(function(count){
               count.should.be.equal(0);
