@@ -136,7 +136,7 @@ var DatosProfesor = sequelize.define('DatosProfesor', {
     usuarioId: {
       type: Sequelize.INTEGER,
       allowNull: false
-    } 
+    }
   }, {
     timestamps: true,
     tableName: "DatosProfesores"
@@ -171,12 +171,12 @@ var CursosDatosProfesores = sequelize.define("CursosDatosProfesores", {
 Curso.belongsToMany(DatosProfesor, {
   through: CursosDatosProfesores,
   as: "profesores",
-  foreignKey: "datosProfesorId"
+  foreignKey: "cursoId"
 });
 DatosProfesor.belongsToMany(Curso, {
   through: CursosDatosProfesores,
   as: "cursos",
-  foreignKey: "cursoId"
+  foreignKey: "datosProfesorId"
 });
 /** FIN: MODELO DATOSPROFESOR **/
 

@@ -245,31 +245,86 @@ describe('GET /api/cursos', function() {
       });
   }) 
 
-  xit("DatosProfesor: Can bind to many courses", function(done){
+  it("DatosProfesor: Can bind to many courses", function(done){
     DependenciasDatosProfesor.create()
       .spread(function(usuario, curso1, curso2){
 
         return DatosProfesor.create({
+
           nombre_completo: "Lucia Marquez Brenes",
           usuarioId: usuario.id
+
         }).then(function(datos_profesor){
-          return datos_profesor.setCursos([curso1, curso2])
+
+          return datos_profesor.setCursos([curso2])
             .then(function(){
+              return datos_profesor.reload();
+            });
+
+        }).then(function(datos_profesor){
+
+          return datos_profesor.getCursos()
+            .then(function(cursos){
+              cursos.length.should.be.equal(1);
               return datos_profesor;
             });
+
         }).then(function(datos_profesor){
-          console.log("curso 0 ", usuario.roles);
-          return datos_profesor;
+
+          return datos_profesor.addCurso(curso1)
+            .then(function(){
+              return datos_profesor.reload();
+            });
+
         }).then(function(datos_profesor){
+
+          return datos_profesor.getCursos()
+            .then(function(cursos){
+              cursos.length.should.be.equal(2);
+              cursos.map(function(curso){
+                return curso.slug;
+              }).should.be.eql(["prueba-2", "prueba-1"].sort());
+              return datos_profesor;
+            });
+
+        }).then(function(datos_profesor){
+
+          return datos_profesor.setCursos([curso1])
+            .then(function(){
+              return datos_profesor.reload();
+            });
+
+        }).then(function(datos_profesor){
+
+          return datos_profesor.getCursos()
+            .then(function(cursos){
+              cursos.length.should.be.equal(1);
+              return datos_profesor;
+            });
+
+        }).then(function(datos_profesor){
+
           return datos_profesor.destroy();
+
         }).then(function(){
+
           DependenciasDatosProfesor.destroy();
+
         }).then(function(){
-          //CursosDatosProfesores.count().should.be.equal(0);
+
+          return CursosDatosProfesores.count()
+            .then(function(count){
+              count.should.be.equal(0);
+            });
+
         }).then(function(){
+
           done();
+
         }).catch(function(error){
+
           done(error);
+
         });
 
       });
