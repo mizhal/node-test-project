@@ -10,7 +10,6 @@ var path = require('path');
 module.exports = function(app) {
 
   // Insert routes below
-  app.use('/api/gestion/importacion_grupos', require('./api/ImportacionDeGrupo'));
   app.use('/api/auth', require('./api/Usuario'));
   app.use('/api/translations', require('./api/Translation'));
 
