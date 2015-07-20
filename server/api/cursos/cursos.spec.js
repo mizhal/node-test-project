@@ -21,7 +21,7 @@ var CursosDatosProfesores = Cursos.CursosDatosProfesores;
 sequelize_fixtures.loadFile("fixtures/cursos.fixtures.yml", Cursos);
 // FIN: Carga de fixtures
 
-describe('GET /api/cursos', function() {
+describe('GET /api/cursos', function(done) {
 
   it('should respond with JSON array', function(done) {
     request(app)
@@ -31,7 +31,31 @@ describe('GET /api/cursos', function() {
       .end(function(err, res) {
         if (err) return done(err);
         res.body.should.be.instanceof(Array);
-        console.log("CURSOS >>", res.body);
+        res.body.length.should.be.equal(5);
+        done();
+      });
+  });
+
+  it("paginates", function(done){
+    request(app)
+      .get('/api/cursos')
+      .expect(200)
+      .set("Range-Unit", "items")
+      .set("Range", "2-3")
+      .expect('Content-Type', /json/)
+      .end(function(err, res) {
+        if (err) return done(err);
+        res.body.should.be.instanceof(Array);
+        res.body.length.should.be.equal(2);
+        // pedimos el tercer y cuarto elemento
+        res.body.map(function(curso){
+          return curso.slug;
+        })
+        .sort()
+        .should.be.eql(
+          ["3-grupo-c-2015", "1-grupo-a-2011"].sort()
+        );
+
         done();
       });
   });
@@ -289,7 +313,9 @@ describe('GET /api/cursos', function() {
               cursos.length.should.be.equal(2);
               cursos.map(function(curso){
                 return curso.slug;
-              }).should.be.eql(["prueba-2", "prueba-1"].sort());
+              }).sort().should.be.eql(
+                ["prueba-2", "prueba-1"].sort()
+              );
               return datos_profesor;
             });
 
