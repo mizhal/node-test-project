@@ -20,7 +20,6 @@ var Curso = sequelize.define('Curso',
     nombre: {
       type: Sequelize.STRING(128),
       allowNull: false,
-      unique: true,
       validate: {
 
       }
