@@ -1,28 +1,35 @@
 'use strict';
 
 var _ = require('lodash');
+var paginate = require('node-paginate-anything');
+
 var Cursos = require('./cursos.model');
+var Curso = Cursos.Curso;
+var DatosAlumno = Cursos.DatosAlumno;
+var DatosProfesor = Cursos.DatosProfesor;
 
-// Get list of cursoss
+// Get list of cursos
 exports.index = function(req, res) { 
-    var page_size = 100
-    var page_offset = (req.params.page || 0) * page_size;
-    var language = req.query.lang;
-    var query = {
-      offset: page_offset,
-      limit: page_size
-    };
-
-    if(req.query.filter){
-      query.where = {key: new RegExp("^.*" + req.query.filter + ".*$", "i")};
-    }
-
-    Cursos.findAll(query).then(function(cursoss){
-      return res.status(200).json(cursoss);
-    }).catch(function(err){
-      return handleError(res, err);
-    });
+  var total_items = Curso.count();
   
+  var queryParameters = paginate(req, res, 
+    total_items, 500);
+
+  var language = req.query.lang;
+  var query = {
+    offset: queryParameters.skip,
+    limit: queryParameters.limit
+  };
+
+  if(req.query.filter){
+    query.where = {key: new RegExp("^.*" + req.query.filter + ".*$", "i")};
+  }
+
+  Curso.findAll(query).then(function(cursos){
+    return res.status(200).json(cursos);
+  }).catch(function(err){
+    return handleError(res, err);
+  });
 }; 
 // Get a single cursos
 exports.show = function(req, res) {
