@@ -1,0 +1,10 @@
+.course-row.col-md-12
+  .handler.col-md-1
+  .name.col-md-5
+    {{course.nombre}}
+  .year.col-md-3
+    {{course.anyo | formato_anyo }}
+  .buttons.col-md-3
+    img.detail(src="/assets/images/icons/course-show.png" ng-click="show_course(course)")
+    img.delete(src="/assets/images/icons/course-delete.png" ng-click="delete_course(course)")
+    img.download(src="/assets/images/icons/course-download.png" ng-click="download_course(course)")
