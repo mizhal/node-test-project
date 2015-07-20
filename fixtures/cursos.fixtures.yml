@@ -1,0 +1,31 @@
+fixtures:
+  - model: Curso
+    data:
+      id: 1
+      nombre: "3º Grupo A"
+      slug: 3-grupo-a-2015
+      anyo: 2015
+  - model: Curso
+    data:
+      id: 2
+      nombre: "3º Grupo B"
+      slug: 3-grupo-b-2015
+      anyo: 2015
+  - model: Curso
+    data:
+      id: 3
+      nombre: "3º Grupo C"
+      slug: 3-grupo-c-2015
+      anyo: 2015
+  - model: Curso
+    data:
+      id: 4
+      nombre: "1º Grupo A"
+      slug: 1-grupo-a-2011
+      anyo: 2011
+  - model: Curso
+    data:
+      id: 5
+      nombre: "1º Grupo A"
+      slug: 1-grupo-a-2009
+      anyo: 2009

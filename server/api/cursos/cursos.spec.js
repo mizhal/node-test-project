@@ -5,6 +5,7 @@ var app = require('../../app');
 var request = require('supertest');
 var Promise = require("bluebird");
 var join = Promise.join;
+var sequelize_fixtures = require('sequelize-fixtures');
 
 // Modelos y paquetes necesarios
 var Auth = require("../Usuario/Usuario.model.js");
@@ -16,9 +17,13 @@ var DatosProfesor = Cursos.DatosProfesor;
 var CursosDatosProfesores = Cursos.CursosDatosProfesores;
 // FIN: Modelos y paquetes necesarios
 
+// Carga de fixtures
+sequelize_fixtures.loadFile("fixtures/cursos.fixtures.yml", Cursos);
+// FIN: Carga de fixtures
+
 describe('GET /api/cursos', function() {
 
-  xit('should respond with JSON array', function(done) {
+  it('should respond with JSON array', function(done) {
     request(app)
       .get('/api/cursos')
       .expect(200)
@@ -26,6 +31,7 @@ describe('GET /api/cursos', function() {
       .end(function(err, res) {
         if (err) return done(err);
         res.body.should.be.instanceof(Array);
+        console.log("CURSOS >>", res.body);
         done();
       });
   });
