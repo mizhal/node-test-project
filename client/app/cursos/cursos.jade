@@ -26,4 +26,7 @@
       .courses.col-md-10.col-md-offset-1
         div(ng-repeat="course in courses")
           div(ng-include="'app/cursos/curso_fila.html'")
-      .pagination
+    .row
+      .normal-pagination.col-md-10.col-md-offset-1
+        bgf-pagination(collection="courses" url="'/api/cursos'" per-page="5" 
+          template-url="/assets/tpl/paginate-anything.html")

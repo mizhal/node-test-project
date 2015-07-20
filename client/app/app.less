@@ -242,3 +242,40 @@ footer.footer.landing {
   }
 }
 /** FIN: Carrusel de Login */
+
+/** PAGINACIONES **/
+.normal-pagination {
+  padding: 0;
+
+  .pagination > li > a {
+    display: inline;
+    margin: 0 0.5em;
+    border-radius: 0;
+    background-color: @darkblue;
+    color: @lightyellow;
+    border: 0px solid black;
+  }
+
+  /** eliminar margenes en los extremos */
+  .pagination > li:first-child > a {
+    display: inline;
+    margin-left: 0;
+  }
+
+  .pagination > li:last-child > a {
+    display: inline;
+    margin-right: 0;
+  }
+  /** FIN: eliminar margenes en los extremos */
+
+  .pagination.buttons {
+    float: right;
+  }
+
+  .pagination > .active > a {
+    background-color: @lightyellow;
+    color: @darkblue;
+  }
+
+}
+/** PAGINACIONES **/
