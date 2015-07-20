@@ -1,0 +1,136 @@
+@font-filter: 18px;
+@font-header: 48px;
+
+/** FUENTES **/
+.font-filter {
+  font-size: 1em;
+  font-family: Tahoma;
+  color: @white-body-fonts;
+  text-transform: capitalize;
+}
+
+.font-header {
+  font-family: Tahoma;
+  color: @white-body-fonts;
+  font-size: 3em;
+  text-transform: capitalize;
+}
+
+.font-course {
+  font-family: Tahoma;
+  color: @lightyellow;
+  font-size: 1.5em;
+  text-transform: capitalize;  
+}
+/** FIN: FUENTES **/
+
+.courses-index {
+
+  .banner {
+    position: relative;
+    background: #ffffff url("/assets/images/banners/courses.png") no-repeat center center;
+    height: 9em;
+
+    h1 {
+      .font-header;
+      .standard-text-shadow;
+
+      padding: 0;
+      margin: 0;
+      line-height: 3em;
+      text-align: center;
+    }
+  }
+
+  .filter-sort {
+    .vertical-shadow;
+    z-index: 1;
+    padding: 1em 0;
+    background-color: @background-white;
+
+    .label {
+      .font-filter;
+      &:after {
+        .font-filter;
+        content: ": ";
+      }
+    }
+
+    .sorts {
+      display: inline;
+      padding: 0.5em 1em;
+      background-color: @background-black;
+    }
+    .filters {
+      display: inline;
+      padding: 0.5em 1em;
+      background-color: @background-tasks;
+    }
+
+    ul {
+      display: inline;
+      margin: 0;
+      padding: 0;
+
+      li {
+        list-style-type: none;
+        display: inline;
+        margin: 0;
+        padding: 0;
+        &:after { 
+          .font-filter;
+          content: " | "; 
+        }
+        a {
+          .font-filter;
+          text-decoration: none;
+        }
+        &:last-child {
+          &:after { 
+            content: ""; 
+          }
+        }
+      }
+    }
+  }
+
+  .list {
+    z-index: 0;
+    
+    .courses {
+      padding: 1em 0;
+      
+      .course-row {
+        .standard-shadow;
+        .font-course;
+
+        @line-height: 2.5em;
+
+        color: @darkblue;
+        background-color: @lightyellow;
+        padding: 0;
+        margin: 0 0 0.5em 0;
+
+        .handler{
+          line-height: @line-height;
+        }
+        .name {
+          line-height: @line-height;
+        }
+        .year {
+          line-height: @line-height;
+          background-color: @darkblue;
+          color: @lightyellow;
+        }
+        .buttons {
+          line-height: @line-height;
+          background-color: #fffeee;
+          text-align: right;
+          img {
+            margin-left: 0.5em;
+          }
+        }
+      }
+    }
+  }
+}

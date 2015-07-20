@@ -1,0 +1,29 @@
+.courses-index
+  .container 
+    .banner.row
+      h1(translate="COURSES_LIST")
+    .buttons
+      .upload-button(ng-click="upload()")
+      .add-button(ng-click="add()")
+    .filter-sort.row
+        .sorts.col-md-5.col-md-offset-1
+          p.label(translate="SORT_BY")
+          ul 
+            li
+              a(translate="BY_YEAR" ng-click="sort_by_year()")
+            li
+              a(translate="ALPHABETIC" ng-click="sort_alpha()")
+            li
+              a(translate="CUSTOM" ng-click="sort_free()")
+        .filters.col-md-5
+          p.label(translate="FILTER")
+          ul
+            li
+              a(translate="OPEN" ng-click="show_open()")
+            li
+              a(translate="FINISHED" ng-click="show_finished()")
+    .list.row
+      .courses.col-md-10.col-md-offset-1
+        div(ng-repeat="course in courses")
+          div(ng-include="'app/cursos/curso_fila.html'")
+      .pagination
