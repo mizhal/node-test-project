@@ -12,8 +12,7 @@ module.exports = {
       },
       nombre: {
         type: Sequelize.STRING(64),
-        allowNull: false,
-        unique: true
+        allowNull: false
       },
       slug: {
         type: Sequelize.STRING(64),

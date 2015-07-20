@@ -5,6 +5,7 @@ var app = require('../../app');
 var request = require('supertest');
 var Promise = require("bluebird");
 var join = Promise.join;
+var sequelize_fixtures = require('sequelize-fixtures');
 
 // Modelos y paquetes necesarios
 var Auth = require("../Usuario/Usuario.model.js");
@@ -16,9 +17,13 @@ var DatosProfesor = Cursos.DatosProfesor;
 var CursosDatosProfesores = Cursos.CursosDatosProfesores;
 // FIN: Modelos y paquetes necesarios
 
-describe('GET /api/cursos', function() {
+// Carga de fixtures
+sequelize_fixtures.loadFile("fixtures/cursos.fixtures.yml", Cursos);
+// FIN: Carga de fixtures
 
-  xit('should respond with JSON array', function(done) {
+describe('GET /api/cursos', function(done) {
+
+  it('should respond with JSON array', function(done) {
     request(app)
       .get('/api/cursos')
       .expect(200)
@@ -26,6 +31,31 @@ describe('GET /api/cursos', function() {
       .end(function(err, res) {
         if (err) return done(err);
         res.body.should.be.instanceof(Array);
+        res.body.length.should.be.equal(5);
+        done();
+      });
+  });
+
+  it("paginates", function(done){
+    request(app)
+      .get('/api/cursos')
+      .expect(200)
+      .set("Range-Unit", "items")
+      .set("Range", "2-3")
+      .expect('Content-Type', /json/)
+      .end(function(err, res) {
+        if (err) return done(err);
+        res.body.should.be.instanceof(Array);
+        res.body.length.should.be.equal(2);
+        // pedimos el tercer y cuarto elemento
+        res.body.map(function(curso){
+          return curso.slug;
+        })
+        .sort()
+        .should.be.eql(
+          ["3-grupo-c-2015", "1-grupo-a-2011"].sort()
+        );
+
         done();
       });
   });
@@ -283,7 +313,9 @@ describe('GET /api/cursos', function() {
               cursos.length.should.be.equal(2);
               cursos.map(function(curso){
                 return curso.slug;
-              }).should.be.eql(["prueba-2", "prueba-1"].sort());
+              }).sort().should.be.eql(
+                ["prueba-2", "prueba-1"].sort()
+              );
               return datos_profesor;
             });
 
