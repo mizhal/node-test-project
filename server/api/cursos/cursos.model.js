@@ -20,6 +20,7 @@ var Curso = sequelize.define('Curso',
     nombre: {
       type: Sequelize.STRING(128),
       allowNull: false,
+      unique: "nombre_anyo",
       validate: {
 
       }
@@ -32,6 +33,7 @@ var Curso = sequelize.define('Curso',
     anyo: {
       type: Sequelize.INTEGER,
       allowNull: false,
+      unique: "nombre_anyo",
       defaultValue: (new Date()).getFullYear()
     }
   },

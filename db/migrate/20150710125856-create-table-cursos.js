@@ -35,6 +35,13 @@ module.exports = {
       // indices
       return Promise.all([
           queryInterface.addIndex("Cursos", ["slug"]),
+          queryInterface.addIndex("Cursos", 
+            ["nombre", "anyo"],
+            {
+              indexName: "unique_nombre_anyo",
+              indicesType: "UNIQUE"
+            }
+          )
         ]);
     });
   },
