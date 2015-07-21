@@ -11,7 +11,8 @@ angular.module 'pfcLaminasNodeApp', [
   'ui.grid',
   'angular-carousel',
   'bgf.paginateAnything',
-  'ngDialog'
+  'ngDialog',
+  'angularFileUpload'
 ]
 .config ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, $translateProvider, $translatePartialLoaderProvider) ->
   $urlRouterProvider
