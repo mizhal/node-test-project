@@ -45,6 +45,9 @@ fixtures:
       slug: armando-casitas
       usuario: 
         login: prof1
+      cursos:
+        - slug: 1-grupo-a-2012
+        - slug: 1-grupo-a-2010
       foto: "assets/attached_files/DatosProfesor/photo.png"
   - model: DatosAlumno
     data:
