@@ -108,12 +108,14 @@ DatosAlumno.hook("beforeValidate", function(datos_alumno){
 DatosAlumno.belongsTo(Auth.Usuario, {
   foreignKey: "usuarioId", 
   onDelete: "cascade",
-  onUpdate: "cascade"
+  onUpdate: "cascade",
+  as: "usuario"
 });
 DatosAlumno.belongsTo(Curso, {
   foreignKey: "cursoId",
   onDelete: "cascade",
-  onUpdate: "cascade"
+  onUpdate: "cascade",
+  as: "curso"
 });
 /** FIN: MODELO DATOSALUMNO **/
 
@@ -159,7 +161,8 @@ DatosProfesor.hook("beforeValidate", function(datos_profesor){
 DatosProfesor.belongsTo(Auth.Usuario, {
   foreignKey: "usuarioId",
   onDelete: "cascade",
-  onUpdate: "cascade"
+  onUpdate: "cascade",
+  as: "usuario"
 });
 
 // tabla intermedia NxM

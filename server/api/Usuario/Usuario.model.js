@@ -88,7 +88,8 @@ var Usuario = sequelize.define('Usuario',
 
     ultimo_acceso: {
       type: Sequelize.DATE,
-      allowNull: true
+      allowNull: true,
+      defaultValue: new Date()
     },
 
     salt: {
