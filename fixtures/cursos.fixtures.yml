@@ -24,3 +24,18 @@ fixtures:
       nombre: "1º Grupo A"
       slug: 1-grupo-a-2009
       anyo: 2009
+  - model: Curso
+    data:
+      nombre: "1º Grupo A"
+      slug: 1-grupo-a-2010
+      anyo: 2010
+  - model: Curso
+    data:
+      nombre: "1º Grupo A"
+      slug: 1-grupo-a-2011
+      anyo: 2011
+  - model: Curso
+    data:
+      nombre: "1º Grupo A"
+      slug: 1-grupo-a-2012
+      anyo: 2012

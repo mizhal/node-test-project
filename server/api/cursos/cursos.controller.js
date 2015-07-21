@@ -10,25 +10,27 @@ var DatosProfesor = Cursos.DatosProfesor;
 
 // Get list of cursos
 exports.index = function(req, res) { 
-  var total_items = Curso.count();
-  
-  var queryParameters = paginate(req, res, 
-    total_items, 500);
+  Curso.count().then(function(total_items){
 
-  var language = req.query.lang;
-  var query = {
-    offset: queryParameters.skip,
-    limit: queryParameters.limit
-  };
+    var queryParameters = paginate(req, res, 
+      total_items, 500);
 
-  if(req.query.filter){
-    query.where = {key: new RegExp("^.*" + req.query.filter + ".*$", "i")};
-  }
+    var language = req.query.lang;
+    var query = {
+      offset: queryParameters.skip,
+      limit: queryParameters.limit
+    };
 
-  Curso.findAll(query).then(function(cursos){
-    return res.status(200).json(cursos);
-  }).catch(function(err){
-    return handleError(res, err);
+    if(req.query.filter){
+      query.where = {key: new RegExp("^.*" + req.query.filter + ".*$", "i")};
+    }
+
+    Curso.findAll(query).then(function(cursos){
+      return res.status(200).json(cursos);
+    }).catch(function(err){
+      return handleError(res, err);
+    });
+
   });
 }; 
 // Get a single cursos
