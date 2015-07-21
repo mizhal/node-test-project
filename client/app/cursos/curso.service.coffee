@@ -5,7 +5,7 @@
 ###
 
 angular.module 'pfcLaminasNodeApp'
-.factory 'Curso', ($resource, $q, $http) ->
+.factory 'Curso', ($resource, $q, $http, $rootScope) ->
 
   ###
   Create new Curso
@@ -26,3 +26,6 @@ angular.module 'pfcLaminasNodeApp'
       deferred.reject(err)
 
     return deferred.promise
+
+  uploadStudentsFile: (file) ->
+    alert("TODO: upload students file");

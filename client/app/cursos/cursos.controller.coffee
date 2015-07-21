@@ -38,4 +38,9 @@ angular.module 'pfcLaminasNodeApp'
         $scope.current.dialog.close()
       .catch (err) ->
         $scope.errors.other = err.message
+
+  $scope.upload_course_data = (form) ->
+    if form.$valid
+      Curso.uploadStudentsFile(form.file)
+      
   ### FIN: formularios ###
