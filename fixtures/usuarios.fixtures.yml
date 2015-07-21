@@ -1,0 +1,17 @@
+fixtures:
+  - model: "Usuario"
+    data:
+      login: prof1
+      slug: prof1
+      password_encrypted: "$2a$10$Kt4NggKDfC2qcq.YmVmQ5OEi6XvRLVH94.tIweHZoJP3PO9S83V1."
+      salt: "$2a$10$Kt4NggKDfC2qcq.YmVmQ5O"
+      puede_entrar: true
+      nombre_completo: Armando Casitas
+  - model: "Usuario"
+    data:
+      login: alumno1
+      slug: alumno1
+      password_encrypted: "$2a$10$Kt4NggKDfC2qcq.YmVmQ5OEi6XvRLVH94.tIweHZoJP3PO9S83V1."
+      salt: "$2a$10$Kt4NggKDfC2qcq.YmVmQ5O"
+      puede_entrar: true
+      nombre_completo: Daniel Gómez Torero

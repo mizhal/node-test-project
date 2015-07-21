@@ -39,3 +39,20 @@ fixtures:
       nombre: "1º Grupo A"
       slug: 1-grupo-a-2012
       anyo: 2012
+  - model: DatosProfesor
+    data:
+      nombre_completo: Armando Casitas
+      slug: armando-casitas
+      usuario: 
+        login: prof1
+      foto: "assets/attached_files/DatosProfesor/photo.png"
+  - model: DatosAlumno
+    data:
+      nombre_completo: Alumno1
+      slug: alumno1
+      usuario:
+        login: alumno1
+      codigo_uo: uo11111
+      curso: 
+        slug: 3-grupo-a-2015
+      foto: "assets/attached_files/DatosAlumno/photo.png"
