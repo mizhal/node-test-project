@@ -26,6 +26,35 @@
 
 .courses-index {
 
+  .buttons {
+    position: relative;
+    z-index: 1;
+    .button {
+      .standard-shadow;
+      position: absolute;
+      top: -20px;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+
+      img {
+        position: absolute;
+        width: 50%;
+        height: 50%;
+        top: 25%;
+        lefT: 25%;
+      }
+    }
+    .add {
+      background-color: @darkred;
+      right: 0px;
+    }
+    .upload {
+      background-color: @background-black;
+      right: 50px;
+    }
+  }
+
   .banner {
     position: relative;
     background: #ffffff url("/assets/images/banners/courses.png") no-repeat center center;

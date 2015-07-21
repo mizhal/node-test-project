@@ -2,9 +2,12 @@
   .container 
     .banner.row
       h1(translate="COURSES_LIST")
-    .buttons
-      .upload-button(ng-click="upload()")
-      .add-button(ng-click="add()")
+    .buttons.row
+      .col-md-10.col-md-offset-1
+        .upload.button(ng-click="upload()")
+          img(src="/assets/images/icons/course-upload.png")
+        .add.button(ng-click="add()")
+          img(src="/assets/images/icons/course-add.png")
     .filter-sort.row
         .sorts.col-md-5.col-md-offset-1
           p.label(translate="SORT_BY")
