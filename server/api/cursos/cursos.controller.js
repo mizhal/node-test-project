@@ -18,7 +18,10 @@ exports.index = function(req, res) {
     var language = req.query.lang;
     var query = {
       offset: queryParameters.skip,
-      limit: queryParameters.limit
+      limit: queryParameters.limit,
+      order: [
+        ["createdAt", "desc"]
+      ]
     };
 
     if(req.query.filter){
@@ -46,8 +49,7 @@ exports.show = function(req, res) {
 
 // Creates a new cursos in the DB.
 exports.create = function(req, res) {
-  var new_ = Cursos.build(req.body);
-  new_.save()
+  Curso.create(req.body)
     .then(function(cursos) {
       return res.status(201).json(cursos);
     }).catch(function(error){
@@ -57,7 +59,7 @@ exports.create = function(req, res) {
 
 // Updates an existing cursos in the DB.
 exports.update = function(req, res) {
-  Cursos.findById(req.params.id)
+  Curso.findById(req.params.id)
     .then(function (cursos) {
 
       if(!cursos) { 
@@ -80,7 +82,7 @@ exports.update = function(req, res) {
 
 // Deletes a cursos from the DB.
 exports.destroy = function(req, res) {
-  Cursos.findById(req.params.id)
+  Curso.findById(req.params.id)
     .then(function (cursos) {
 
       if(!cursos) { 

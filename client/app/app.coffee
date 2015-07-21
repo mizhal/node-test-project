@@ -10,7 +10,8 @@ angular.module 'pfcLaminasNodeApp', [
   'pascalprecht.translate',
   'ui.grid',
   'angular-carousel',
-  'bgf.paginateAnything'
+  'bgf.paginateAnything',
+  'ngDialog'
 ]
 .config ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, $translateProvider, $translatePartialLoaderProvider) ->
   $urlRouterProvider

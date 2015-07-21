@@ -33,6 +33,7 @@ module.exports = function(config) {
       'client/bower_components/angular-touch/angular-touch.js',
       'client/bower_components/angular-carousel/dist/angular-carousel.js',
       'client/bower_components/angular-paginate-anything/dist/paginate-anything-tpls.js',
+      'client/bower_components/ngDialog/js/ngDialog.js',
       'client/bower_components/angular-mocks/angular-mocks.js',
       'client/bower_components/angular-scenario/angular-scenario.js',
       // endbower

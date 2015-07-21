@@ -1,0 +1,16 @@
+h1(translate="NEW_COURSE")
+form.form(name='new_form', ng-submit='submit_new_course(new_form)')
+  .form-group
+    label(translate="COURSE_NAME")
+    input.form-control(type="text" name="name" ng-model="current.new_course.name")
+  .form-group
+    label(translate="COURSE_YEAR")
+    select.form-control(name="year" ng-model="current.new_course.year")
+      option(value="2014") 2014
+      option(value="2015") 2015
+      option(value="2016") 2016
+      option(value="2017") 2017
+      option(value="2018") 2018
+      option(value="2019") 2019
+  .form-group
+    input.form-control(type="submit")

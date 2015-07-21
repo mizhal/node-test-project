@@ -1,0 +1,8 @@
+.upload-course
+  h1(translate="UPLOAD_STUDENT_DATA")
+  form.form(name='upload_form', ng-submit='upload_course_data(upload_form)')
+    .form-group
+      label(translate="FILE")
+      input.form-control(type="file" ng-model="current.new_course.file")
+    .form-group
+      input.form-control(type="submit")
