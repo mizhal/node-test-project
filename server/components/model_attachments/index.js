@@ -1,50 +1,10 @@
 //model attachments: manages attached files to model fields.
 
 var _ = require("lodash");
-var fs = require('fs.extra');
-var path = require("path");
-var mkdirp = require("mkdirp");
+var logger = require("../logger");
 
-/*** AUX FUNCTIONS ***/
-function moveFile(source, destination){
-	var fsSource = fs.createReadStream(source);
-	var fsDestination = fs.createWriteStream(destination);
-	fsSource.pipe(fsDestination);
-	fs.unlinkSync(source);
-}
-
-function createArchive(archive_path, field_names){
-	var base_path = process.env.PWD;
-	for(var i = 0; i < field_names.length; i++){
-		var field_name = field_names[i];
-
-		var abs_path = path.join(base_path, archive_path, field_name);
-		var deleted_path = path.join(abs_path, "_deleted");
-
-		fs.mkdirpSync(abs_path);
-		fs.mkdirpSync(deleted_path);
-	}
-}
-
-function softDelete(archive_path, _field, _id, _ext){
-	var base_path = process.env.PWD;
-	var abs_path = path.join(base_path, archive_path, _field, _id + "." + _ext);
-	var deleted_path = path.join(base_path, archive_path, _field, "_deleted", _id + "." + _ext);
-
-	moveFile(abs_path, deleted_path);
-}
-
-function store(archive_path, field, source, fname, ext){
-	var base_path = process.env.PWD;
-
-	var abs_source = path.join(base_path, source);
-	var abs_dest = path.join(base_path, archive_path, field, fname + "." + ext);
-
-	moveFile(abs_source, abs_dest);
-	return abs_dest;
-}
-
-/*** END: AUX FUNCTIONS ***/
+var FileDBManager = require("./file-db-manager");
+var ArchiveManager = require("./archive-manager");
 
 module.exports = exports = function attachPlugin(schema, options){
 	
@@ -111,45 +71,70 @@ module.exports = exports = function attachPlugin(schema, options){
 
 }
 
+
 /** SEQUELIZE PLUGIN **/
 function enableAttachments(Model, field_names, FileModel){
 
+	var archive = new ArchiveManager(Model, field_names);
+
 	// utility methods
 	Model.options.instanceMethods.attachFiles = function(req_files){
-		for(var i = 0; i < field_names.length; i++){
-			var field = field_names[i];
-			var file_data = req_files[field];
-			if(file_data == undefined){
-				continue;
-			}
 
-			this["__temp_file_fields"] ||= {}
-			this["__temp_file_fields"][field] = FileModel.build({
-				model: Model,
-				field: field,
-				object_id: this.id,
-				path: file_data.path,
-				mimetype: file_data.mimetype,
-				extension: file_data.extension,
-				original_filename: file_data.originalname
-			});
-		}
+		FileDBManager.bindHost(this);
+
+		FileDBManager.eachFieldWithFile(field_names, req_files, function(file){
+
+			var tmp_file_model = FileModel.build({
+					model: Model,
+					field: field,
+					path: file_data.path,
+					mimetype: file_data.mimetype,
+					extension: file_data.extension,
+					original_filename: file_data.originalname
+				});
+
+			FileDBManager.storeTemporarily(field, tmp_file_model);
+
+		});
 	}
 
-	Model.hook("beforeSave", function(instance){
-		for(var i = 0; i < field_names.length; i++){
-			var field = field_names[i];
-			this["__temp_file_fields"][field]
-				.save()
-				.then(function(file_instance){
-					this[field + "Id"] = file_instance.id;
-				})
-				.catch(function(error){
-					morgan.
-				});
-		}
-	});
+	var update_files = function(instance){
 
+		FileDBManager.bindHost(instance);
+
+		FileDBManager.deleteAllFilesAndFields().then(function(){
+			FileDBManager.processAllTemporaryObjects(function(field, tmp_object){
+
+				// asignacion de los valores que faltan, id del objeto
+				// y destino definitivo del archivo adjunto.
+				tmp_object.object_id = instance.id;
+				file_instance.path = archive.storeFromObject(field, file_instance);
+
+				tmp_object.save()
+					.then(function(file_instance){
+
+						instance[field + "Id"] = file_instance.id;
+						
+					})
+					.catch(function(error){
+						logger.error(
+							"%s.%s: Error saving attached file registry in database",
+							Model, field
+						);
+					});
+
+			});
+
+		});
+	};
+
+	Model.hook("afterCreate", "model-attachments", update_files);
+	Model.hook("afterUpdate", "model-attachments", update_files);
+
+	Model.hook("afterDestroy", "model-attachments", function(instance){
+		FileDBManager.bindHost(instance);
+		FileDBManager.deleteAllFilesAndFields();
+	});
 }
 
 
