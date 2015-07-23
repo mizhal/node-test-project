@@ -19,6 +19,7 @@ var session = require('express-session');
 var mongoStore = require('connect-mongo')(session);
 var mongoose = require('mongoose');
 var multer  = require('multer');
+var fs = require('fs');
 
 module.exports = function(app) {
   var env = app.get('env');
@@ -46,10 +47,17 @@ module.exports = function(app) {
   app.use(passport.session());
   
   if ('production' === env) {
-    app.use(favicon(path.join(config.root, 'public', 'favicon.ico')));
-    app.use(express.static(path.join(config.root, 'public')));
-    app.set('appPath', path.join(config.root, 'public'));
-    app.use(morgan('dev'));
+    app.use(favicon(path.join(config.root, 'client', 'assets', 'favicon.ico')));
+    app.use(express.static(path.join(config.root, 'client')));
+    app.set('appPath', path.join(config.root, 'client'));
+    var logFile = fs.createWriteStream(
+      path.join(config.root, config.log.path),
+      {flags: 'a'}
+    );
+    app.use(morgan({
+      format: config.log.format, 
+      stream: logFile
+    }));
   }
 
   if ('development' === env || 'test' === env) {
@@ -57,7 +65,14 @@ module.exports = function(app) {
     app.use(express.static(path.join(config.root, '.tmp')));
     app.use(express.static(path.join(config.root, 'client')));
     app.set('appPath', path.join(config.root, 'client'));
-    app.use(morgan('dev'));
+    var logFile = fs.createWriteStream(
+      path.join(config.root, config.log.path),
+      {flags: 'a'}
+    );
+    app.use(morgan({
+      format: config.log.format, 
+      stream: logFile
+    }));
     app.use(errorHandler()); // Error handler - has to be last
   }
 };

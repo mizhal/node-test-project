@@ -53,6 +53,11 @@ Curso.hook("beforeValidate", function(curso){
     CURSO_SLUG_FIELD_SIZE
   );
 });
+
+// Hook para comprobar el logging 
+Curso.hook("afterSave", function(curso){
+
+});
 /** FIN: MODELO CURSO **/
 
 /** MODELO DATOSALUMNO **/

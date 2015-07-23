@@ -8,5 +8,10 @@ module.exports = {
     uri: 'mongodb://localhost/pfclaminasnode-dev'
   },
 
+  log: {
+    path: "/log/development.log",
+    format: ':remote-addr - :remote-user [:date] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"'
+  },
+
   seedDB: true
 };

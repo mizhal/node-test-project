@@ -110,3 +110,49 @@ module.exports = exports = function attachPlugin(schema, options){
 	})
 
 }
+
+/** SEQUELIZE PLUGIN **/
+function enableAttachments(Model, field_names, FileModel){
+
+	// utility methods
+	Model.options.instanceMethods.attachFiles = function(req_files){
+		for(var i = 0; i < field_names.length; i++){
+			var field = field_names[i];
+			var file_data = req_files[field];
+			if(file_data == undefined){
+				continue;
+			}
+
+			this["__temp_file_fields"] ||= {}
+			this["__temp_file_fields"][field] = FileModel.build({
+				model: Model,
+				field: field,
+				object_id: this.id,
+				path: file_data.path,
+				mimetype: file_data.mimetype,
+				extension: file_data.extension,
+				original_filename: file_data.originalname
+			});
+		}
+	}
+
+	Model.hook("beforeSave", function(instance){
+		for(var i = 0; i < field_names.length; i++){
+			var field = field_names[i];
+			this["__temp_file_fields"][field]
+				.save()
+				.then(function(file_instance){
+					this[field + "Id"] = file_instance.id;
+				})
+				.catch(function(error){
+					morgan.
+				});
+		}
+	});
+
+}
+
+
+
+
+}
