@@ -17,10 +17,22 @@ function ArchiveManager(base_path, model_name, field_names){
 ArchiveManager.prototype = {
   moveFile: function(source, destination){
     /** (string, string) -> Promise **/
+    return this.copyFile(source, destination).then(function(){
+      return fs.unlinkAsync(source);
+    });
+  },
+  copyFile: function(source, destination){
+    /** (string, string) -> Promise **/
+    var defer = Promise.defer();
     var fsSource = fs.createReadStream(source);
     var fsDestination = fs.createWriteStream(destination);
-    fsSource.pipe(fsDestination);
-    return fs.unlink(source);   
+
+    fsSource.pipe(fsDestination)
+    fsSource.on("end", function(){
+      defer.resolve();
+    });
+
+    return defer.promise;
   },
   create: function(){
     var host = this;
@@ -44,14 +56,20 @@ ArchiveManager.prototype = {
 
     return this.moveFile(abs_path, deleted_path);
   },
-  store: function(field, source, fname, ext){
-    var abs_source = path.join(this.base_path, source);
-    var abs_dest = path.join(this.base_path, this.model_name, field, fname + "." + ext);
+  store: function(field, abs_source_path, fname, ext_with_dot, copy_mode){
+    var abs_dest = path.join(this.base_path, this.model_name, field, fname + ext_with_dot);
 
-    this.moveFile(abs_source, abs_dest)
+    if(copy_mode){
+      return this.copyFile(abs_source_path, abs_dest)
       .then(function(){
         return abs_dest;  
       });
+    } else {
+      return this.moveFile(abs_source_path, abs_dest)
+        .then(function(){
+          return abs_dest;  
+        });
+    }
   },
   storeFromObject: function(field, file_object){
     var abs_source = path.join(this.base_path, file_object.path);
