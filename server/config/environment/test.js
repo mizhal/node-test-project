@@ -11,5 +11,10 @@ module.exports = {
   log: {
     path: "/log/test.log",
     format: ':remote-addr - :remote-user [:date] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"'
-  }
+  },
+
+  attachments: {
+    base_path: "/client/assets/test_attached_files"
+  },
+
 };

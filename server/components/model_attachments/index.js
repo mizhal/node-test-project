@@ -1,143 +1,138 @@
 //model attachments: manages attached files to model fields.
 
 var _ = require("lodash");
-var logger = require("../logger");
+
+var logger_module /* :ILoggerModule */= require("../logger");
+var logger /* :ILogger */ = logger_module.getLogger();
 
 var FileDBManager = require("./file-db-manager");
 var ArchiveManager = require("./archive-manager");
 
-module.exports = exports = function attachPlugin(schema, options){
-	
-	// create field columns for attachments
-	var field_names = options.field_names;
+/** conforms IModelAttachments */
+module.exports = exports = {
 
-	sc_options = {};
-	for(var i=0; i < field_names.length; i++){
-		sc_options[field_names[i]] = String;
-		sc_options[field_names[i] + "_mimetype"] = String;
-		sc_options[field_names[i] + "_original_fname"] = String;
-		sc_options[field_names[i] + "_ext"] = String;
-	}
-	schema.add(sc_options);
+	settings: {
+		base_path: "/archive"
+	},
 
-	//set archive storage path
-	var archive_path = options.path;
-	createArchive(archive_path, field_names);
+	setSettings: function(settings){
+		/**
+			@param {Hash} _settings 
+		 **/
+		this.settings = _.assign(this.settings, settings);
+	},
 
-	schema.methods["attach"] = function(req_files){
-		for(var i = 0; i < field_names.length; i++){
-			var field = field_names[i];
-			var file_data = req_files[field];
-			if(file_data == undefined){
-				continue;
-			}
+	enableAttachments: function(HostModel, FileModel) {
+		/** 
+			creates associated archive object for managing files in disk
 
-			this[field] = file_data.path
-			this[field + "_mimetype"] = file_data.mimetype; 
-			this[field + "_ext"] = file_data.extension;
-			this[field + "_original_fname"] = file_data.originalname;
+			@param {ISequelizeModel} HostModel
+			@param {ISequelizeModel} FileModel
+		**/
+		var base_path = this.settings.base_path;
+		var archive = new ArchiveManager(base_path, HostModel.getTableName());
+		archive.bindToModel(HostModel);
+
+		try {
+			archive.createSync();
+		} catch (e) {
+			logger.fatal("Cannot create attachment archive for model with tablename '%s'", 
+				HostModel.getTableName());
 		}
-	};
 
-	schema.methods["resetAttachmentsArchive"] = function(callback){
-		fs.rmrf(archive_path, function(){
-			console.log("Attachment Archive in " + archive_path +  " DELETED");
-			createArchive(archive_path, field_names);
-			if(callback){
-				callback();
-			}	
-		});		
-	};
+		this.bindAttachData(HostModel);
+		this.bindAttachMethod(HostModel);
+		this.bindCallbacks(HostModel);
+	},
 
-	schema.post("save", function(doc){
-		for(var i = 0; i < field_names.length; i++){
-			var field = field_names[i];
-			if(doc[field]){
-				var final_path = store(archive_path, field, doc[field], 
-					doc._id.toString(), doc[field + "_ext"]);
-				doc[field] = final_path;
-			} 
-		}
-	});
+	defineAttachment: function(Model, field) {
+		/**
+			@param {ISequelizeModel} Model
+			@param {String} field 
+		**/
+		var attachments = Model["__attachment_fields"]; 
+		attachments[field] = {exists: 1, payload: null};
 
-	schema.post("remove", function(doc){
-		for(var i = 0; i < field_names.length; i++){
-			var field = field_names[i];
-			if(doc[field]){
-				softDelete(archive_path, field, doc.id, doc[field + "_ext"]);
+		var archive = Model["archive"];
+		if(!archive){
+			throw "You must call 'enableAttachments' on the model before trying to define a field";
+		} else {
+			try {
+				archive.addFieldSync(field);
+			} catch (e) {
+				logger.fatal("Cannot create attachment field '%s' for model '%s'", 
+					field, Model.name);
 			}
 		}
-	})
+	},
 
-}
+	// private
+	bindAttachData: function(Model) {
+		/**
+			@param {ISequelizeModel} Model
+		**/
+		Model["__attachment_fields"] = {};
+	},
 
+	bindAttachMethod: function(Model) {
+		/** 
+			creates method "attachFiles" to set attachments 
+			
+			@param {ISequelizeModel} Model
+		**/
 
-/** SEQUELIZE PLUGIN **/
-function enableAttachments(Model, field_names, FileModel){
+		Model.options.instanceMethods.attachFiles = function(req_files){
+			/** 
+				@param {IMulterFiles} req_files
+			**/
+			var attachments = Model["__attachment_fields"]; 
+			var field_names = attachments.keys();
 
-	var archive = new ArchiveManager(Model, field_names);
+			for(index in field_names) {
+				var field = field_names[index];
+				var capitalized_field = _.capitalize(field);
 
-	// utility methods
-	Model.options.instanceMethods.attachFiles = function(req_files){
+				// crear un registro temporal en memoria que luego ira a la 
+				// base de datos si todo valida bien.
+				var fileman = new FileDBManager(this);
 
-		FileDBManager.bindHost(this);
+				fileman.eachFieldWithFile( field_names, req_files, 
+					function(file, field){
+						var tmp_file_model = FileModel.build({
+								model: Model,
+								field: field,
+								path: file_data.path,
+								mimetype: file_data.mimetype,
+								extension: file_data.extension,
+								original_filename: file_data.originalname
+							});
 
-		FileDBManager.eachFieldWithFile(field_names, req_files, function(file){
-
-			var tmp_file_model = FileModel.build({
-					model: Model,
-					field: field,
-					path: file_data.path,
-					mimetype: file_data.mimetype,
-					extension: file_data.extension,
-					original_filename: file_data.originalname
+						fileman.storeTemporarily(field, tmp_file_model);
 				});
+			}
+		} // Model.options.instanceMethods.attachFiles
+	}, // bindAttachMethod
 
-			FileDBManager.storeTemporarily(field, tmp_file_model);
+	bindCallbacks: function(Model) {
+		/**
+			@param {ISequelizeModel} Model
+		**/
+		var store_attachments_callback = function(instance){
+			var fileman = new FileDBManager(instance);
+			fileman.commitTemporaries();
+		};
 
-		});
-	}
+		var delete_attachments_callback = function(instance){
+			var fileman = new FileDBManager(instance);
+			fileman.softDeleteAttachments();
+		}
 
-	var update_files = function(instance){
+		Model.hook("afterCreate", "model-attachments", 
+			store_attachments_callback);
+		Model.hook("afterUpdate", "model-attachments", 
+			store_attachments_callback);
+		Model.hook("afterDestroy", "model-attachments", 
+			delete_attachments_callback);
+	} // bindCallbacks 
 
-		FileDBManager.bindHost(instance);
-
-		FileDBManager.deleteAllFilesAndFields().then(function(){
-			FileDBManager.processAllTemporaryObjects(function(field, tmp_object){
-
-				// asignacion de los valores que faltan, id del objeto
-				// y destino definitivo del archivo adjunto.
-				tmp_object.object_id = instance.id;
-				file_instance.path = archive.storeFromObject(field, file_instance);
-
-				tmp_object.save()
-					.then(function(file_instance){
-
-						instance[field + "Id"] = file_instance.id;
-						
-					})
-					.catch(function(error){
-						logger.error(
-							"%s.%s: Error saving attached file registry in database",
-							Model, field
-						);
-					});
-
-			});
-
-		});
-	};
-
-	Model.hook("afterCreate", "model-attachments", update_files);
-	Model.hook("afterUpdate", "model-attachments", update_files);
-
-	Model.hook("afterDestroy", "model-attachments", function(instance){
-		FileDBManager.bindHost(instance);
-		FileDBManager.deleteAllFilesAndFields();
-	});
-}
-
-
-
-
-}
+} // module.exports

@@ -1,31 +1,27 @@
-// Winston logger configuration
-var winston = require("winston");
-var expressWinston = require('express-winston');
+// Bunyan logger configuration
+var bunyan = require("bunyan");
 var path = require("path");
 
-module.exports = {
-  logger: null,
-  initialize: function(config){
-    this.logger = new winston.Logger({
-      transports: [
-        new winston.transports.Console(),
-        new winston.transports.File({ filename: path.join(config.root, config.log.path) })
+module.exports = exports = {
+  // {IPFCLaminasConfig} config
+  config: null,
+  setConfig: function(config){
+    /**
+      @param {IPFCLaminasConfig} config
+    **/
+    this.config = config;
+  },
+  getLogger: function() {
+    var logger = bunyan.createLogger({
+      name: "pfc-laminas", 
+      streams: [
+        {
+          level: "trace",
+          path: path.join(this.config.root, this.config.log.path)
+        }
       ]
     });
-    this.logger.log("Winston logger initialized");
-  },
-  getLogger: function(){
-    return this.logger;
-  },
-  getMiddleware: function(config){
-    return expressWinston.errorLogger({
-      transports: [
-        new winston.transports.Console({
-          json: true,
-          colorize: true
-        }),
-        new winston.transports.File({ filename: config.log.path })
-      ]
-    });
+
+    return logger;
   }
 };

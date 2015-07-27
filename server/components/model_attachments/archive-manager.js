@@ -8,10 +8,13 @@ var fs = Promise.promisifyAll(require('fs.extra'));
 var path = require("path");
 var mkdirp = require("mkdirp");
 
-function ArchiveManager(base_path, model_name, field_names){
+var logger_module /*:ILoggerModule*/ = require("../logger");
+var logger /*:ILogger*/ = logger_module.getLogger();
+
+function ArchiveManager(base_path, model_name){
   this.model_name = model_name;
   this.base_path = path.join(process.env.PWD, base_path);
-  this.field_names = field_names;
+  this.fields = [];
 };
 
 ArchiveManager.prototype = {
@@ -35,26 +38,60 @@ ArchiveManager.prototype = {
     return defer.promise;
   },
   create: function(){
-    var host = this;
+    var abs_path = path.join(this.base_path, this.model_name);
+    var deleted_path = path.join(abs_path, "_deleted");
+
+    return fs.mkdirpAsync(abs_path);
+  },
+  createSync: function(){
+    var abs_path = path.join(host.base_path, host.model_name);
+    fs.mkdirpSync(abs_path);
+  },
+  addField: function(field_name){
+    if(this.fields.indexOf(field_name) == -1){
+      this.fields.push(field_name);
+    }
+
+    var abs_path = path.join(this.base_path, this.model_name, field_name);
+    var deleted_path = path.join(abs_path, "_deleted");
+
+    return fs.mkdirpAsync(abs_path).then(function(){
+      return fs.mkdirpAsync(deleted_path);
+    });
+  },
+  addFieldSync: function(field_name){
+    if(this.fields.indexOf(field_name) == -1){
+      this.fields.push(field_name);
+    } else {
+      return;
+    }
+
+    var abs_path = path.join(this.base_path, this.model_name, field_name);
+    var deleted_path = path.join(abs_path, "_deleted");
+
+    fs.mkdirpSync(abs_path);
+    fs.mkdirpSync(deleted_path);
+  },
+  softDelete: function(field, sequelize_instance){
+    var dir_path = path.join(this.base_path, this.model_name, 
+      field);
 
     return Promise.all(
-      this.field_names.map(function(field_name){
+      fs.readDirAsync(dir_path)
 
-        var abs_path = path.join(host.base_path, host.model_name, field_name);
-        var deleted_path = path.join(abs_path, "_deleted");
+        .filter(function(filename, index, length){
+          return path.parse(filename).name == sequelize_instance.id.toString();
+        })
 
-        return fs.mkdirpAsync(abs_path).then(function(){
-          return fs.mkdirpAsync(deleted_path);
-        });
-      })
+        .then(function(filtered){
+          var full_path = path.join(this.base_path, this.model_name, field, 
+            filtered);
+          var deleted_path = path.join(this.base_path, this.model_name, field, 
+            "_deleted", filtered); 
+
+          return this.moveFile(full_path, deleted_path);    
+        })
     );
-  },
-  softDelete: function(_field, _id, _ext){
-    var base_path = process.env.PWD;
-    var abs_path = path.join(this.base_path, this.model_name, _field, _id + "." + _ext);
-    var deleted_path = path.join(this.base_path, this.model_name, _field, "_deleted", _id + "." + _ext);
-
-    return this.moveFile(abs_path, deleted_path);
   },
   store: function(field, abs_source_path, fname, ext_with_dot, copy_mode){
     var abs_dest = path.join(this.base_path, this.model_name, field, fname + ext_with_dot);
@@ -71,21 +108,41 @@ ArchiveManager.prototype = {
         });
     }
   },
-  storeFromObject: function(field, file_object){
-    var abs_source = path.join(this.base_path, file_object.path);
-    var fname = file_object.object_id.toString() + "." + file_object.extension;
+  storeFromObject: function(file_object, copy_mode){
+    /**
+     * storeFromObject
+     * @param {String} field
+     * @param {IFileModel} file_object
+     **/
+    var field = file_object.object_field;
+    var abs_source = file_object.path;
+    var fname = file_object.object_id.toString() + file_object.extension_with_dot;
     var abs_dest = path.join(
       this.base_path, this.model_name, 
       field, fname
     ); 
 
-    return this.moveFile(abs_source, abs_dest)
-      .then(function(){
-        return abs_dest;  
-      });
+    if(copy_mode){
+
+      return this.copyFile(abs_source, abs_dest)
+        .then(function(){
+          return abs_dest;  
+        });
+
+    } else {
+
+      return this.moveFile(abs_source, abs_dest)
+        .then(function(){
+          return abs_dest;  
+        });
+      
+    }
   },
   destroy: function(){
     return fs.removeAsync(this.base_path);
+  },
+  bindToModel: function(model){
+    return model["archive"] = this;
   }
 };
 
