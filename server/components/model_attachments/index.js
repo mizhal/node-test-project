@@ -1,4 +1,18 @@
-//model attachments: manages attached files to model fields.
+/** 
+ model attachments: Gestiona archivos adjuntos a campos de registros de
+ la base de datos.
+ El comportamiento implementado establece que un campo puede tener tantos
+ archivos adjuntos como quiera, de CERO a N.
+
+ depends on:
+ 	lodash
+ 	sequelize
+ 	path
+ 	fs.extra
+ 	mkdirp
+ 	bluebird
+	
+**/
 
 var _ = require("lodash");
 
@@ -41,7 +55,7 @@ module.exports = exports = {
 		}
 
 		this.bindAttachData(HostModel);
-		this.bindAttachMethod(HostModel);
+		this.bindAttachMethods(HostModel);
 		this.bindCallbacks(HostModel);
 	},
 
@@ -74,7 +88,7 @@ module.exports = exports = {
 		Model["__attachment_fields"] = {};
 	},
 
-	bindAttachMethod: function(Model) {
+	bindAttachMethods: function(Model) {
 		/** 
 			creates method "attachFiles" to set attachments 
 			
@@ -111,6 +125,15 @@ module.exports = exports = {
 				});
 			}
 		} // Model.options.instanceMethods.attachFiles
+
+		Model.options.instanceMethods.getAttachmentsRecords = function(){
+			return FileModel.findAll({
+				where: {
+					object_id: this.id
+				}
+			});
+		} // Model.options.instanceMethods.getAttachmentsRecords
+
 	}, // bindAttachMethod
 
 	bindCallbacks: function(Model) {

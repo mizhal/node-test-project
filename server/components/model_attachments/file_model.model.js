@@ -44,7 +44,13 @@ var FileModel = sequelize.define('FileModel',
   },
   {//CONFIGURACION
     timestamps: true,
-    tableName: "FileModels"
+    tableName: "FileModels",
+    instanceMethods: {
+      getFilename: function(){
+        return this.object_id.toString() + "-" + this.id.toString() + 
+          this.extension_with_dot;
+      }
+    }
   }
 );
 

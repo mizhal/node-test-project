@@ -116,7 +116,7 @@ ArchiveManager.prototype = {
      **/
     var field = file_object.object_field;
     var abs_source = file_object.path;
-    var fname = file_object.object_id.toString() + file_object.extension_with_dot;
+    var fname = file_object.getFilename();
     var abs_dest = path.join(
       this.base_path, this.model_name, 
       field, fname
@@ -139,7 +139,7 @@ ArchiveManager.prototype = {
     }
   },
   destroy: function(){
-    return fs.removeAsync(this.base_path);
+    return fs.removeAsync(path.join(this.base_path, this.model_name));
   },
   bindToModel: function(model){
     return model["archive"] = this;

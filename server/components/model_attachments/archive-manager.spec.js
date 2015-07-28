@@ -27,13 +27,17 @@ var logger /* ILogger */ = logger_module.getLogger();
 /** deps de modulos internos del proyecto **/
 var ArchiveManager = require("./archive-manager");
 var FileModel = require("./file_model.model");
+/** configuracion de archivos adjuntos 
+  Hay que hacerla antes de importar los modelos que tienen
+  adjuntos porque sino van a crear los directorios en el
+  directorio por defecto '/archive'
+**/
+var attachModule /* :IModelAttachments */ = require("./index");
+attachModule.setSettings({base_path: "/test-archive"});
+
 var HostModel = require("./host_model.model");
 var model_name = "Model";
-var attachModule /* :IModelAttachments */ = require("./index");
 /** FIN: deps de modulos internos del proyecto **/
-
-/** configuracion de archivos adjuntos **/
-attachModule.setSettings({base_path: "/test-archive"});
 
 /** FIN: configuracion de archivos adjuntos **/
 
@@ -43,7 +47,7 @@ describe("ArchiveManager", function() {
 
     attachModule.setSettings({base_path: "/test-archive"});
     expect(attachModule.settings.base_path).to.eql("/test-archive");
-    
+
   })
 
   it("Should create folders", function(done){
@@ -187,20 +191,26 @@ describe("ArchiveManager", function() {
     // regenerar las tablas en base de datos y crear 
     // los directorios del archivo
     Promise.join(
-      FileModel.sync(),
+      // 3 procesos paralelos: crear las 2 tablas y crear el archivo
+      FileModel.sync(), //esto destruye todos los adjuntos de anteriores runs del test
       HostModel.sync(),
       archive.create()
+
     ).then(function(){
+      // 2 procesos paralelos: crear cada campo en el archivo
       return Promise.join(
         archive.addField("photo"), 
         archive.addField("icon")
       );
+
     }).then(function(){
       // crear un objeto host para asociarle los archivos
       return HostModel.create({});
+      
     })
     .then(function(host_object){
-
+      // para cada test_file crear un registro de archivo adjunto (FileModel)
+      // en la base de datos
       return Promise.all(
 
         test_files.map(function(fname_and_field){
@@ -221,7 +231,8 @@ describe("ArchiveManager", function() {
         })
 
       ).then(function(){
-
+        // recuperamos todos los registros de archivo adjunto 
+        // de la base de datos
         return FileModel.findAll({
           where: {
             object_id: host_object.id
@@ -231,7 +242,8 @@ describe("ArchiveManager", function() {
       });
 
     }).then(function(file_model_objects){
-
+      // Para cada registro de archivo adjunto, guardamos definitivamente
+      // el archivo adjunto en el disco en el lugar que nos conviene
       return Promise.all(
         file_model_objects.map(function(file_model_object){
           return archive.storeFromObject(file_model_object, true);
@@ -239,13 +251,37 @@ describe("ArchiveManager", function() {
       );
 
     }).then(function(){
+      // sacamos el HostModel de la base de datos para trabajar con el
+      return HostModel.find(); //solo va a haber uno
 
+    }).then(function(host_object){
+      // verificamos que se han generado los ficheros esperados
+      return FileModel.findAll({
+          where: {
+            object_id: host_object.id
+          }
+        }).map(function(file_model){
+          var field = file_model.object_field;
+          var fname = file_model.getFilename();
+
+          var expected_file = path.join(base_path, field, fname);
+
+          expect(fs.existsSync(expected_file)).to.be.equal(true, 
+                "No generado archivo '" + expected_file + "'."); 
+        });
+
+    }).then(function(){
+      // destruimos todos los archivos en disco
       return archive.destroy();
 
     }).then(function(){
+      // llamada a la finalizacion del test
       done();
+
     }).catch(function(error){
+      // llamada a la finalizacion del test
       done(error);
+
     });
 
   })
