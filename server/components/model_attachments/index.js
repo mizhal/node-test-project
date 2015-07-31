@@ -22,6 +22,14 @@ var logger /* :ILogger */ = logger_module.getLogger();
 var FileDBManager = require("./file-db-manager");
 var ArchiveManager = require("./archive-manager");
 
+/** Excepciones **/
+function ArchiveManagerException(msg){
+	this.name = "ArchiveManagerException";
+	this.message = msg;
+}
+ArchiveManagerException.prototype = Error.prototype;
+/** FIN: Excepciones **/
+
 /** conforms IModelAttachments */
 module.exports = exports = {
 
@@ -43,6 +51,8 @@ module.exports = exports = {
 			@param {ISequelizeModel} HostModel
 			@param {ISequelizeModel} FileModel
 		**/
+
+		/** archive initialization **/
 		var base_path = this.settings.base_path;
 		var archive = new ArchiveManager(base_path, HostModel.getTableName());
 		archive.bindToModel(HostModel);
@@ -53,6 +63,18 @@ module.exports = exports = {
 			logger.fatal("Cannot create attachment archive for model with tablename '%s'", 
 				HostModel.getTableName());
 		}
+		/** FIN: archive initialization **/	
+
+		/** FileModel initialization **/
+		if(!FileModel){
+			// en el caso de no especificarse un modelo para almacenar los 
+			// archivos en la base de datos, se usa el que viene por defecto.
+			// se asume que las tablas estan creadas en base de datos
+			FileModel = require("./file_model.model.js");
+
+		}
+		/** FIN: FileModel initialization **/
+
 
 		this.bindAttachData(HostModel);
 		this.bindAttachMethods(HostModel);

@@ -192,11 +192,17 @@ describe("ArchiveManager", function() {
     // los directorios del archivo
     Promise.join(
       // 3 procesos paralelos: crear las 2 tablas y crear el archivo
-      FileModel.sync(), //esto destruye todos los adjuntos de anteriores runs del test
+      FileModel.sync(),
       HostModel.sync(),
       archive.create()
-
     ).then(function(){
+      // destruir datos de anteriores ejecuciones del test
+      return Promise.join(
+        FileModel.destroy({truncate:true}),
+        HostModel.destroy({truncate:true})
+      );
+
+    }).then(function(){
       // 2 procesos paralelos: crear cada campo en el archivo
       return Promise.join(
         archive.addField("photo"), 
@@ -246,6 +252,10 @@ describe("ArchiveManager", function() {
       // el archivo adjunto en el disco en el lugar que nos conviene
       return Promise.all(
         file_model_objects.map(function(file_model_object){
+          logger.info("Store file %s to %s", 
+            file_model_object.original_filename,
+            archive.calculateDestination(file_model_object)
+          );
           return archive.storeFromObject(file_model_object, true);
         })
       );
@@ -264,7 +274,9 @@ describe("ArchiveManager", function() {
           var field = file_model.object_field;
           var fname = file_model.getFilename();
 
-          var expected_file = path.join(base_path, field, fname);
+          var expected_file = path.join(base_path, 
+            host_object.Model.getTableName(), 
+            field, fname);
 
           expect(fs.existsSync(expected_file)).to.be.equal(true, 
                 "No generado archivo '" + expected_file + "'."); 

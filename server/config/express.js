@@ -34,7 +34,6 @@ module.exports = function(app) {
   app.use(passport.initialize());
 
   app.use('/uploads', express.static(__dirname + "/uploads"));
-  app.use(multer({dest: './uploads/'}))
 
   // Persist sessions with mongoStore
   // We need to enable sessions for passport twitter because its an oauth 1.0 strategy

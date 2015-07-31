@@ -143,6 +143,12 @@ ArchiveManager.prototype = {
   },
   bindToModel: function(model){
     return model["archive"] = this;
+  },
+  calculateDestination: function(file_object){
+    return path.join(
+        this.base_path, this.model_name,
+        file_object.object_field, file_object.getFilename()
+      )
   }
 };
 
