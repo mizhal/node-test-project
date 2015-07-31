@@ -31,7 +31,7 @@ describe('GET /api/cursos', function(done) {
       .end(function(err, res) {
         if (err) return done(err);
         res.body.should.be.instanceof(Array);
-        res.body.length.should.be.equal(5);
+        res.body.length.should.be.equal(7);
         done();
       });
   });
@@ -41,7 +41,7 @@ describe('GET /api/cursos', function(done) {
       .get('/api/cursos')
       .expect(200)
       .set("Range-Unit", "items")
-      .set("Range", "2-3")
+      .set("Range", "3-4")
       .expect('Content-Type', /json/)
       .end(function(err, res) {
         if (err) return done(err);
