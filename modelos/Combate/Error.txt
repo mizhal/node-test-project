@@ -1,0 +1,9 @@
+class Error
+  id: int
+  center_x: float
+  center_y: float
+  radius: float
+  estado: ENUM{creado, reclamado, aceptado, rechazado}
+  categoria: *Categoria
+  entrega: *Entrega
+  usuario: *Usuario

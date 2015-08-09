@@ -1,0 +1,42 @@
+Instalar nuevos componentes del Back
+
+Para instalar nuevos componentes para el back es necesario editar el archivo "packages.json". Es fundamental asegurarse de que se escribe JSON correcto y no javascript, en concreto en dos detalles:
+
+  - NO se debe dejar la "trailing comma", es decir, la coma al final de las enumeraciones de campos de un hash o de elementos de un array, que en javascript es tolerable pero en JSON no.
+  - Las claves deben ir entre comillas en general.
+
+Si el módulo que vamos a instalar es necesario en PRODUCCION la parte que hay que cambiar es la rama "dependencies" del hash principal. Si el modulo solo fuera necesario en DESARROLLO, por ejemplo módulos para pruebas automátizadas o para verificar el estilo del código fuente, la rama que hay que modificar es "devDependencies".
+
+Alli para añadir un nuevo módulo, digamos "fs.extra", es necesario crear una nueva clave con ese nombre y cuyo valor será la versión del módulo que vamos a necesitar:
+
+  "dependencies": {
+    ...
+    "fs.extra": "1.3.2"
+  }
+
+O bien para una dependencia/módulo para desarrollo:
+
+"devDependencies": {
+  ...
+  "should": "~3.3.1"
+}
+
+La versión puede prefijarse con los simbolos "~" para que se busque una versión aproximada (permitiendo cambiar el tercer número de versión), "^" para que busque una version cambiando el segundo y el tercer numero de versión, o ">=" para especificar un número de versión minimo tolerable. Existen otros modificadores para el número de versión.
+
+Una vez modificado este archivo, es necesario invocar:
+
+  npm install
+
+para instalar realmente los módulos en el entorno, ya sea de DESARROLLO o PRODUCCION.
+
+Una peculiaridad de ciertos modulos de NodeJS es que para compilarse nativamente utilizan la librería "node-gyp" y esta librería utiliza ¡Python! asi que tenemos una dependencia de otro lenguaje de script. Desgraciadamente esta dependencia no es de la serie más actual de versiones de Python (que serían las versiones 3.x) sino de las versiones 2.x. El problema es que realmente existen cambios notables entre estas dos series de versiones.
+
+Esto hace que en los sistemas que tengan Python actualizado, el comando "npm install" arroje un error que dice que la versión de Python no es la adecuada al intentar compilar nativamente ciertos módulos. 
+
+La solución en este caso pasa por instalar una versión de Python de la serie 2.x (en los Unix es muy problable que existan dos versiones, una de la serie 2.x y otra de la serie 3.x) y añadir un parámetro al comando npm install indicandole donde está instalada, ya que la versión "por defecto" del sistema probablemente sea la 3.x
+
+Un ejemplo en windows, suponiendo que tenemos Python 2.7 instalado en "c:\Python27", que debería ser lo más común, quedaría:
+
+  npm install --python=C:\Python27\python.exe
+
+En este caso, se usaría el Python indicado y no debería haber más problemas por este frente.

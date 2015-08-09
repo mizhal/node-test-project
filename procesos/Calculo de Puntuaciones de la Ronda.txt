@@ -1,0 +1,29 @@
+Calculo de Puntuaciones de la Ronda 
+  (sin bonificacion)
+
+  La puntuación de la Ronda para cada alumno se calcula como un combate:
+    - cada error encontrado a otro alumno es un DAÑO INFLINGIDO a los puntos de vida de dicho alumno. El daño inflingido a otros a lo largo del juego aporta EXPERIENCIA.
+    - cada error que otro alumno encuentra al primer alumno es un DAÑO RECIBIDO que se descuenta de los puntos de vida propios.
+    - las bonificaciones por dificultad se calculan a parte.
+    - se anotan los movimientos en el registro general, para luego poder analizar
+
+  puntuacion: (alumno:Usuario, ronda:Ronda, registro:RegistroMovimientos) ->
+    puntos: new Puntuacion
+    entrega:Entrega = Entrega.findByAlumnoAndRonda(alumno, ronda)
+
+    danyo_recibido:int = 0
+    for error in entrega.erroresAceptados():
+      danyo_recibido = danyo_recibido + error.computaCoste()
+
+    puntos.vida = alumno.puntos.vida - danyo_recibido
+    if (puntos.vida < 0)
+      puntos.vida = 0
+
+    danyo_inflingido:int = 0
+    for tarea in alumno.tareasEnRonda(ronda):
+      for error in tarea.erroresAceptados():
+        danyo_inflingido = danyo_inflingido + error.computaCoste()
+
+    puntos.experiencia = alumno.puntos.experiencia + danyo_inflingido
+
+    return puntos

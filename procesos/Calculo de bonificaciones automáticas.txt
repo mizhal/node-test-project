@@ -1,0 +1,33 @@
+Calculo de bonificaciones automáticas
+
+  Al finalizar una [Ronda], las puntuaciones del [Jugador] son bonificadas conforme a la dificultad de la [Ronda] y la dificultad del [Reparto]. La dificultad de la ronda se define como:
+
+    ronda: Ronda
+    ronda.dificultad = () ->
+      total = 0
+      for alumno in ronda.curso.alumnos():
+        total = total + alumno.puntos_vida
+      return total / ronda.curso.cuantosAlumnos()
+
+  La dificultad del reparto se define como:
+
+    reparto: Reparto
+    reparto.dificultad = () ->
+      total = 0
+      for entrega in reparto.entregas():
+        total = total + entrega.alumno.puntos_vida
+      return total / reparto.cuantasEntregas()
+
+  Con estos dos datos, el bonus de puntuacion de la ronda se define como:
+
+    EL TOTAL DE PUNTOS OBTENIDOS MULTIPLICADO POR UNA CORRECCION DE DIFICULTAD TAL QUE SI EL REPARTO ES MAS DIFICIL QUE LA MEDIA EL BONUS ES POSITIVO Y SI EL REPARTO ES MAS FACIL QUE LA MEDIA EL BONUS ES NEGATIVO.
+
+    Para medir la dificultad podemos usar el cociente de dificultades. Como queremos que el bonus sea positivo cuando la dificultad del paquete sea mayor dividimos la dificultad del reparto entre la dificultad media de la ronda. Como queremos que el bonus sea 0 cuando sean iguales (el cociente nos da 1 en este caso), le restamos 1.
+
+    calculaBonusAutocompensacion: (alumno:Alumno, ronda:Ronda, reparto:Reparto, puntos_obtenidos: Puntuacion) ->
+      bonus: Bonus.creaBonusAutocompensacion()
+      correccion: float = (reparto.dificultad / ronda.dificultad) - 1
+      bonus.vida = puntos_obtenidos.vida * correccion
+      bonus.experiencia = puntos_obtenidos.experiencia * correccion
+
+      return bonus

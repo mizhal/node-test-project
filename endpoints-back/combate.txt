@@ -1,0 +1,7 @@
+combate:
+  /api/deliverables/:id
+ 
+GET    /errors/ 
+PUT    /errors
+GET    /errors/:id_error
+

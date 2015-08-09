@@ -1,0 +1,35 @@
+Generación inicial de la base de datos.
+
+  Paso 1: Configuraciones
+
+    Supuesto que está instalado el Servicio PostgreSQL en un lugar conocido y que se conoce el nombre del usuario root y la clave del mismo, se copian en el archivo de configuración:
+
+      server/config/local.env.js
+
+    Los valores adecuados para las siguientes claves:
+
+      SQL_USERNAME: 'pfc-laminas',
+      SQL_PASSWORD: 'pfc-laminas-pass',
+      SQL_DATABASE: 'pfc-laminas',
+      SQL_HOST: 'localhost',
+      SQL_DIALECT: 'postgres',
+
+      SQL_ROOT_USER: 'postgres',
+      SQL_ROOT_PASSWORD: 'root',
+
+    Este archivo de configuración debe mantenerse de manera manual en el servidor, ya que no puede estar en el sistema de control de versiones por razones de seguridad.
+
+    Las claves SQL_USERNAME, SQL_PASSWORD, SQL_DATABASE son propias del proyecto y deberían llevar los valores mas parecidos al nombre del proyecto dentro del sistema de gestión de proyectos de la empresa.
+
+  Paso 2: Lanzar el script de creación
+
+    En el directorio "admin-utils" se puede encontrar el script 
+
+      create_database.js
+
+    Supuesto que ya se ha realizado la instalación de las dependencias del proyecto, el script se conectará a la base de datos mediante el driver de postgresql (nota: si se usa otra base de datos es necesario usar otro driver y modificar el script)
+
+    Este script intenta crear el usuario y la base de datos asociados al proyecto. En el caso de que ya existan, simplemente muestra un mensaje informando de ello pero no se trata de ninguna condición de error.
+
+
+

@@ -1,0 +1,5 @@
+class DatosAlumno
+	nombre_completo: String(128)
+	codigo_uo: String[0..10]
+	foto: String[0..255]
+  usuario: belongs-to Usuario

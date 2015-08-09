@@ -1,0 +1,9 @@
+Uso de los sockets de socket.io en la vista
+
+Para sincronizar el web service con las vistas mediante websockets, el generador ya monta un sistema basado en socket.io que conecta las callbacks de ciclo de vida del ORM con el envío de actualizaciones a través del websocket en tiempo real.
+
+Para conectar esto con la vista, se usan las funciones del socket service (creado por el generador) "syncUpdates" para registrar y "unsyncUpdates" para liberar el flujo de actualizaciones. 
+
+A estas funciones se les pasa un array definido en el scope del controlador (hay que tener cuidado de no sobreescribirlo después pues la referencia al objeto sería diferente)
+
+A partir de ahí, en tanto la vista/widget soporte la actualización en vivo del modelo, deberían verse los cambios en todas las vistas simultáneamente.

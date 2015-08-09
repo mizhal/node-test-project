@@ -1,0 +1,49 @@
+class Entrega
+  requires(
+    Ronda, Usuario
+  )
+
+  id: int
+  archivo: UPLOADED_FILE
+  subido: Boolean
+  created_at: Date
+  updated_at: Date
+  ronda: belongs-to(Ronda) 
+  errores: has-many(Error)
+  usuario: belongs-to(Usuario)
+  correcciones: knows-many(Tarea)
+  estado: ENUM{abierta, pendiente-validacion, completa, fallida, con-error}
+  razon_incorrecta: Text
+  ----
+  METODOS:
+
+  uploadedAt () ->
+    """ fecha en la que se subio el trabajo """
+    return @updated_at
+
+  ----
+  EVENTOS:
+
+  (When @ronda "termina") ->
+    if @subido
+      if @estado = "activa"
+        @estado <- "completa"
+    else
+      @estado <- "fallida"
+
+  (When @ronda "empieza") ->
+    @estado <- "activa"
+
+  (When "uploaded-file-ok") ->
+    if @estado = "activa"
+      @estado <- "pendiente-validacion"
+
+  (When "profesor-encuentra-error"(msg)) ->
+    @estado <- "con-error"
+    @mensaje_incorrecta <- <msg>
+
+  (When @estado changedTo "completa") ->
+    send("dar-logro", @ronda, @usuario)
+
+
+

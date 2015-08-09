@@ -1,0 +1,5 @@
+class DatosProfesor
+  id:int
+  nombre_completo: String(128)
+  usuario: belongs-to Usuario
+  cursos: has-many Curso
